@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+require("dotenv").config();
+
 // Connect to MongoDB
 module.exports = () => {
     const connectionParams = {
