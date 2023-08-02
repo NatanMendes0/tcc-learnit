@@ -7,6 +7,7 @@ const multer = require("multer");
 const path = require("path");
 const connection = require("./db");
 const UserModel = require("./models/User");
+const PostModel = require("./models/Post");
 
 require("dotenv").config();
 
@@ -86,10 +87,33 @@ app.post("/api/login", (req, res) => {
   });
 });
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.filename + '_' + Date.now() + path.extname(file.originalname))
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/api/createPost", verifyUser, upload.single('file'), (req, res) => {
+  PostModel.create({
+    title: req.body.title,
+    description: req.body.description,
+    file: req.file.filename,
+  })
+    .then(result => res.json("Post criado com sucesso!"))
+    .catch(err => res.json(err));
+});
+
 app.get('/api/logout', (req, res) => {
     res.clearCookie('token');
     return res.json("Success")
 })
+
+// parei no minuto 53:00 do video
 
 const port = process.env.PORT || 8080;
 

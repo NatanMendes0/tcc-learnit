@@ -3,9 +3,10 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Navbar from "./components/navbar";
-import Register from "./components/register";
-import Login from "./components/login";
 import Home from "./components/home";
+import Login from "./components/login";
+import Register from "./components/register";
+import CreatePost from "./components/createPost";
 
 export const userContext = createContext();
 
@@ -21,6 +22,8 @@ function App() {
       .get("http://localhost:8080/api/getUser")
       .then((user) => {
         setUser(user.data);
+        console.log(user.data);
+        
       })
       .catch((err) => console.log(err));
   }, []);
@@ -30,9 +33,10 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/create" element={<CreatePost />} />
         </Routes>
       </BrowserRouter>
     </userContext.Provider>

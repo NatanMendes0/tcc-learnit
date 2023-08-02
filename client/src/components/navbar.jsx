@@ -19,36 +19,59 @@ function Navbar() {
   return (
     <div className="flex justify-between bg-gray-100 py-5 px-10">
       <div>
-        <h2>Fórum</h2>
+        <h2 className="text-xl font-bold">Fórum</h2>
       </div>
       <div>
-        <Link className="px-5" to="/">
+        <Link
+          className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
+          to="/"
+        >
           Home
         </Link>
-        <Link className="px-5" to="/">
-          Create
-        </Link>
-        <Link className="px-5" to="/">
+        {user.name ? (
+          <Link
+            className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
+            to="/create"
+          >
+            Create
+          </Link>
+        ) : (
+          <></>
+        )}
+        <Link
+          className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
+          to="/"
+        >
           Contact
         </Link>
       </div>
       <div>
-        {
-          user.name ?
+        {user.name ? (
           <div>
             <p className="inline-block px-5">{user.name}</p>
-            <input type="button" onClick={handleLogout} value="Logout"/>
+            <input
+              type="button"
+              onClick={handleLogout}
+              value="Logout"
+              className="bg-red-600 rounded-lg mx-1 py-2 px-5 text-white"
+            />
           </div>
-          :
+        ) : (
           <div>
-            <Link className="px-5" to="/login">
+            <Link
+              className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
+              to="/login"
+            >
               Login
             </Link>
-            <Link className="px-5" to="/register">
+            <Link
+              className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
+              to="/register"
+            >
               Register
             </Link>
           </div>
-        }
+        )}
       </div>
     </div>
   );
