@@ -1,26 +1,11 @@
-import { Link } from "react-router-dom";
+import React from 'react';
 
-
-const home = () => {
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  };
-
-  //pega os dados do usuário
-
+function home() {
   return (
     <div>
-      <nav className="bg-sky-500 justify-between flex py-5 px-2">
-        <Link className="rounded-lg px-5 py-2 bg-white text-black" to="/forum">
-          Fórum
-        </Link>
-        <button className="rounded-lg px-5 py-2 bg-white text-black" onClick={handleLogout}>
-          Sair
-        </button>
-      </nav>
+        <h1>Home</h1>
     </div>
   );
-};
+}
 
 export default home;

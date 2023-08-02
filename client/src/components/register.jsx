@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Login() {
+
+function Register() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -10,12 +12,9 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/login", { email, password })
+      .post("http://localhost:8080/api/register", { name, email, password })
       .then((res) => {
-        if(res.data === "Login efetuado com sucesso!"){
-          console.log(res.data);
-          window.location.href = "/";
-        }
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -25,9 +24,18 @@ function Login() {
   return (
     <div>
       <div>
-        <h2>Login</h2>
+        <h2>Cadastro</h2>
         {/* mudar os campos depois, NÃO ESQUECER */}
         <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name">Nome:</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           <div>
             <label htmlFor="email">Email:</label>
             <input
@@ -47,17 +55,17 @@ function Login() {
             />
           </div>
           <div>
-            <button className="mb-6 p-2 bg-sky-600 rounded-lg text-white" type="submit">Entrar</button>
+            <button type="submit">Cadastrar</button>
           </div>
         </form>
         <br />
         <div>
-          <p className="mb-2">Não possui conta?</p>
+          <p className="mb-2">Já possui conta?</p>
           <Link
-            to="/register"
+            to="/login"
             className="mb-6 p-2 bg-sky-600 rounded-lg text-white"
           >
-            Cadastro
+            Login
           </Link>
         </div>
       </div>
@@ -65,4 +73,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
