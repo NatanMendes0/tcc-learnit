@@ -7,6 +7,8 @@ import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
 import CreatePost from "./components/createPost";
+import Post from "./components/post";
+import EditPost from "./components/editPost";
 
 export const userContext = createContext();
 
@@ -37,6 +39,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/create" element={<CreatePost />} />
+          <Route path="/post/:id" element={<Post />} />
+          <Route path="/editPost/:id" element={<EditPost />} />
         </Routes>
       </BrowserRouter>
     </userContext.Provider>

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import { userContext } from "../App";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [file, setFile] = useState("");  
+  const [file, setFile] = useState("");
+  const user = useContext(userContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,10 +14,13 @@ function CreatePost() {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("file", file);
+    formData.append("name", user.name);
+    formData.append("email", user.email);
+
     axios
-      .post("http://localhost:8080/api/createPost", formData )
+      .post("http://localhost:8080/api/createPost", formData)
       .then((res) => {
-        if(res.data === "Post criado com sucesso!"){
+        if (res.data === "Post criado com sucesso!") {
           console.log(res.data);
           window.location.href = "/";
         }
@@ -23,7 +28,7 @@ function CreatePost() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   return (
     <div>

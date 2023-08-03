@@ -4,7 +4,7 @@ import { userContext } from "../App";
 import axios from "axios";
 
 function Navbar() {
-  const user = useContext(userContext);
+  const user = useContext(userContext); //informações do usuário
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -70,6 +70,7 @@ function Navbar() {
             >
               Register
             </Link>
+            {/* parei no minuto 1:17:23 */}
           </div>
         )}
       </div>

@@ -25,11 +25,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-
-// Routes
-// app.use("/api/users", userRoutes);
-// app.use("/api/auth", authRoutes);
-// app.use("/api/forum", forumRoutes);
+app.use(express.static("public"));
 
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
@@ -89,10 +85,10 @@ app.post("/api/login", (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images')
+    cb(null, 'Public/Images')
   },
   filename: (req, file, cb) => {
-    cb(null, file.filename + '_' + Date.now() + path.extname(file.originalname))
+    cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname))
   },
 });
 
@@ -103,8 +99,16 @@ app.post("/api/createPost", verifyUser, upload.single('file'), (req, res) => {
     title: req.body.title,
     description: req.body.description,
     file: req.file.filename,
+    email: req.body.email,
+    name: req.body.name,
   })
     .then(result => res.json("Post criado com sucesso!"))
+    .catch(err => res.json(err));
+});
+
+app.get("/api/getPosts", (req, res) => {
+  PostModel.find()
+    .then(posts => res.json(posts))
     .catch(err => res.json(err));
 });
 
@@ -113,7 +117,26 @@ app.get('/api/logout', (req, res) => {
     return res.json("Success")
 })
 
-// parei no minuto 53:00 do video
+app.get("/api/getPost/:id", (req, res) => {
+  PostModel.findById(req.params.id)
+    .then(post => res.json(post))
+    .catch(err => res.json(err));
+});    
+
+app.put("/api/editPost/:id", verifyUser, (req, res) => {
+  PostModel.findByIdAndUpdate({_id: req.params.id}, {
+    title: req.body.title,
+    description: req.body.description,
+  })
+    .then(result => res.json("Post editado com sucesso!"))
+    .catch(err => res.json(err));
+});
+
+app.delete("/api/deletePost/:id", verifyUser, (req, res) => {
+  PostModel.findByIdAndDelete(req.params.id)
+    .then(result => res.json("Post deletado com sucesso!"))
+    .catch(err => res.json(err));
+});
 
 const port = process.env.PORT || 8080;
 
