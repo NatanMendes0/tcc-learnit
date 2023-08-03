@@ -21,6 +21,7 @@ function Home() {
           <div className="bg-sky-200">
             <img src={`http://localhost:8080/Images/${post.file}`} alt="post" />
             <div>
+              <h2>{post.name}</h2>
               <h2>{post.title}</h2>
               <h2>{post.description}</h2>
             </div>
