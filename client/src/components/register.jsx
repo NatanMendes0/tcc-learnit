@@ -7,12 +7,13 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/register", { name, email, password })
+      .post("http://localhost:8080/api/register", { name, email, password, nickname })
       .then((res) => {
         navigate("/login");
       })
@@ -52,6 +53,15 @@ function Register() {
               name="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="nickname">Usuário:</label>
+            <input
+              type="text"
+              name="nickname"
+              id="nickname"
+              onChange={(e) => setNickname(e.target.value)}
             />
           </div>
           <div>

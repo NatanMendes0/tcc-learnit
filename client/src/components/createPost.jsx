@@ -11,11 +11,12 @@ function CreatePost() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("nickname", user.nickname);
+    formData.append("name", user.name);
+    formData.append("email", user.email);
     formData.append("title", title);
     formData.append("description", description);
     formData.append("file", file);
-    formData.append("name", user.name);
-    formData.append("email", user.email);
 
     axios
       .post("http://localhost:8080/api/createPost", formData)

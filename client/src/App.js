@@ -14,7 +14,8 @@ export const userContext = createContext();
 
 function App() {
   const [user, setUser] = useState({
-    username: null,
+    name: null,
+    nickname: null,
     email: null,
   });
 
@@ -22,10 +23,10 @@ function App() {
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/getUser")
-      .then((user) => {
-        setUser(user.data);
-        console.log(user.data);
-        
+      .then((response) => {
+        const { name, nickname, email } = response.data; // Obtém os atributos do usuário da resposta
+        setUser({ name, nickname, email }); // Atualiza o estado com os atributos do usuário
+        console.log(response.data);
       })
       .catch((err) => console.log(err));
   }, []);
