@@ -2,9 +2,9 @@ import React from 'react';
 
 function Footer() {
   return (
-    <div className="bg-primary text-white">
+    <footer className="footer">
         <h1 className="text-xl text-center py-4">© 2023 LearnIT, Inc. Todos os direitos reservados.</h1>
-    </div>
+    </footer>
   );
 }
 

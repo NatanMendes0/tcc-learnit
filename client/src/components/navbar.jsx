@@ -17,7 +17,7 @@ function Navbar() {
   };
 
   return (
-    <div className="flex items-center justify-between bg-bg_primary py-3 px-72 shadow-lg">
+    <nav className="navbar">
       <div className="flex items-center">
         <img className="w-14" src="logo.png" alt="logo learnit" />
         <div className="ml-2">
@@ -25,7 +25,7 @@ function Navbar() {
             className="text-xl font-semibold px-3 rounded-lg text-font_secondary"
             to="/"
           >
-            Home
+            Fórum
           </Link>
           <Link
             className="text-xl font-semibold px-3 rounded-lg ml-2 text-font_secondary"
@@ -43,7 +43,7 @@ function Navbar() {
               type="button"
               onClick={handleLogout}
               value="Logout"
-              className="mx-1 px-3 py-2 -mr-6 bg-primary text-white rounded-lg"
+              className="btn-secondary"
             />
           </div>
         ) : (
@@ -63,7 +63,7 @@ function Navbar() {
           </div>
         )}
       </div>
-    </div>
+    </nav>
   );
 }
 

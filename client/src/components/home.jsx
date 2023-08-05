@@ -11,8 +11,8 @@ function Home() {
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('pt-BR', options);
   };
 
   useEffect(() => {
@@ -26,15 +26,15 @@ function Home() {
 
   return (
     <div>
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-14 lg:max-w-7xl lg:px-8">
-        <h2 className="text-6xl font-bold tracking-tight text-primary text-center">
+      <div className="flex-1 mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-14 lg:max-w-7xl lg:px-8">
+        <h2 className="title">
           Fórum
         </h2>
         <h2 className="text-4xl mt-7 font-bold tracking-tight text-font_primary text-center">
           Tenha suas dúvidas respondidas
         </h2>
         <div className="bg-font_secondary mt-2 h-0.5 rounded-xl" />
-        <h2 className="text-2xl mt-5 font-bold tracking-tight text-font_secondary text-center">
+        <h2 className="subtitle">
           Está com algum problema e não encontrou a solução nos materiais da
           plataforma? Acrescente-o no fórum e logo você terá sua resposta pela
           nossa equipe ou pelos membros da nossa comunidade!
@@ -42,7 +42,7 @@ function Home() {
         <div className="text-center mt-11 mx-96">
           {user.name ? (
             <Link
-              className="text-xl font-normal px-3 py-2 shadow-lg rounded-lg text-white bg-secondary"
+              className="btn"
               to="/create"
             >
               Insira sua dúvida!
