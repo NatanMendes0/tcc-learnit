@@ -9,6 +9,7 @@ import Register from "./components/register";
 import CreatePost from "./components/createPost";
 import Post from "./components/post";
 import EditPost from "./components/editPost";
+import Footer from "./components/footer";
 
 export const userContext = createContext();
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/post/:id" element={<Post />} />
           <Route path="/editPost/:id" element={<EditPost />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </userContext.Provider>
   );

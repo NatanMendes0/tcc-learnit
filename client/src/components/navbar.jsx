@@ -17,60 +17,49 @@ function Navbar() {
   };
 
   return (
-    <div className="flex justify-between bg-gray-100 py-5 px-10">
-      <div>
-        <h2 className="text-xl font-bold">Fórum</h2>
-      </div>
-      <div>
-        <Link
-          className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
-          to="/"
-        >
-          Home
-        </Link>
-        {user.name ? (
+    <div className="flex items-center justify-between bg-bg_primary py-3 px-72 shadow-lg">
+      <div className="flex items-center">
+        <img className="w-14" src="logo.png" alt="logo learnit" />
+        <div className="ml-2">
           <Link
-            className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
-            to="/create"
+            className="text-xl font-semibold px-3 rounded-lg text-font_secondary"
+            to="/"
           >
-            Create
+            Home
           </Link>
-        ) : (
-          <></>
-        )}
-        <Link
-          className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
-          to="/"
-        >
-          Contact
-        </Link>
+          <Link
+            className="text-xl font-semibold px-3 rounded-lg ml-2 text-font_secondary"
+            to="/"
+          >
+            Materiais
+          </Link>
+        </div>
       </div>
       <div>
         {user.name ? (
           <div>
-            <p className="inline-block px-5">{user.name}</p>
+            <p className="inline-block px-5 font-semibold text-font_secondary">{user.name}</p>
             <input
               type="button"
               onClick={handleLogout}
               value="Logout"
-              className="bg-red-600 rounded-lg mx-1 py-2 px-5 text-white"
+              className="mx-1 px-3 py-2 -mr-6 bg-primary text-white rounded-lg"
             />
           </div>
         ) : (
           <div>
             <Link
-              className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
+              className="text-xl font-semibold px-3 rounded-lg ml-2 text-font_secondary"
               to="/login"
             >
               Login
             </Link>
             <Link
-              className="px-5 bg-sky-600 rounded-lg mx-1 py-2 text-white"
+              className="text-xl font-semibold px-3 rounded-lg ml-2 mr- text-font_secondary"
               to="/register"
             >
               Register
             </Link>
-            {/* parei no minuto 1:17:23 */}
           </div>
         )}
       </div>
