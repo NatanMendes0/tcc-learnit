@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Homepage = () => {
@@ -14,8 +15,13 @@ const Homepage = () => {
           <button onClick={logout}>Logout</button>
         </>
       )}
+      <Link to="/login" className="ml-3 bg-red-300">Login</Link>
+      <Link to="/register" className="ml-3 bg-red-300">Cadastro</Link>
+      
     </div>
   );
 };
 
+// eu abro se eu quiser!
+// eita lapada seca
 export default Homepage;

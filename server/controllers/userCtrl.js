@@ -51,6 +51,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
         httpOnly: true,
         maxAge: 72 * 60 * 60 * 1000,
       })
+      console.log(res.cookie)
 
       res.json({
         _id: findUser?._id,
@@ -110,7 +111,6 @@ const handleLoggedIn = asyncHandler(async (req, res) => {
     secure: true,
     sameSite: 'none',
     maxAge: 72 * 60 * 60 * 1000,
-    domain: 'http://localhost:5000'
   })
 
   await new Promise((resolve) => setTimeout(resolve, 100));
@@ -120,7 +120,7 @@ const handleLoggedIn = asyncHandler(async (req, res) => {
     name: findUser?.name,
     email: findUser?.email,
     nickname: findUser?.nickname,
-    token: generateToken(findUser?._id),
+    token: refreshToken,
   })
 })
 

@@ -20,7 +20,7 @@ const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const app = express();
 
 /* CORS */
-const whitelist = ["http://localhost:3000"];
+const whitelist = "http://127.0.0.1:3000";
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -34,7 +34,7 @@ const corsOptions = {
       );
     }
   },
-  withCredentials: true,
+  credentials: true
 };
 
 app.use(cors(corsOptions));
