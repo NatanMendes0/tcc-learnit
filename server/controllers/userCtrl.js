@@ -36,7 +36,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
       throw new Error('Não foi possível fazer login, o usuário está bloqueado.')
     }
     if (await findUser.isPasswordMatched(password)) {
-      const refreshToken = await generateRefreshToken(findUser?.id)
+      const refreshToken = await generateRefreshToken(findUser.id)
       const updateUser = await User.findByIdAndUpdate(
         findUser.id,
         {
@@ -79,6 +79,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   }
 })
 
+// Check if user is logged in
 const handleLoggedIn = asyncHandler(async (req, res) => {
   const cookie = req.cookies
   console.log(cookie)
@@ -99,11 +100,6 @@ const handleLoggedIn = asyncHandler(async (req, res) => {
     return res.sendStatus(204)
   }
 
-  const findCart = await Cart.findOne(findUser.cart).populate({
-    path: 'products',
-    populate: { path: 'product' },
-  })
-
   refreshToken = await generateRefreshToken(findUser.id)
 
   findUser.refreshToken = refreshToken
@@ -114,7 +110,7 @@ const handleLoggedIn = asyncHandler(async (req, res) => {
     secure: true,
     sameSite: 'none',
     maxAge: 72 * 60 * 60 * 1000,
-    domain: 'http://localhost:5173'
+    domain: 'http://localhost:5000'
   })
 
   await new Promise((resolve) => setTimeout(resolve, 100));

@@ -1,52 +1,51 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
-import Navbar from "./components/navbar";
-import Home from "./components/home";
-import Login from "./components/login";
-import Register from "./components/register";
-import CreatePost from "./components/createPost";
-import Post from "./components/post";
-import EditPost from "./components/editPost";
-import Footer from "./components/footer";
+import api from "./api";
+
+/* Pages */
+import Register from "./Pages/Auth/Register";
+import Login from "./Pages/Auth/Login";
+
+import Homepage from "./Pages/Homepage";
 
 export const userContext = createContext();
 
 function App() {
-  const [user, setUser] = useState({
-    name: null,
-    nickname: null,
-    email: null,
-  });
+  const [user, setUser] = useState({});
 
-  axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/getUser")
-      .then((response) => {
-        const { name, nickname, email } = response.data; // Obtém os atributos do usuário da resposta
-        setUser({ name, nickname, email }); // Atualiza o estado com os atributos do usuário
-        console.log(response.data);
+    api
+      .get("/user/relogin")
+      .then((res) => {
+        res?.data && setUser(res.data);
+        console.log(res, res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((_) => {});
   }, []);
 
+  const PrivateRoute = ({ children }) => {
+    const { isLoggedIn } = useAuth()
+    const location = useLocation()
+
+    return isLoggedIn ? (
+      children
+    ) : (
+      <Navigate to='/login' replace state={{ from: location }} />
+    )
+  }
+
   return (
-    <userContext.Provider value={user}>
+    <AuthProvider user={user} setUser={setUser}>
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/create" element={<CreatePost />} />
-          <Route path="/post/:id" element={<Post />} />
-          <Route path="/editPost/:id" element={<EditPost />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
-    </userContext.Provider>
+    </AuthProvider>
   );
 }
 
