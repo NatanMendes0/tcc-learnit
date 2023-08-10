@@ -1,8 +1,9 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -28,16 +29,19 @@ const Login = () => {
       });
     } catch (error) {
       toast.error(error.message);
-    } finally {
     }
   };
 
   return (
     <div>
-      <h1>Login</h1>
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="email">Endereço de e-mail</label>
+          <label
+            htmlFor="email"
+            className="text-font_primary block text-sm font-medium"
+          >
+            Endereço de e-mail
+          </label>
           <div className="mt-1">
             <input
               id="email"
@@ -60,7 +64,7 @@ const Login = () => {
                   value: 50,
                   message: "Máximo de 50 caracteres",
                 },
-                // value: auth.user.email,
+                value: auth.user.email,
               })}
             />
             {errors.email && (
@@ -70,8 +74,14 @@ const Login = () => {
             )}
           </div>
         </div>
+
         <div>
-          <label htmlFor="password">Senha</label>
+          <label
+            htmlFor="password"
+            className="text-font_primary block text-sm font-medium"
+          >
+            Senha
+          </label>
           <div className="mt-1">
             <input
               id="password"
@@ -93,10 +103,16 @@ const Login = () => {
             )}
           </div>
         </div>
+
         <div>
-          <button type="submit"> Entrar</button>
+          <button type="submit">Entrar</button>
         </div>
       </form>
+
+      <div className="flex mt-2">
+        <p className="mr-1">Não tem uma conta? </p>
+        <Link to="/register">Cadastre-se</Link>
+      </div>
     </div>
   );
 };

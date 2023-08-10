@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 
 const Register = () => {
@@ -30,7 +30,7 @@ const Register = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-1">
           <input
             id="name"
@@ -58,6 +58,7 @@ const Register = () => {
             <span className="text-sm text-red-500">{errors.name.message}</span>
           )}
         </div>
+
         <div className="mt-1">
           <input
             id="nickname"
@@ -72,7 +73,7 @@ const Register = () => {
               },
               minLength: {
                 value: 3,
-                message: "Digite um sobrenome com ao menos 3 caracteres",
+                message: "Digite um nickname com ao menos 3 caracteres",
               },
               maxLength: {
                 value: 30,
@@ -86,6 +87,7 @@ const Register = () => {
             </span>
           )}
         </div>
+
         <div className="mt-1">
           <input
             id="email"
@@ -110,6 +112,7 @@ const Register = () => {
             <span className="text-sm text-red-500">{errors.email.message}</span>
           )}
         </div>
+
         <div className="mt-1">
           <input
             id="password"
@@ -134,8 +137,14 @@ const Register = () => {
             </span>
           )}
         </div>
+
         <button type="submit">Registrar-se</button>
       </form>
+
+      <div className="flex mt-2">
+        <p className="mr-1">Não tem uma conta? </p>
+        <Link to="/register">Cadastre-se</Link>
+      </div>
     </div>
   );
 };

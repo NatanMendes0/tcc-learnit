@@ -1,16 +1,14 @@
-import { createContext, useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import React, { useState, useEffect } from "react";
+import { AuthProvider } from "./context/AuthContext";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import api from "./api";
 
 /* Pages */
+import Homepage from "./Pages/Homepage";
 import Register from "./Pages/Auth/Register";
 import Login from "./Pages/Auth/Login";
-
-import Homepage from "./Pages/Homepage";
-
-export const userContext = createContext();
 
 function App() {
   const [user, setUser] = useState({});
@@ -25,26 +23,19 @@ function App() {
       .catch((_) => {});
   }, []);
 
-  const PrivateRoute = ({ children }) => {
-    const { isLoggedIn } = useAuth()
-    const location = useLocation()
-
-    return isLoggedIn ? (
-      children
-    ) : (
-      <Navigate to='/login' replace state={{ from: location }} />
-    )
-  }
-
   return (
     <AuthProvider user={user} setUser={setUser}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
+      <div className="relative min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+
+            <Route path="/register" element={<Register />} />
+
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </AuthProvider>
   );
 }

@@ -20,7 +20,8 @@ const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const app = express();
 
 /* CORS */
-const whitelist = "http://127.0.0.1:3000";
+/*
+const whitelist = "http://localhost:3000";
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -34,15 +35,21 @@ const corsOptions = {
       );
     }
   },
-  credentials: true
+  withCredentials: true,
 };
+*/
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Origem permitida
+    credentials: true, // Permite credenciais (cookies, autenticação etc.)
+  })
+);
+app.use(cookieParser());
 
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use(helmet());
 
