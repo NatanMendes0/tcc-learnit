@@ -68,9 +68,9 @@ const Register = () => {
             {...register("nickname", {
               required: "Campo obrigatório",
               validate: (value) => {
-                const regex = /^[^0-9]+$/;
-                return regex.test(value) || "Campo não pode conter números";
-              },
+                const regex = /^\S*$/; // no spaces
+                return regex.test(value) || "Campo não pode conter espaços";
+              },              
               minLength: {
                 value: 3,
                 message: "Digite um nickname com ao menos 3 caracteres",
