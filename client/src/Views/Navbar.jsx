@@ -7,6 +7,7 @@ const Navbar = () => {
     <div className="navbar">
       {!isLoggedIn ? (
         <>
+          <Link to="/">Página Inicial</Link>
           <Link to="/login">Login</Link>
           <Link to="/register">Register</Link>
         </>

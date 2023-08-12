@@ -7,7 +7,7 @@ const {
     editPost,
     deletePost,
     rating,
-} = require('../controllers/blogCtrl')
+} = require('../controllers/forumCtrl')
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware')
 
 const router = express.Router()

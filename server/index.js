@@ -13,7 +13,7 @@ dbConnect();
 // ROUTES
 
 const authRouter = require("./routes/authRouter");
-const blogRouter = require("./routes/blogRouter");
+const forumRouter = require("./routes/forumRouter");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
@@ -54,7 +54,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 
 app.use("/api/user", authRouter);
-app.use("/api/blog", blogRouter);
+app.use("/api/forum", forumRouter);
 
 app.use(notFound);
 app.use(errorHandler);
