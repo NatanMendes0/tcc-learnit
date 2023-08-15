@@ -83,105 +83,114 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
 
 // Check if user is logged in
 const handleLoggedIn = asyncHandler(async (req, res) => {
-  const cookie = req.cookies;
-  console.log(cookie);
-  let refreshToken = cookie.refreshToken;
+    const cookie = req.cookies;
+    console.log(cookie);
+    let refreshToken = cookie.refreshToken;
 
-  if (!refreshToken) {
-    return res.sendStatus(204);
+    if (!refreshToken) {
+      return res.sendStatus(204);
+    }
+
+    const findUser = await User.findOne({ refreshToken });
+
+    if (!findUser) {
+      res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: true,
+      });
+
+      return res.sendStatus(204);
+    }
+
+    refreshToken = await generateRefreshToken(findUser.id);
+
+    findUser.refreshToken = refreshToken;
+    await findUser.save();
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 72 * 60 * 60 * 1000,
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    res.json({
+      _id: findUser?._id,
+      name: findUser?.name,
+      email: findUser?.email,
+      nickname: findUser?.nickname,
+      token: refreshToken,
+    });
+});
+
+// handle refresh token
+const handleRefreshToken = asyncHandler(async (req, res) => {
+  try {
+    const cookie = req.cookies;
+    if (!cookie?.refreshToken)
+      throw new Error("Nenhuma atualização de token nos cookies");
+    const refreshToken = cookie.refreshToken;
+    const user = await User.findOne({ refreshToken });
+    if (!user) throw new Error("No refresh token present in db");
+    jwt.verify(refreshToken, process.env.JWT_SECRET, (err, decoded) => {
+      if (err || user.id !== decoded.id) {
+        throw new Error("There is something wrong with refresh token");
+      } else {
+        const accessToken = generateToken(user?.id);
+        res.json({ accessToken });
+      }
+    });
+  } catch (error) {
+    const errorMessage = error.message;
+    const errorResponse = {
+      error: true,
+      message: errorMessage,
+    };
+    res.status(500).json(errorResponse);
   }
+});
 
-  const findUser = await User.findOne({ refreshToken });
+// logout fuction
+const logout = asyncHandler(async (req, res) => {
+  try {
+    const cookie = req.cookies;
 
-  if (!findUser) {
+    if (!cookie?.refreshToken) {
+      throw new Error("Nenhuma atualização de token nos cookies");
+    }
+
+    const refreshToken = cookie.refreshToken;
+    const user = await User.findOne({ refreshToken });
+
+    if (!user) {
+      res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: true,
+      });
+      return res.sendStatus(204);
+    }
+
+    await User.findByIdAndUpdate(user._id, {
+      refreshToken: "",
+    });
+
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
     });
 
     return res.sendStatus(204);
-  }
-
-  refreshToken = await generateRefreshToken(findUser.id);
-
-  findUser.refreshToken = refreshToken;
-  await findUser.save();
-
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "http://localhost:3000",
-    maxAge: 72 * 60 * 60 * 1000,
-  });
-
-  await new Promise((resolve) => setTimeout(resolve, 100));
-
-  res.json({
-    _id: findUser?._id,
-    name: findUser?.name,
-    email: findUser?.email,
-    nickname: findUser?.nickname,
-    token: refreshToken,
-  });
-});
-
-// handle refresh token
-const handleRefreshToken = asyncHandler(async (req, res) => {
-  const cookie = req.cookies;
-  if (!cookie?.refreshToken)
-    throw new Error("Nenhuma atualização de token nos cookies");
-  const refreshToken = cookie.refreshToken;
-  const user = await User.findOne({ refreshToken });
-  if (!user) throw new Error("No refresh token present in db");
-  jwt.verify(refreshToken, process.env.JWT_SECRET, (err, decoded) => {
-    if (err || user.id !== decoded.id) {
-      throw new Error("There is something wrong with refresh token");
-    } else {
-      const accessToken = generateToken(user?.id);
-      res.json({ accessToken });
-    }
-  });
-});
-
-// logout fuction
-const logout = asyncHandler(async (req, res) => {
-  try {
-    const cookie = req.cookies
-  
-    if (!cookie?.refreshToken) {
-      throw new Error('Nenhuma atualização de token nos cookies')
-    }
-  
-    const refreshToken = cookie.refreshToken
-    const user = await User.findOne({ refreshToken })
-  
-    if (!user) {
-      res.clearCookie('refreshToken', {
-        httpOnly: true,
-        secure: true
-      })
-      return res.sendStatus(204)
-    }
-  
-    await User.findByIdAndUpdate(user._id, {
-      refreshToken: ''
-    })
-  
-    res.clearCookie('refreshToken', {
-      httpOnly: true,
-      secure: true
-    })
-  
-    return res.sendStatus(204)
   } catch (error) {
-    const errorMessage = error.message
+    const errorMessage = error.message;
     const errorResponse = {
       error: true,
-      message: errorMessage
-    }
-    res.status(500).json(errorResponse)
+      message: errorMessage,
+    };
+    res.status(500).json(errorResponse);
   }
-})
+});
 
 // update a user
 const updateUser = asyncHandler(async (req, res) => {

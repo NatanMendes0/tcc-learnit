@@ -12,13 +12,16 @@ const Create = () => {
     formState: { errors },
   } = useForm();
 
+  const postContext = usePost();
+
   const onSubmit = async (data) => {
     try {
-      usePost.register(data, () => {
+      postContext.register(data, () => {
         navigate("../", { replace: true });
       });
     } catch (error) {
       toast.error(error.message);
+      console.log(error);
     }
   };
 
@@ -44,8 +47,8 @@ const Create = () => {
               },
             })}
           />
-          {errors.name && (
-            <span className="text-sm text-red-500">{errors.name.message}</span>
+          {errors.title && (
+            <span className="text-sm text-red-500">{errors.title.message}</span>
           )}
         </div>
 
@@ -59,8 +62,8 @@ const Create = () => {
               required: "Campo obrigatório",
             })}
           />
-          {errors.name && (
-            <span className="text-sm text-red-500">{errors.name.message}</span>
+          {errors.description && (
+            <span className="text-sm text-red-500">{errors.description.message}</span>
           )}
         </div>
 
@@ -74,8 +77,8 @@ const Create = () => {
               required: "Campo obrigatório",
             })}
           />
-          {errors.name && (
-            <span className="text-sm text-red-500">{errors.name.message}</span>
+          {errors.file && (
+            <span className="text-sm text-red-500">{errors.file.message}</span>
           )}
         </div>
 

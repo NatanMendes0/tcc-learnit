@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { PostProvider } from "./context/PostContext";
 
 import {
   BrowserRouter,
@@ -47,6 +48,7 @@ function App() {
 
   return (
     <AuthProvider user={user} setUser={setUser}>
+      <PostProvider>
       <div className="relative min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary">
         <BrowserRouter>
           <Navbar />
@@ -71,6 +73,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
+      </PostProvider>
     </AuthProvider>
   );
 }
