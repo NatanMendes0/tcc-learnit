@@ -14,7 +14,10 @@ import api from "./api";
 
 /* Pages */
 import Homepage from "./Pages/Homepage";
+
+/* Views */
 import Navbar from "./Views/Navbar";
+import Footer from "./Views/Footer";
 
 import Forum from "./Pages/Forum/Homepage";
 import ForumCreate from "./Pages/Forum/Create";
@@ -30,6 +33,7 @@ function App() {
       .get("/user/relogin")
       .then((res) => {
         res?.data && setUser(res.data);
+
         console.log(res, res.data);
       })
       .catch((_) => {});
@@ -49,7 +53,7 @@ function App() {
   return (
     <AuthProvider user={user} setUser={setUser}>
       <PostProvider>
-      <div className="relative min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary">
+      <div className="relative min-h-full w-full overflow-x-hidden bg-bg_primary text-font_secondary ">
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -71,6 +75,7 @@ function App() {
             />
             
           </Routes>
+          <Footer />
         </BrowserRouter>
       </div>
       </PostProvider>
