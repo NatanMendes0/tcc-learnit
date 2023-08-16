@@ -33,9 +33,9 @@ export default function Login() {
   };
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className=" mt-auto justify-center sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="text-center text-3xl font-bold leading-7 tracking-tight text-gray-900">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
             Entre na sua conta!
           </h2>
         </div>
@@ -119,7 +119,8 @@ export default function Login() {
 
               <div className="flex items-center justify-center">
                 <div className="text-sm leading-6">
-                  <Link to="/forgot-password"
+                  <Link
+                    to="/forgot-password"
                     className="font-semibold text-lg text-sky-600 hover:text-sky-700 action:text-sky-800"
                   >
                     Esqueceu a senha?
@@ -140,15 +141,17 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Não possui cadastro ainda?{" "}
-            <Link to="/register"
+            <Link
+              to="/register"
               className="font-semibold leading-6 text-sky-600 hover:text-sky-500"
             >
               Faça seu cadastro aqui!
             </Link>
           </p>
           <p className="mt-5 text-center text-sm text-gray-500">
-            <Link to="/educator"
-              className="font-semibold text-lg leading-6 text-sky-600 hover:text-sky-500"
+            <Link
+              to="/educator"
+              className="font-semibold text-lg text-sky-600 hover:text-sky-500"
             >
               Quero ser um educador!
             </Link>

@@ -37,7 +37,9 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
         throw new Error('Usuário não encontrado')
       }
     } catch (error) {
-      throw new Error('Token expirado / Usuário não autorizado. Faça login novamente.')
+      // throw new Error('Token expirado / Usuário não autorizado. Faça login novamente.')
+      throw new Error(error)
+      console.log(process.env.JWT_SECRET)
     }
   } else {
     throw new Error('Não há token anexado ao cabeçalho')

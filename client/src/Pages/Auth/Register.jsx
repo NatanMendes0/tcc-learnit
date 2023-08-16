@@ -198,7 +198,7 @@ export default function Register() {
                   <input
                     id="name"
                     name="name"
-                    type="name"
+                    type="text"
                     autoComplete="name"
                     placeholder="ex: Maria Antonia"
                     required
@@ -280,7 +280,7 @@ export default function Register() {
                   <input
                     id="nickname"
                     name="nickname"
-                    type="nickname"
+                    type="text"
                     autoComplete="nickname"
                     placeholder="ex: pessoa_legal"
                     required

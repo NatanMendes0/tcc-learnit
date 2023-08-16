@@ -1,5 +1,21 @@
 @tailwind base;
 
+html {
+  scroll-behavior: smooth;
+}
+
+#quem-somos{
+    padding-top: 100px
+}
+
+#sobre-plataforma{
+    padding-top: 100px
+}
+
+#contato{
+    padding-top: 50px
+}
+
 .navbar{
     @apply flex px-44 py-3 items-center justify-between bg-bg_primary shadow-lg;
 }
@@ -33,7 +49,7 @@
 }
 
 .footer {
-  @apply bg-primary text-white text-center py-4 text-lg mt-1;
+  @apply bg-primary text-white text-center py-4 text-lg mt-auto;
 }
 
 @tailwind components;

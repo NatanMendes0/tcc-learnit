@@ -53,7 +53,7 @@ function App() {
   return (
     <AuthProvider user={user} setUser={setUser}>
       <PostProvider>
-      <div className="relative min-h-full w-full overflow-x-hidden bg-bg_primary text-font_secondary ">
+      <div className="relative flex flex-col min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary ">
         <BrowserRouter>
           <Navbar />
           <Routes>
