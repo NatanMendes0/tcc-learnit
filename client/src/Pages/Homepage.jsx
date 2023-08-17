@@ -210,7 +210,7 @@ export default function Homepage() {
         </div>
 
         {/* CTA section */}
-        <div className="mx-auto mt-16 max-w-7xl sm:mt-20 lg:mt-24 pb-16 pt-24 sm:pb-24 sm:pt-32 xl:pb-32" id="contato">
+        <div className="mx-auto mt-20 max-w-7xl sm:mt-20 lg:mt-48 pb-16 pt-24 sm:pb-24 sm:pt-32 xl:pb-32" id="contato">
           <div className="mx-auto mb-24 max-w-3xl lg:text-center">
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
               Conheça o responsável pelo projeto
