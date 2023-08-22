@@ -5,6 +5,7 @@ const asyncHandler = require('express-async-handler')
 const slugify = require('slugify')
 const multer = require('multer')
 const mongoose = require('mongoose')
+const path = require('path')
 const validateMongodbId = require('../utils/validateMongodbId')
 
 const createPost = asyncHandler(async (req, res, next) => {

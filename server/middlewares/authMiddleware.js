@@ -15,6 +15,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1]
+    res.status(200).json({ message: 'Token anexado ao cabeçalho', token })
   } else if (req.cookies && req.cookies.refreshToken) {
     const refreshToken = req.cookies.refreshToken
     const user = await User.findOne({ refreshToken })
@@ -39,7 +40,6 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     } catch (error) {
       // throw new Error('Token expirado / Usuário não autorizado. Faça login novamente.')
       throw new Error(error)
-      console.log(process.env.JWT_SECRET)
     }
   } else {
     throw new Error('Não há token anexado ao cabeçalho')

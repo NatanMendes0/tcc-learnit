@@ -26,7 +26,7 @@ import { useAuth } from "../context/AuthContext";
 
 import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MagnifyingGlassIcon, UserIcon } from "@heroicons/react/20/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
@@ -130,10 +130,17 @@ export default function Navbar() {
                     <Menu.Button className="relative rounded-sm flex bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <Bars3Icon
-                        className="w-11 h-9 rounded-lg bg-secondary text-white"
-                        aria-hidden="true"
-                      />
+                      {open ? (
+                        <XMarkIcon
+                          className="w-11 h-9 rounded-lg bg-secondary text-white"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <Bars3Icon
+                          className="w-11 h-9 rounded-lg bg-secondary text-white"
+                          aria-hidden="true"
+                        />
+                      )}
                     </Menu.Button>
                   </div>
                   <Transition
@@ -167,7 +174,7 @@ export default function Navbar() {
                                 onClick={logout}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  "block cursor-pointer px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Sair

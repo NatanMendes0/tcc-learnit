@@ -84,7 +84,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
 // Check if user is logged in
 const handleLoggedIn = asyncHandler(async (req, res) => {
     const cookie = req.cookies;
-    console.log(cookie);
+    
     let refreshToken = cookie.refreshToken;
 
     if (!refreshToken) {
@@ -105,6 +105,7 @@ const handleLoggedIn = asyncHandler(async (req, res) => {
     refreshToken = await generateRefreshToken(findUser.id);
 
     findUser.refreshToken = refreshToken;
+    console.log(findUser.refreshToken)
     await findUser.save();
 
     res.cookie("refreshToken", refreshToken, {
