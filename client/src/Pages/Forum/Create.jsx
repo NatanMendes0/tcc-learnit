@@ -16,9 +16,10 @@ const Create = () => {
 
   const onSubmit = async (data) => {
     try {
-      postContext.register(data, () => {
-        navigate("../", { replace: true });
-      });
+      console.log(data);
+      await postContext.register(data);
+      toast.success("Tópico criado com sucesso!");
+      navigate("../forum", { replace: true });
     } catch (error) {
       toast.error(error.message);
       console.log(error);
@@ -63,7 +64,9 @@ const Create = () => {
             })}
           />
           {errors.description && (
-            <span className="text-sm text-red-500">{errors.description.message}</span>
+            <span className="text-sm text-red-500">
+              {errors.description.message}
+            </span>
           )}
         </div>
 
@@ -89,8 +92,6 @@ const Create = () => {
 };
 
 export default Create;
-
-
 
 // import { Fragment, useState } from "react";
 // import { Listbox, Transition } from "@headlessui/react";

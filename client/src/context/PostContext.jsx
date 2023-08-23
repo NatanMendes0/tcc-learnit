@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 import api from "../api/index";
 
@@ -11,26 +11,38 @@ import "react-toastify/dist/ReactToastify.css";
 const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
+  
   const auth = useAuth();
+  
+  /* Estado local para armazenar o token */
+  const [token, setToken] = useState(""); 
+
+  /* Atualizar o token local sempre que o token do usuário for atualizado */
+  useEffect(() => {
+    if (auth.user.token) {
+      setToken(auth.user.token);
+    }
+  }, [auth.user.token]);
+  
 
   const [posts, setPosts] = useState([]);
 
-  const register = async (info, callback = () => {}) => {
-    return await api
-      .post("/forum/", info, {
+  const register = async (info) => {
+    try {
+      const response = await api.post("/forum/", info, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
-      })
-      .then((response) => {
-        setPosts(response.data);
-        toast.success("Tópico criado com sucesso!");
-        return callback();
-      }
-      )
-      .catch((err) => {
-        toast.error(err.response?.data?.message || 'Ocorreu um erro ao cadastrar o tópico')
-      })
+      });
+
+      setPosts(response.data);
+
+      return response.data;
+    } catch (err) {
+      throw new Error(
+        err.response?.data?.message || "Ocorreu um erro ao cadastrar o tópico"
+      );
+    }
   };
 
   const list = async () => {

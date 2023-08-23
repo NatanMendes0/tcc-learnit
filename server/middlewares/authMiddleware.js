@@ -1,60 +1,60 @@
-const jwt = require('jsonwebtoken')
-const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel')
+const jwt = require("jsonwebtoken");
+
+const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
-  })
-}
+    expiresIn: "30d",
+  });
+};
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
-  let token
+  let token = null;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    req.headers.authorization.startsWith("Bearer")
   ) {
-    token = req.headers.authorization.split(' ')[1]
-    res.status(200).json({ message: 'Token anexado ao cabeçalho', token })
+    token = req.headers.authorization.split(" ")[1];
+    console.log("token", token);
   } else if (req.cookies && req.cookies.refreshToken) {
-    const refreshToken = req.cookies.refreshToken
-    const user = await User.findOne({ refreshToken })
+    const refreshToken = req.cookies.refreshToken;
+    const user = await User.findOne({ refreshToken });
     if (user) {
-      token = generateToken(user.id)
-      res.cookie('token', token, {
+      token = generateToken(user._id);
+      res.cookie("token", token, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
-      })
+      });
     }
   }
 
   if (token) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      const user = await User.findById(decoded.id)
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.id);
+      // console.log(user);
       if (user) {
-        req.user = user
+        req.user = user;
+        next();
       } else {
-        throw new Error('Usuário não encontrado')
+        throw new Error("Usuário passou no teste de autenticação, mas não foi encontrado no banco de dados.");
       }
     } catch (error) {
       // throw new Error('Token expirado / Usuário não autorizado. Faça login novamente.')
-      throw new Error(error)
+      throw new Error(error);
     }
   } else {
-    throw new Error('Não há token anexado ao cabeçalho')
+    throw new Error("Não há token anexado ao cabeçalho");
   }
-
-  next()
-})
+});
 
 const isAdmin = asyncHandler(async (req, res, next) => {
-  if (req.user.role === 'admin') {
-    next()
+  if (req.user.role === "admin") {
+    next();
   } else {
-    throw new Error('Você não é administrador.')
+    throw new Error("Você não é administrador.");
   }
-})
+});
 
-
-module.exports = { authMiddleware, isAdmin }
+module.exports = { authMiddleware, isAdmin };
