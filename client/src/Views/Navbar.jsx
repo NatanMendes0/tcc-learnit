@@ -45,7 +45,7 @@ export default function Navbar() {
                   <img
                     className="h-10 w-auto"
                     src="./logo.png"
-                    alt="Your Company"
+                    alt="LearnIT logo"
                   />
                 </div>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">

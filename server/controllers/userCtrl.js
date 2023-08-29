@@ -52,13 +52,13 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
         httpOnly: true,
         maxAge: 72 * 60 * 60 * 1000,
       });
-      console.log(res.cookie);
 
       res.json({
         _id: findUser?._id,
         name: findUser?.name,
         email: findUser?.email,
         nickname: findUser?.nickname,
+        role: findUser?.role,
         token: generateToken(findUser?._id),
       });
     } else {
@@ -121,6 +121,7 @@ const handleLoggedIn = asyncHandler(async (req, res) => {
       _id: findUser?._id,
       name: findUser?.name,
       email: findUser?.email,
+      role: findUser?.role,
       nickname: findUser?.nickname,
       token: refreshToken,
     });

@@ -64,11 +64,10 @@ const validateMongodbId = require("../utils/validateMongodbId");
 // });
 
 const createPost = asyncHandler(async (req, res, next) => {
-
-  //TODO - arrumar inserção de imagem
+  
+  //TODO - arrumar inserção de imagem - não está sendo enviada a imagem pelo formulario
 
   console.log("req.body", req.body);
-
   const { title, description } = req.body;
   const { email } = req.user;
 
@@ -80,48 +79,52 @@ const createPost = asyncHandler(async (req, res, next) => {
       .json({ message: "Já existe um post com esse título" });
   }
 
-  const user = await User.findOne({ email });
+  try {
 
-  if (!user) {
-    return res.status(404).json({ message: "Usuário não encontrado" });
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, "Public/Images");
+      },
+      filename: (req, file, cb) => {
+        const fileName =
+          file.fieldname + "_" + Date.now() + path.extname(file.originalname);
+        cb(null, fileName);
+      },
+    });
+
+    const upload = multer({ storage: storage }).single("file");
+
+    upload(req, res, async (err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "Erro ao fazer o upload da imagem" });
+      }
+
+      const newPostData = {
+        user: user._id,
+        title,
+        description,
+        file: req.file ? req.file.filename : null,
+        filePath: req.file ? `/Images/${req.file.filename}` : null,
+      };
+
+      try {
+        const newPost = await Post.create(newPostData);
+        res.json({ message: "Post criado com sucesso!", post: newPost });
+      } catch (error) {
+        res.status(500).json({ message: "Erro ao criar o post", error });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao criar o post", error });
   }
-
-  const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "Public/Images");
-    },
-    filename: (req, file, cb) => {
-      const fileName =
-        file.fieldname + "_" + Date.now() + path.extname(file.originalname);
-      cb(null, fileName);
-    },
-  });
-
-  const upload = multer({ storage: storage }).single("file");
-
-  upload(req, res, async (err) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({ message: "Erro ao fazer o upload da imagem" });
-    }
-
-    const newPostData = {
-      user: user._id,
-      title,
-      description,
-      file: req.file ? req.file.filename : null, // Nome do arquivo no servidor
-      // Adicione um campo adicional para armazenar o caminho/nome do arquivo no banco de dados
-      filePath: req.file ? `/Images/${req.file.filename}` : null,
-    };
-
-    try {
-      const newPost = await Post.create(newPostData);
-      res.json({ message: "Post criado com sucesso!", post: newPost });
-    } catch (error) {
-      res.status(500).json({ message: "Erro ao criar o post", error });
-    }
-  });
 });
 
 const getPosts = asyncHandler(async (req, res) => {
