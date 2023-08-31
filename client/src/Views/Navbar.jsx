@@ -44,7 +44,7 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="h-10 w-auto"
-                    src="./logo.png"
+                    src="../../images/logo.png"
                     alt="LearnIT logo"
                   />
                 </div>

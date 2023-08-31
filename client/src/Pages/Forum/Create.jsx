@@ -48,7 +48,7 @@ export default function Create() {
                   message: "Digite um título com ao menos 3 caracteres",
                 },
                 maxLength: {
-                  value: 30,
+                  value: 700,
                   message: "Máximo de 30 caracteres",
                 },
               })}
@@ -122,7 +122,7 @@ export default function Create() {
                   placeholder="Imagem"
                   className="sr-only"
                   {...register("file", {
-                    required: "Campo obrigatório",
+                    required: false,
                   })}
                   onChange={(e) => setFileName(e.target.files[0]?.name || "")}
                 />

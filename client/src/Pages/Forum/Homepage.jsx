@@ -43,6 +43,15 @@ export default function Homepage() {
     }
   };
 
+  //TODO - função de editar o post
+  const handleEdit = async (id) => {
+    try {
+      await api.get(`/forum/edit-post/${id}`);
+    } catch (error) {
+      console.error("Error editing post:", error);
+    }
+  };
+
   return (
     <>
       <div className="relative isolate py-20 sm:py-38 lg:pb-40">
@@ -156,7 +165,7 @@ export default function Homepage() {
                   {user && user.role === "admin" && (
                     <div className="text-center cursor-pointer bg-primary p-2 hover:bg-secondary mr-[380%] rounded-lg my-2">
                       <button
-                        onClick={() => handleDelete(post._id)}
+                        onClick={() => handleEdit(post._id)}
                         className="text-white"
                       >
                         <svg
@@ -178,7 +187,7 @@ export default function Homepage() {
                   )}
                 </div>
 
-                <Link to={`/forum/post/${post._id}`}>
+                <Link to={post._id}>
                   <div className="relative w-full">
                     <img
                       src={post.file || "https://via.placeholder.com/1920x1080"}

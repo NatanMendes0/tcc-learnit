@@ -64,7 +64,6 @@ const validateMongodbId = require("../utils/validateMongodbId");
 // });
 
 const createPost = asyncHandler(async (req, res, next) => {
-  
   //TODO - arrumar inserção de imagem - não está sendo enviada a imagem pelo formulario
 
   console.log("req.body", req.body);
@@ -80,7 +79,6 @@ const createPost = asyncHandler(async (req, res, next) => {
   }
 
   try {
-
     const user = await User.findOne({ email });
 
     if (!user) {
