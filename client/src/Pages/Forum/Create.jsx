@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { usePost } from "../../context/PostContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Create() {
   const navigate = useNavigate();
