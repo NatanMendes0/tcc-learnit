@@ -69,7 +69,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
 
                 <Route path="/forum" element={<Forum />} />
-
                 <Route path="/forum/:id" element={<Post />} />
 
                 <Route

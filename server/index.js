@@ -1,6 +1,7 @@
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -46,7 +47,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-
+app.use('/Public', express.static(path.join(__dirname, 'Public')));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

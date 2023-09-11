@@ -6,7 +6,10 @@ const slugify = require("slugify");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const path = require("path");
+const crypto = require("crypto");
 const validateMongodbId = require("../utils/validateMongodbId");
+const formidable = require("formidable");
+const fs = require("fs");
 
 // const createPost = asyncHandler(async (req, res, next) => {
 //   console.log("req.body", req.body);
@@ -44,7 +47,7 @@ const validateMongodbId = require("../utils/validateMongodbId");
 //     if (err) {
 //       return res
 //         .status(500)
-//         .json({ message: "Erro ao fazer o upload da imagem" });
+//         .json({ message: "Erro ao fazer o upload da file" });
 //     }
 
 //     const newPostData = {
@@ -63,10 +66,44 @@ const validateMongodbId = require("../utils/validateMongodbId");
 //   });
 // });
 
-const createPost = asyncHandler(async (req, res, next) => {
-  //TODO - arrumar inserção de imagem - não está sendo enviada a imagem pelo formulario
+const createPost = asyncHandler(async (req, res, next) => {  
+  var form = new formidable.IncomingForm();
+  // console.log(req)
+  form.parse(req, function (err, fields, files) {
+    if (err) throw err;
+    // console.log(files['file[]'][0])
 
-  console.log("req.body", req.body);
+    var oldpath = files['file[]'][0].filepath;
+    console.log(oldpath)
+        var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+        var ext = path.extname(files['file[]'][0].originalFilename);
+        var nomeimg = hash + ext;
+        var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
+
+        fs.rename(oldpath, newpath, function (err) {
+            if (err) throw err;
+        });
+
+        var title = fields.title[0];
+        var description = fields.description[0];
+        var user = req.user;
+        // console.log(fields)
+        const newPostData = {
+          user: user._id,
+          title,
+          description,
+          file: nomeimg ? nomeimg : null,
+          filePath: nomeimg ? `/Images/${nomeimg}` : null,
+        };
+
+        try {
+          const newPost = Post.create(newPostData);
+          res.json({ message: "Post criado com sucesso!", post: newPost });
+        } catch (error) {
+          res.status(500).json({ message: "Erro ao criar o post", error });
+        }
+  });
+  console.log('depois')
   const { title, description } = req.body;
   const { email } = req.user;
 
@@ -87,7 +124,8 @@ const createPost = asyncHandler(async (req, res, next) => {
 
     const storage = multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, "Public/Images");
+        console.log(file);
+        cb(null, "../Public/Images");
       },
       filename: (req, file, cb) => {
         const fileName =

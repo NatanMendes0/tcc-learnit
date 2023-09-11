@@ -19,8 +19,10 @@ export default function Create() {
   const onSubmit = async (data) => {
     try {
       await postContext.register(data);
+      console.log(data)
       toast.success("Tópico criado com sucesso!");
-      navigate("../forum", { replace: true });
+      navigate("../forum", { replace: false });
+      window.location.reload();
     } catch (error) {
       toast.error(error.message);
       console.log(error);
@@ -93,7 +95,7 @@ export default function Create() {
               <div className="flex">
                 <label
                   htmlFor="file"
-                  className="p-1 relative flex cursor-pointer bg-white rounded-md font-italic text-lg text-gray-400 hover:text-secondary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                  className="p-1 relative flex cursor-pointer rounded-md font-italic text-lg text-gray-400 hover:text-secondary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

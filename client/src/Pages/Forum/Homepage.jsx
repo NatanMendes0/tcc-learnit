@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-
 import api from "../../api";
 
 import { UserCircleIcon } from "@heroicons/react/20/solid";
@@ -140,10 +139,10 @@ export default function Homepage() {
               <div key={post._id}>
                 <div className="flex w-fit justify-between">
                   {user && user.role === "admin" && (
-                    <div className="text-center cursor-pointer bg-red-700 p-2 hover:bg-red-900 mr-[380%] rounded-lg my-2">
+                    <div className="text-center mr-[380%] my-2">
                       <button
                         onClick={() => handleDelete(post._id)}
-                        className="text-white"
+                        className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -163,10 +162,10 @@ export default function Homepage() {
                     </div>
                   )}
                   {user && user.role === "admin" && (
-                    <div className="text-center cursor-pointer bg-primary p-2 hover:bg-secondary mr-[380%] rounded-lg my-2">
+                    <div className="text-center mr-[380%] my-2">
                       <button
                         onClick={() => handleEdit(post._id)}
-                        className="text-white"
+                        className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -187,15 +186,19 @@ export default function Homepage() {
                   )}
                 </div>
 
-                <Link to={post._id}>
-                  <div className="relative w-full">
-                    <img
-                      src={post.file || "https://via.placeholder.com/1920x1080"}
-                      alt="imagem do post"
-                      className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
-                    />
-                    <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
-                  </div>
+                <Link to={`/get-post/${post._id}`}>
+                  {post.file ? (
+                    <div className="relative w-full">
+                      <img
+                        src={`http://localhost:5000/Public/Images/${post.file}`}
+                        alt="imagem do post"
+                        className="aspect-[16/9] w-full rounded-2xl bg-gray-100 sm:aspect-[2/1] lg:aspect-[3/2] object-cover"
+                      />
+                      <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                    </div>
+                  ) : (
+                    ''
+                  )}
                   <div className="max-w-xl">
                     <div className="mt-8 flex items-center gap-x-4 text-xs">
                       <time dateTime={post.updatedAt} className="text-gray-500">

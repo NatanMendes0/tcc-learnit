@@ -11,11 +11,11 @@ import "react-toastify/dist/ReactToastify.css";
 const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
-  
+
   const auth = useAuth();
-  
+
   /* Estado local para armazenar o token */
-  const [token, setToken] = useState(""); 
+  const [token, setToken] = useState("");
 
   /* Atualizar o token local sempre que o token do usuário for atualizado */
   useEffect(() => {
@@ -23,7 +23,7 @@ const PostProvider = ({ children }) => {
       setToken(auth.user.token);
     }
   }, [auth.user.token]);
-  
+
 
   const [posts, setPosts] = useState([]);
 
@@ -32,6 +32,7 @@ const PostProvider = ({ children }) => {
       const response = await api.post("/forum/", info, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type":"multipart/form-data"
         },
       });
 
@@ -47,9 +48,9 @@ const PostProvider = ({ children }) => {
 
   const list = async () => {
     try {
-      const response = await api.get("/posts", {
+      const response = await api.get("/forum/get-posts", {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${auth.token}`,          
         },
       });
 
