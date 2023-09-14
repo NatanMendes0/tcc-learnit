@@ -27,9 +27,10 @@ const PostProvider = ({ children }) => {
 
   const [posts, setPosts] = useState([]);
 
-  const register = async (info) => {
+  const register = async (data) => {
+
     try {
-      const response = await api.post("/forum/", info, {
+      const response = await api.post("/forum/", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
