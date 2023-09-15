@@ -11,11 +11,11 @@ import "react-toastify/dist/ReactToastify.css";
 const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
-  
+
   const auth = useAuth();
-  
+
   /* Estado local para armazenar o token */
-  const [token, setToken] = useState(""); 
+  const [token, setToken] = useState("");
 
   /* Atualizar o token local sempre que o token do usuário for atualizado */
   useEffect(() => {
@@ -23,21 +23,21 @@ const PostProvider = ({ children }) => {
       setToken(auth.user.token);
     }
   }, [auth.user.token]);
-  
+
 
   const [posts, setPosts] = useState([]);
 
   const register = async (data) => {
-
     try {
       const response = await api.post("/forum/", data, {
         headers: {
           Authorization: `Bearer ${token}`,
+
+          /* O header abaixo é necessário para o multer funcionar */
+          "Content-Type": "multipart/form-data",
         },
       });
-
       setPosts(response.data);
-
       return response.data;
     } catch (err) {
       throw new Error(

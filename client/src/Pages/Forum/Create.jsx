@@ -4,38 +4,17 @@ import { toast } from "react-toastify";
 import React, { useState } from "react";
 
 export default function Create() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState("");
   const navigate = useNavigate();
 
   const postContext = usePost();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    file: null,
-  });
-
-  const handleChange = (e) => {
-    const { title, value } = e.target;
-    setFormData({
-      ...formData,
-      [title]: value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      file,
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { title, description, file } = formData;
-
-    if (!title || !description ) {
+    if (!title || !description) {
       toast.error("Preencha o campo títúlo e descrição!");
       return;
     }
@@ -69,8 +48,7 @@ export default function Create() {
               type="text"
               placeholder="Título"
               classtitle="block w-full border-0 pt-4 text-xl placeholder:text-gray-400 focus:ring-0"
-              value={formData.title}
-              onChange={handleChange}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <div classtitle="border-b-2 border-gray-200 rounded-md mx-2" />
             <label htmlFor="description" classtitle="sr-only">
@@ -82,8 +60,7 @@ export default function Create() {
               type="text"
               placeholder="Descrição"
               classtitle="block w-full resize-none border-0 pb-80 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
-              value={formData.description}
-              onChange={handleChange}
+              onChange={(e) => setDescription(e.target.value)}
             />
 
             <div aria-hidden="true">
@@ -104,7 +81,7 @@ export default function Create() {
                   type="file"
                   id="file"
                   title="file"
-                  onChange={handleFileChange}
+                  onChange={(e) => setFile(e.target.files[0])}
                 />
               </div>
               <div classtitle="flex-shrink-0">
