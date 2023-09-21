@@ -66,12 +66,13 @@ const fs = require("fs");
 //   });
 // });
 
-const createPost = asyncHandler(async (req, res, next) => {  
+const createPost = asyncHandler(async (req, res, next) => {
+  //TODO - arrumar inserção de file - não está sendo enviada a file pelo formulario
   var form = new formidable.IncomingForm();
-  // console.log(req)
+  console.log(req)
   form.parse(req, function (err, fields, files) {
     if (err) throw err;
-    // console.log(files['file[]'][0])
+    console.log(files['file[]'][0])
 
     var oldpath = files['file[]'][0].filepath;
     console.log(oldpath)
@@ -87,7 +88,7 @@ const createPost = asyncHandler(async (req, res, next) => {
         var title = fields.title[0];
         var description = fields.description[0];
         var user = req.user;
-        // console.log(fields)
+        console.log(fields)
         const newPostData = {
           user: user._id,
           title,
