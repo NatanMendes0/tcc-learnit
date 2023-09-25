@@ -22,6 +22,7 @@ import Footer from "./Views/Footer";
 
 import Forum from "./Pages/Forum/Homepage";
 import ForumCreate from "./Pages/Forum/Create";
+
 import Post from "./Pages/Forum/Post";
 
 import Register from "./Pages/Auth/Register";
@@ -37,8 +38,6 @@ function App() {
       .get("/user/relogin")
       .then((res) => {
         res?.data && setUser(res.data);
-
-        console.log(res, res.data);
       })
       .catch((_) => {});
   }, []);
@@ -69,7 +68,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
 
                 <Route path="/forum" element={<Forum />} />
-                <Route path="/forum/:id" element={<Post />} />
+ 
+                <Route path="/forum/get-post/:id" element={<Post />} />
 
                 <Route
                   path="/forum/create"

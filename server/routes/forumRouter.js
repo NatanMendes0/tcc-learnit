@@ -16,7 +16,7 @@ const router = express.Router()
 // router.post('/', authMiddleware, isAdmin, createPost) rota para criar post apenas para admins
 router.post('/', authMiddleware, createPost)
 router.get('/get-posts', getPosts)
-router.get('/get-post/:id', authMiddleware, getPost)
+router.get('/get-post/:id', getPost)
 router.put('/edit-post/:id', authMiddleware, isAdmin, editPost)
 router.delete('/delete-post/:id', authMiddleware, isAdmin, deletePost)
 router.put('/rating/:id', authMiddleware, rating)

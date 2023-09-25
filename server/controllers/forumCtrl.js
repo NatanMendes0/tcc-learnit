@@ -11,99 +11,41 @@ const validateMongodbId = require("../utils/validateMongodbId");
 const formidable = require("formidable");
 const fs = require("fs");
 
-// const createPost = asyncHandler(async (req, res, next) => {
-//   console.log("req.body", req.body);
-//   const { title, description } = req.body;
-//   const { email } = req.user;
-
-//   const checkPost = await Post.findOne({ title });
-
-//   if (checkPost) {
-//     return res
-//       .status(400)
-//       .json({ message: "Já existe um post com esse título" });
-//   }
-
-//   const user = await User.findOne({ email });
-
-//   if (!user) {
-//     return res.status(404).json({ message: "Usuário não encontrado" });
-//   }
-
-//   const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//       cb(null, "Public/Images");
-//     },
-//     filename: (req, file, cb) => {
-//       const fileName =
-//         file.fieldname + "_" + Date.now() + path.extname(file.originalname);
-//       cb(null, fileName);
-//     },
-//   });
-
-//   const upload = multer({ storage: storage }).single("file");
-
-//   upload(req, res, async (err) => {
-//     if (err) {
-//       return res
-//         .status(500)
-//         .json({ message: "Erro ao fazer o upload da file" });
-//     }
-
-//     const newPostData = {
-//       user: user._id,
-//       title,
-//       description,
-//       file: req.file ? req.file.filename : null,
-//     };
-
-//     try {
-//       const newPost = await Post.create(newPostData);
-//       res.json({ message: "Post criado com sucesso!", post: newPost });
-//     } catch (error) {
-//       res.status(500).json({ message: "Erro ao criar o post", error });
-//     }
-//   });
-// });
-
 const createPost = asyncHandler(async (req, res, next) => {
-  //TODO - arrumar inserção de file - não está sendo enviada a file pelo formulario
+  //TODO - reorganizar o código - resolver problema de cabeçalho
   var form = new formidable.IncomingForm();
-  console.log(req)
   form.parse(req, function (err, fields, files) {
     if (err) throw err;
-    console.log(files['file[]'][0])
 
     var oldpath = files['file[]'][0].filepath;
-    console.log(oldpath)
-        var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
-        var ext = path.extname(files['file[]'][0].originalFilename);
-        var nomeimg = hash + ext;
-        var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
+    var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+    var ext = path.extname(files['file[]'][0].originalFilename);
+    var nomeimg = hash + ext;
+    var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
 
-        fs.rename(oldpath, newpath, function (err) {
-            if (err) throw err;
-        });
+    fs.rename(oldpath, newpath, function (err) {
+      if (err) throw err;
+    });
 
-        var title = fields.title[0];
-        var description = fields.description[0];
-        var user = req.user;
-        console.log(fields)
-        const newPostData = {
-          user: user._id,
-          title,
-          description,
-          file: nomeimg ? nomeimg : null,
-          filePath: nomeimg ? `/Images/${nomeimg}` : null,
-        };
+    var title = fields.title[0];
+    var description = fields.description[0];
+    var user = req.user;
+    const newPostData = {
+      user: user._id,
+      title,
+      description,
+      file: nomeimg ? nomeimg : null,
+      filePath: nomeimg ? `/Images/${nomeimg}` : null,
+    };
 
-        try {
-          const newPost = Post.create(newPostData);
-          res.json({ message: "Post criado com sucesso!", post: newPost });
-        } catch (error) {
-          res.status(500).json({ message: "Erro ao criar o post", error });
-        }
+    try {
+      const newPost = Post.create(newPostData);
+      res.json({ message: "Post criado com sucesso!", post: newPost });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao criar o post", error });
+    }
   });
+  /*
   console.log('depois')
   const { title, description } = req.body;
   const { email } = req.user;
@@ -162,6 +104,7 @@ const createPost = asyncHandler(async (req, res, next) => {
   } catch (error) {
     res.status(500).json({ message: "Erro ao criar o post", error });
   }
+  */
 });
 
 const getPosts = asyncHandler(async (req, res) => {
@@ -175,12 +118,13 @@ const getPosts = asyncHandler(async (req, res) => {
 
 const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
-
+console.log('aqui')
   try {
     const post = await Post.findById(postId).populate("user");
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
+    console.log(post);
     res.json(post);
   } catch (error) {
     res.status(500).json({ message: "Erro ao buscar o post", error });

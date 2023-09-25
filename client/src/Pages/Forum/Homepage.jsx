@@ -186,7 +186,7 @@ export default function Homepage() {
                   )}
                 </div>
 
-                <Link to={`/get-post/${post._id}`}>
+                <Link to={`/forum/get-post/${post._id}`}>
                   {post.file ? (
                     <div className="relative w-full">
                       <img
