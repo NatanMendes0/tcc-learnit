@@ -79,6 +79,7 @@ const PostProvider = ({ children }) => {
       const response = await api.put(`/posts/${id}`, data, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
+          "Content-Type":"multipart/form-data"
         },
       });
 
@@ -87,7 +88,7 @@ const PostProvider = ({ children }) => {
       newPosts[index] = response.data;
       setPosts(newPosts);
 
-      toast.success("Tópico atualizado com sucesso!");
+      toast.success("Postagem atualizada com sucesso!");
       callback();
     } catch (error) {
       toast.error(error.response.data.message);
