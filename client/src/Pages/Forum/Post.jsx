@@ -6,12 +6,10 @@ import { toast } from 'react-toastify';
 function Post() {
     const { id } = useParams();
     const [post, setPost] = useState({});
-    const [user, setUser] = useState({});
 
     const getPost = async () => {
         try {
             const response = await api.get(`/forum/get-post/${id}`);
-            console.log("Post data: "+ response.data);
             return response.data;
 
             // setPost(response.data);
@@ -30,40 +28,34 @@ function Post() {
         }
         fetchPost();
     }, []);
-/*
-    const getUser = async () => {
-        try {
-            const response = await api.get(`/user/${post.user._id}`);
-            return response.data;
-        } catch (error) {
-            console.error("Error fetching user", error);
-            toast.error(error.response.data.message);
-            return [];
-        }
-    };
 
-    useEffect(() => {
-        async function fetchUser() {
-            const userData = await getUser();
-            setUser(userData);
-            console.log("User data: ", userData);
-        }
-        fetchUser();
-    }, []);
-*/
     return (
         <>
-            <div>
-                <h1>teste</h1>
-                <h1>{post.title}</h1>
-                <h1>{post.description}</h1>
-                <h1>{post.user ? (
-                    <>
-                        <h1>{post.user.name}</h1>
-                        <h1>{post.user.email}</h1>
-                    </>
-                ) : () => { return } }</h1>
-
+            <div className='relative isolate py-12 sm:py-38 lg:pb-20'>
+            <div className="mx-auto max-w-4xl bg-tertiary rounded-lg shadow-lg">
+                    <div className="px-4 py-5 sm:p-6">
+                        <h1 className='title'>{post.title}</h1>
+                        <h1 className='subtitle'>{post.description}</h1>
+                        <h1>{post.user ? (
+                            <>
+                                <h1>{post.user.name}</h1>
+                                <h1>@{post.user.nickname}</h1>
+                            </>
+                        ) : () => { return }}</h1>
+                        {post.file ? (
+                    <div className="relative w-full">
+                      <img
+                        src={`http://localhost:5000/Public/Images/${post.file}`}
+                        alt="imagem do post"
+                        className="w-[100%] rounded-2xl bg-gray-100 aspect-[16/9] sm:aspect-[2/1] lg:aspect-[16/9] object-hover"
+                      />
+                      <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                    </div>
+                </div>
             </div>
         </>
     );

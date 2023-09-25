@@ -161,7 +161,7 @@ export default function Homepage() {
                       </button>
                     </div>
                   )}
-                  {user && user.role === "admin" && (
+                  {user && user.name === post.user.name && (
                     <div className="text-center mr-[380%] my-2">
                       <button
                         onClick={() => handleEdit(post._id)}

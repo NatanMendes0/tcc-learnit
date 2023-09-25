@@ -118,13 +118,11 @@ const getPosts = asyncHandler(async (req, res) => {
 
 const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
-console.log('aqui')
   try {
     const post = await Post.findById(postId).populate("user");
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
-    console.log(post);
     res.json(post);
   } catch (error) {
     res.status(500).json({ message: "Erro ao buscar o post", error });
