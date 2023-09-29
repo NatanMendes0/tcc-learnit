@@ -1,50 +1,54 @@
 @tailwind base;
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
-#quem-somos{
+#quem-somos {
     padding-top: 150px
 }
 
-#sobre-plataforma{
+#sobre-plataforma {
     padding-top: 100px
 }
 
-#contato{
+#contato {
     padding-top: 20px
 }
 
-#forum{
+#forum {
     padding-top: 140px
 }
 
-.navbar{
+.modal-transition {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.navbar {
     @apply flex px-44 py-3 items-center justify-between bg-bg_primary shadow-lg;
 }
 
-.title{
+.title {
     @apply text-6xl font-bold tracking-tight text-primary text-center;
 }
 
 .subtitle {
-  @apply text-2xl mt-5 font-bold tracking-tight text-font_secondary text-center;
+    @apply text-2xl mt-5 font-bold tracking-tight text-font_secondary text-center;
 }
 
 .btn {
-  @apply text-xl font-normal px-3 py-2 shadow-lg rounded-lg text-white bg-secondary;
+    @apply text-xl font-normal px-3 py-2 shadow-lg rounded-lg text-white bg-secondary;
 }
 
-.btn-secondary{
+.btn-secondary {
     @apply mx-1 px-3 py-2 -mr-6 bg-primary text-white rounded-lg cursor-pointer;
 }
 
-.input{
+.input {
     @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
 }
 
-.login{
+.login {
     @apply flex-1 mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-14 lg:max-w-7xl lg:px-8 mt-12 -mb-1;
 }
 
@@ -53,7 +57,7 @@ html {
 }
 
 .footer {
-  @apply bg-primary text-white text-center py-4 text-lg mt-auto;
+    @apply bg-primary text-white text-center py-4 text-lg mt-auto;
 }
 
 @tailwind components;
@@ -62,9 +66,11 @@ html {
 ::-webkit-scrollbar {
     width: 7px;
 }
+
 ::-webkit-scrollbar-track {
     background-color: white;
 }
+
 ::-webkit-scrollbar-thumb {
     background-color: #0284C7;
 }

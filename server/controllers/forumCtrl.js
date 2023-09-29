@@ -2,17 +2,12 @@ const User = require("../models/userModel");
 const Post = require("../models/postModel");
 
 const asyncHandler = require("express-async-handler");
-const slugify = require("slugify");
-const multer = require("multer");
-const mongoose = require("mongoose");
 const path = require("path");
 const crypto = require("crypto");
-const validateMongodbId = require("../utils/validateMongodbId");
 const formidable = require("formidable");
 const fs = require("fs");
 
 const createPost = asyncHandler(async (req, res, next) => {
-  //TODO - reorganizar o código - resolver problema de cabeçalho
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
     if (err) throw err;
@@ -45,66 +40,6 @@ const createPost = asyncHandler(async (req, res, next) => {
       res.status(500).json({ message: "Erro ao criar o post", error });
     }
   });
-  /*
-  console.log('depois')
-  const { title, description } = req.body;
-  const { email } = req.user;
-
-  const checkPost = await Post.findOne({ title });
-
-  if (checkPost) {
-    return res
-      .status(400)
-      .json({ message: "Já existe um post com esse título" });
-  }
-
-  try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ message: "Usuário não encontrado" });
-    }
-
-    const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        console.log(file);
-        cb(null, "../Public/Images");
-      },
-      filename: (req, file, cb) => {
-        const fileName =
-          file.fieldname + "_" + Date.now() + path.extname(file.originalname);
-        cb(null, fileName);
-      },
-    });
-
-    const upload = multer({ storage: storage }).single("file");
-
-    upload(req, res, async (err) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Erro ao fazer o upload da imagem" });
-      }
-
-      const newPostData = {
-        user: user._id,
-        title,
-        description,
-        file: req.file ? req.file.filename : null,
-        filePath: req.file ? `/Images/${req.file.filename}` : null,
-      };
-
-      try {
-        const newPost = await Post.create(newPostData);
-        res.json({ message: "Post criado com sucesso!", post: newPost });
-      } catch (error) {
-        res.status(500).json({ message: "Erro ao criar o post", error });
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Erro ao criar o post", error });
-  }
-  */
 });
 
 const getPosts = asyncHandler(async (req, res) => {

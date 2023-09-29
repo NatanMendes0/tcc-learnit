@@ -142,48 +142,50 @@ export default function Homepage() {
         </div>
 
         {/* Feature section with grid */}
-        <div className="mx-auto max-w-7xl" id="sobre-plataforma">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold  text-primary">
-              Como é a plataforma?
-            </h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              Entenda nossos objetivos
-            </p>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Esta plataforma foi desenvolvida com o foco em introduzir o mundo
-              da computação para quem quiser ingressar na área, assim como
-              ajudar quem esteja enfrentando algum problema com sua máquina e
-              busque por uma solução rápida e prática.
-            </p>
-          </div>
+        <div id="sobre-plataforma">
+          <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-2xl lg:text-center">
+              <h2 className="text-base font-semibold  text-primary">
+                Como é a plataforma?
+              </h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                Entenda nossos objetivos
+              </p>
+              <p className="mt-6 text-lg leading-8 text-gray-600">
+                Esta plataforma foi desenvolvida com o foco em introduzir o mundo
+                da computação para quem quiser ingressar na área, assim como
+                ajudar quem esteja enfrentando algum problema com sua máquina e
+                busque por uma solução rápida e prática.
+              </p>
+            </div>
 
-          <div className="mx-auto mt-16 max-w-7xl sm:mt-20 lg:mt-24 lg:max-w-5xl">
-            <dl className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-              {/* todo: adicionar função que faz o border-b da navbar mudar */}
-              {features.map((feature) => (
-                <div key={feature.name} className="flex flex-col">
-                  <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                    <feature.icon
-                      className="h-5 w-5 flex-none text-primary"
-                      aria-hidden="true"
-                    />
-                    {feature.name}
-                  </dt>
-                  <dd className="mt-4 flex flex-auto flex-col text-base text-justify leading-7 text-gray-600">
-                    <p className="flex-auto">{feature.description}</p>
-                    <p className="mt-6">
-                      <Link
-                        to={feature.href}
-                        className="text-sm font-semibold leading-6 text-primary hover:text-secondary"
-                      >
-                        Acesse agora <span aria-hidden="true">→</span>
-                      </Link>
-                    </p>
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <div className="mx-auto mt-16 max-w-7xl sm:mt-20 lg:mt-24 lg:max-w-5xl">
+              <dl className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+                {/* todo: adicionar função que faz o border-b da navbar mudar */}
+                {features.map((feature) => (
+                  <div key={feature.name} className="flex flex-col">
+                    <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                      <feature.icon
+                        className="h-5 w-5 flex-none text-primary"
+                        aria-hidden="true"
+                      />
+                      {feature.name}
+                    </dt>
+                    <dd className="mt-4 flex flex-auto flex-col text-base text-justify leading-7 text-gray-600">
+                      <p className="flex-auto">{feature.description}</p>
+                      <p className="mt-6">
+                        <Link
+                          to={feature.href}
+                          className="text-sm font-semibold leading-6 text-primary hover:text-secondary"
+                        >
+                          Acesse agora <span aria-hidden="true">→</span>
+                        </Link>
+                      </p>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
         </div>
 

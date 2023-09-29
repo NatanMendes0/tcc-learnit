@@ -25,6 +25,7 @@ export default function Homepage() {
   useEffect(() => {
     async function fetchPosts() {
       const postsData = await getPosts();
+      postsData.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
       setPosts(postsData);
       console.log(postsData);
     }
