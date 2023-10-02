@@ -33,7 +33,6 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.id);
-      // console.log(user);
       if (user) {
         req.user = user;
         next();
@@ -41,8 +40,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
         throw new Error("Usuário passou no teste de autenticação, mas não foi encontrado no banco de dados.");
       }
     } catch (error) {
-      // throw new Error('Token expirado / Usuário não autorizado. Faça login novamente.')
-      throw new Error(error);
+      throw new Error('Token expirado / Usuário não autorizado. Faça login novamente.');
     }
   } else {
     throw new Error("Não há token anexado ao cabeçalho");

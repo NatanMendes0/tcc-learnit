@@ -24,6 +24,7 @@ import Forum from "./Pages/Forum/Homepage";
 import ForumCreate from "./Pages/Forum/Create";
 
 import Post from "./Pages/Forum/Post";
+import PostEdit from "./Pages/Forum/Edit";
 
 import Register from "./Pages/Auth/Register";
 import Login from "./Pages/Auth/Login";
@@ -39,7 +40,7 @@ function App() {
       .then((res) => {
         res?.data && setUser(res.data);
       })
-      .catch((_) => {});
+      .catch((_) => { });
   }, []);
 
   const PrivateRoute = ({ children }) => {
@@ -68,7 +69,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
 
                 <Route path="/forum" element={<Forum />} />
- 
+
                 <Route path="/forum/get-post/:id" element={<Post />} />
 
                 <Route
@@ -76,6 +77,15 @@ function App() {
                   element={
                     <PrivateRoute>
                       <ForumCreate />
+                    </PrivateRoute>
+                  }
+                />
+
+                <Route
+                  path="/forum/edit-post/:id"
+                  element={
+                    <PrivateRoute>
+                      <PostEdit />
                     </PrivateRoute>
                   }
                 />

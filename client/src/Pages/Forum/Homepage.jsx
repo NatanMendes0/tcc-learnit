@@ -25,8 +25,7 @@ export default function Homepage() {
   useEffect(() => {
     async function fetchPosts() {
       const postsData = await getPosts();
-      postsData.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-      setPosts(postsData);
+      setPosts(postsData.reverse());
       console.log(postsData);
     }
 
@@ -37,7 +36,7 @@ export default function Homepage() {
     try {
       await api.delete(`/forum/delete-post/${id}`);
       const postsData = await getPosts();
-      setPosts(postsData);
+      setPosts(postsData.reverse());
     } catch (error) {
       console.error("Error deleting post:", error);
     }
@@ -164,25 +163,26 @@ export default function Homepage() {
                   )}
                   {user && user.name === post.user.name && (
                     <div className="text-center mr-[380%] my-2">
-                      <button
-                        onClick={() => handleEdit(post._id)}
-                        className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
+                      <Link to={`/forum/edit-post/${post._id}`}>
+                        <button
+                          className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                          />
-                        </svg>
-                      </button>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                            />
+                          </svg>
+                        </button>
+                      </Link>
                     </div>
                   )}
                 </div>

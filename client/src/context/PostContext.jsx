@@ -76,7 +76,7 @@ const PostProvider = ({ children }) => {
 
   const update = async (id, data, callback) => {
     try {
-      const response = await api.put(`/posts/${id}`, data, {
+      const response = await api.put(`/forum/edit-post/${id}`, data, { //conferir rota
         headers: {
           Authorization: `Bearer ${auth.token}`,
           "Content-Type":"multipart/form-data"
