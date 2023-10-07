@@ -46,7 +46,7 @@ function Post() {
     return (
         //Todo - melhorar estilização e adicionar seção de comentários
         <>
-            <div className='relative isolate py-12 sm:py-38 lg:pb-20'>
+            <div className='mt-auto relative isolate py-12 sm:py-38 lg:pb-20'>
                 <div className="mx-auto max-w-4xl bg-tertiary rounded-lg shadow-lg">
                     <div>
                         <div className='bg-primary p-5 rounded-t-lg'>
@@ -97,7 +97,7 @@ function Post() {
                                     <img
                                         src={`http://localhost:5000/Public/Images/${post.file}`}
                                         alt="imagem do post"
-                                        className="w-[40%] rounded-2xl bg-gray-100 aspect-[16/9] sm:aspect-[2/1] lg:aspect-[16/9] object-contain"
+                                        className="w-[40%] rounded-2xl aspect-[16/9] sm:aspect-[2/1] lg:aspect-[16/9] object-contain"
                                     />
                                 </div>
                             ) : (
@@ -118,7 +118,7 @@ function Post() {
                                         <img
                                             src={modalImageUrl}
                                             alt="Imagem em tamanho completo"
-                                            className="max-h-screen rounded-lg max-w-screen-3xl mx-auto"
+                                            className="max-h-screen max-w-screen-xl rounded-lg max-w-screen-3xl mx-auto"
                                         />
                                     </div>
                                 </div>

@@ -1,9 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
@@ -35,7 +34,7 @@ export default function Navbar() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-gray-100 shadow">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -68,29 +67,6 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-                <div className="w-full max-w-lg lg:max-w-xs">
-                  <label htmlFor="search" className="sr-only">
-                    Pesquisar
-                  </label>
-                  <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                      <MagnifyingGlassIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <input
-                      id="search"
-                      name="search"
-                      className="block w-full rounded-md border-0 bg-gray-200 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
-                      placeholder="Pesquisar"
-                      type="search"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <div className="flex items-center lg:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500">
@@ -108,7 +84,7 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-1 flex-shrink-0">
                   <div>
-                    <Menu.Button className="relative rounded-sm flex bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                    <Menu.Button className="relative rounded-sm flex bg-white text-sm focus:outline-none">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       {open ? (
@@ -133,7 +109,7 @@ export default function Navbar() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute items-center right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute items-center right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg focus:outline-none">
                       {isLoggedIn ? (
                         <>
                           <Menu.Item>
@@ -208,21 +184,21 @@ export default function Navbar() {
                 href="#"
                 className="block border-l-4 border-sky-500 bg-sky-50 py-2 pl-3 pr-4 text-xl font-medium text-sky-700"
               >
-                Dashboard
+                Início
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
                 href="#"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-7xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
               >
-                Team
+                Forum
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
                 href="#"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-7xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
               >
-                Projects
+                Materiais
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"

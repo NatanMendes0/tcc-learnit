@@ -105,7 +105,7 @@ const handleLoggedIn = asyncHandler(async (req, res) => {
     refreshToken = await generateRefreshToken(findUser.id);
 
     findUser.refreshToken = refreshToken;
-    console.log(findUser.refreshToken)
+    console.log("Refresh Token do usuário logado: ", findUser.refreshToken)
     await findUser.save();
 
     res.cookie("refreshToken", refreshToken, {
