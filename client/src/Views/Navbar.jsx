@@ -1,4 +1,4 @@
-import {  useLocation } from "react-router-dom";
+import {  Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { Fragment, useState } from "react";
@@ -11,9 +11,9 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [current, setCurrent] = useState("/");
+  const [, setCurrent] = useState("/");
   const navigate = useNavigate();
-  const { isLoggedIn, user, logout } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
   const location = useLocation();
 
   const navigation = [
@@ -114,15 +114,14 @@ export default function Navbar() {
                         <>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link to="/account"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Conta
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
@@ -143,28 +142,28 @@ export default function Navbar() {
                         <>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="/login"
+                              <Link
+                                to="/login"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Login
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="/register"
+                              <Link
+                                to="/register"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Cadastro
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </>

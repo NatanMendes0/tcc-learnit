@@ -29,6 +29,8 @@ import PostEdit from "./Pages/Forum/Edit";
 import Register from "./Pages/Auth/Register";
 import Login from "./Pages/Auth/Login";
 
+import Educator from "./Pages/Educator/Homepage";
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -72,6 +74,8 @@ function App() {
 
                 <Route path="/forum/get-post/:id" element={<Post />} />
 
+                <Route path="/educator" element={<Educator />} />
+                
                 <Route
                   path="/forum/create"
                   element={

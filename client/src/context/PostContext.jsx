@@ -62,7 +62,7 @@ const PostProvider = ({ children }) => {
 
   const get = async (id) => {
     try {
-      const response = await api.get(`/posts/${id}`, {
+      const response = await api.get(`forum/get-post/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
         },
@@ -74,24 +74,24 @@ const PostProvider = ({ children }) => {
     }
   };
 
-  const update = async (id, data, callback) => {
+  const updatePost = async (id, data) => {
     try {
-      const response = await api.put(`/forum/edit-post/${id}`, data, { //conferir rota
+      const response = await api.put(`/forum/edit-post/${id}`, data, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
-          "Content-Type":"multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
       });
 
-      const index = posts.findIndex((post) => post.id === id);
-      const newPosts = [...posts];
-      newPosts[index] = response.data;
-      setPosts(newPosts);
+      const updatedPost = response.data;
+      const updatedPosts = posts.map((post) =>
+        post._id === id ? updatedPost : post
+      );
+      setPosts(updatedPosts);
 
       toast.success("Postagem atualizada com sucesso!");
-      callback();
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Erro ao atualizar a postagem");
     }
   };
 
@@ -119,8 +119,8 @@ const PostProvider = ({ children }) => {
         register,
         list,
         get,
-        update,
         remove,
+        updatePost,
       }}
     >
       {children}

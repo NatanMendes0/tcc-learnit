@@ -65,67 +65,27 @@ const getPost = asyncHandler(async (req, res) => {
 });
 
 const editPost = asyncHandler(async (req, res) => {
-  // const postId = req.params.id;
-  // const { title, description } = req.body;
+  const postId = req.params.id;
+  console.log(req.body);
+  const { title, description } = req.body;
 
-  // try {
-  //   const updatedPost = await Post.findOneAndUpdate(
-  //     { _id: postId },
-  //     { $set: { title, description } },
-  //     { new: true }
-  //   );
+  try {
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: postId },
+      { $set: { title, description } },
+      { new: true }
+    );
 
-  //   if (!updatedPost) {
-  //     return res.status(404).json({ message: "Post não encontrado" });
-  //   }
-
-  //   res.json({ message: "Post atualizado com sucesso!", post: updatedPost });
-  // } catch (error) {
-  //   res.status(500).json({ message: "Erro ao atualizar o post", error });
-  // }
-
-  var form = new formidable.IncomingForm();
-  form.parse(req, function (err, fields, files) {
-    if (err) throw err;
-
-    var oldpath = files['file[]'][0].filepath;
-    var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
-    var ext = path.extname(files['file[]'][0].originalFilename);
-    var nomeimg = hash + ext;
-    var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
-
-    fs.rename(oldpath, newpath, function (err) {
-      if (err) throw err;
-    });
-
-    var title = fields.title[0];
-    var description = fields.description[0];
-    var user = req.user;
-    const newPostData = {
-      user: user._id,
-      title,
-      description,
-      file: nomeimg ? nomeimg : null,
-      filePath: nomeimg ? `/Images/${nomeimg}` : null,
-    };
-
-    try {
-      const updatedPost = Post.findOneAndUpdate(
-        { _id: postId },
-        { $set: { title, description } },
-        { new: true }
-      );
-
-      if (!updatedPost) {
-        return res.status(404).json({ message: "Post não encontrado" });
-      }
-
-      res.json({ message: "Post atualizado com sucesso!", post: updatedPost });
-    } catch (error) {
-      res.status(500).json({ message: "Erro ao atualizar o post", error });
+    if (!updatedPost) {
+      return res.status(404).json({ message: "Post não encontrado" });
     }
-  });
+
+    res.json({ message: "Post atualizado com sucesso!", post: updatedPost });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao atualizar o post", error });
+  }
 });
+
 
 const deletePost = asyncHandler(async (req, res) => {
   const postId = req.params.id;

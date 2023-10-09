@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { format } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
 import { useParams } from 'react-router-dom';
-import api from '../../api/index';
 import { toast } from 'react-toastify';
+
+import ptBR from "date-fns/locale/pt-BR";
+import { format } from "date-fns";
+
 import { UserCircleIcon } from '@heroicons/react/20/solid';
+
+import api from '../../api/index';
 
 function Post() {
     const { id } = useParams();

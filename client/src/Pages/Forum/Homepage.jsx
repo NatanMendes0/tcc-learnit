@@ -43,13 +43,13 @@ export default function Homepage() {
   };
 
   //TODO - função de editar o post
-  const handleEdit = async (id) => {
-    try {
-      await api.get(`/forum/edit-post/${id}`);
-    } catch (error) {
-      console.error("Error editing post:", error);
-    }
-  };
+  // const handleEdit = async (id) => {
+  //   try {
+  //     await api.get(`/forum/edit-post/${id}`);      
+  //   } catch (error) {
+  //     console.error("Error editing post:", error);
+  //   }
+  // };
 
   return (
     <>

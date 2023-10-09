@@ -1,63 +1,55 @@
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { usePost } from "../../context/PostContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import React, { useState, useEffect } from "react";
 
-import api from "../../api/index";
-
-function Edit() {
+export default function Edit() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [post, setPost] = useState({});
   const [fileName, setFileName] = useState("");
-
-  const getPost = async () => {
-      try {
-          const response = await api.get(`/forum/get-post/${id}`);
-          return response.data;
-      } catch (error) {
-          console.error("Error fetching posts", error);
-          toast.error(error.response.data.message);
-          return [];
-      }
-  };
-
-  useEffect(() => {
-      async function fetchPost() {
-          const postData = await getPost();
-          setPost(postData);
-          console.log("Post data: ", postData);
-      }
-      fetchPost();
-  }, []);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const postContext = usePost();
 
+  useEffect(() => {
+    async function fetchPostData() {
+      try {
+        const post = await postContext.get(id);
+        setValue("title", post.title);
+        setValue("description", post.description);
+        // Assuming you have a way to get the file name from the post data.
+        setFileName(post.fileName || "");
+      } catch (error) {
+        toast.error(error.message);
+        navigate("../forum", { replace: false });
+      }
+    }
+
+    fetchPostData();
+  }, [id, navigate, postContext, setValue]);
+
   const onSubmit = async (data) => {
     try {
-      await postContext.update(data);
-      console.log(data)
+      await postContext.updatePost(id, data);
       toast.success("Tópico atualizado com sucesso!");
       navigate("../forum", { replace: false });
-      window.location.reload();
     } catch (error) {
       toast.error(error.message);
-      console.log(error);
     }
   };
 
   return (
-    <div>
+    <>
       <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
         <form className="shadow-lg relative" onSubmit={handleSubmit(onSubmit)}>
-          <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
+        <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
             <label htmlFor="title" className="sr-only">
               Título
             </label>
@@ -65,8 +57,7 @@ function Edit() {
               id="title"
               name="title"
               type="text"
-              placeholder={post.title}
-              defaultValue={post.title}
+              placeholder="Título"
               className="block w-full border-0 pt-4 text-xl placeholder:text-gray-400 focus:ring-0"
               {...register("title", {
                 required: "Campo obrigatório",
@@ -93,8 +84,7 @@ function Edit() {
               id="description"
               name="description"
               type="text"
-              placeholder={post.description}
-              defaultValue={post.description}
+              placeholder="Descrição"
               className="block w-full resize-none border-0 pb-80 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
               {...register("description", {
                 required: "Campo obrigatório",
@@ -147,12 +137,12 @@ function Edit() {
                   id="file"
                   name="file"
                   type="file"
-                  placeholder={post.file}
+                  placeholder="Imagem"
                   className="sr-only"
                   {...register("file", {
                     required: false,
                   })}
-                  onChange={(e) => setFileName(e.target.files[0]?.name || post.file)}
+                  onChange={(e) => setFileName(e.target.files[0]?.name || "")}
                 />
                 {errors.file && (
                   <span className="text-sm text-red-500">
@@ -172,8 +162,6 @@ function Edit() {
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 }
-
-export default Edit;
