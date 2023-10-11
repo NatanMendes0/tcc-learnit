@@ -50,7 +50,7 @@ function Post() {
         //Todo - melhorar estilização e adicionar seção de comentários
         <>
             <div className='mt-auto relative isolate py-12 sm:py-38 lg:pb-20'>
-                <div className="mx-auto max-w-4xl bg-tertiary rounded-lg shadow-lg">
+                <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-lg">
                     <div>
                         <div className='bg-primary p-5 rounded-t-lg'>
                             <h1 className='title text-4xl text-white text-left'>{post.title}</h1>
@@ -78,7 +78,7 @@ function Post() {
                                             </div>
                                         </div>
                                         <div className="px-5 py-5">
-                                            <p className="text-gray-600 font-semibold text-lg">{post.description}</p>
+                                            <p className="text-gray-600 font-semibold text-xl">{post.description}</p>
                                         </div>
                                     </>
                                 ) : () => { return }}
@@ -93,8 +93,8 @@ function Post() {
                                     <div className='text-center text-gray-400 text-md'>
                                         Clique para <br /> aumentar a imagem
                                     </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mx-3 w-6 h-6 text-gray-400">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mx-3 w-6 h-6 text-gray-400">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                                     </svg>
 
                                     <img
@@ -114,8 +114,8 @@ function Post() {
                                             className="absolute top-4 right-4 bg-primary p-2 rounded-lg text-white"
                                             onClick={closeModal}
                                         >
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </button>
                                         <img
@@ -127,6 +127,9 @@ function Post() {
                                 </div>
                             )}
                         </div>
+                    </div>
+                    <div className='p-5 rounded-b-lg bg-red-600'>
+                        <h1 className='text-white text-2xl'>Inserir comentário [ficcional]</h1>
                     </div>
                 </div>
             </div >

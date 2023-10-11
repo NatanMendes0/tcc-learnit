@@ -24,6 +24,8 @@ html {
     transition: opacity 0.3s ease-in-out;
 }
 
+
+
 .navbar {
     @apply flex px-44 py-3 items-center justify-between bg-bg_primary shadow-lg;
 }

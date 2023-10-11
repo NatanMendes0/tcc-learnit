@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Educator() {
     return (
         <>
             <div className='mt-auto max-w-7xl mx-auto'>
-                <h1 className="title mb-5 text-font_secondary">
+                <h1 className="title mb-7 text-font_secondary">
                     Entre em contato com nossa equipe
                 </h1>
                 <div className='bg-tertiary mx-auto rounded-xl shadow-lg max-w-2xl p-5'>
@@ -26,7 +27,11 @@ function Educator() {
             </div>
             <div className="flex mx-auto items-center justify-center text-lg gap-x-2 mt-6">
                 <h1>Gostaria de realizar seu login?</h1>
-                <a className='text-primary hover:text-secondary active:text-sky-900' href="/login">Entre na sua conta aqui!</a>
+                <Link to="/login">
+                    <p className='text-primary hover:text-secondary active:text-sky-900'>
+                        Entre na sua conta aqui!
+                    </p>
+                </Link>
             </div>
         </>
     );

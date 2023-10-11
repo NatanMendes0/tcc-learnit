@@ -143,7 +143,7 @@ export default function Homepage() {
 
         {/* Feature section with grid */}
         <div id="sobre-plataforma">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-7xl mt-14">
             <div className="mx-auto max-w-2xl lg:text-center">
               <h2 className="text-base font-semibold  text-primary">
                 Como é a plataforma?
@@ -161,7 +161,6 @@ export default function Homepage() {
 
             <div className="mx-auto mt-16 max-w-7xl sm:mt-20 lg:mt-24 lg:max-w-5xl">
               <dl className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-                {/* todo: adicionar função que faz o border-b da navbar mudar */}
                 {features.map((feature) => (
                   <div key={feature.name} className="flex flex-col">
                     <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
