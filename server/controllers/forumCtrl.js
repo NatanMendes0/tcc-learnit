@@ -1,4 +1,3 @@
-const User = require("../models/userModel");
 const Post = require("../models/postModel");
 
 const asyncHandler = require("express-async-handler");
@@ -12,32 +11,55 @@ const createPost = asyncHandler(async (req, res, next) => {
   form.parse(req, function (err, fields, files) {
     if (err) throw err;
 
-    var oldpath = files['file[]'][0].filepath;
-    var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
-    var ext = path.extname(files['file[]'][0].originalFilename);
-    var nomeimg = hash + ext;
-    var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
+    if (files['file[]'] && Array.isArray(files['file[]']) && files['file[]'].length > 0) {
+      // One file was uploaded
+      var oldpath = files['file[]'][0].filepath;
+      var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+      var ext = path.extname(files['file[]'][0].originalFilename);
+      var nomeimg = hash + ext;
+      var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
 
-    fs.rename(oldpath, newpath, function (err) {
-      if (err) throw err;
-    });
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+      });
 
-    var title = fields.title[0];
-    var description = fields.description[0];
-    var user = req.user;
-    const newPostData = {
-      user: user._id,
-      title,
-      description,
-      file: nomeimg ? nomeimg : null,
-      filePath: nomeimg ? `/Images/${nomeimg}` : null,
-    };
+      var title = fields.title[0];
+      var description = fields.description[0];
+      var user = req.user;
+      const newPostData = {
+        user: user._id,
+        title,
+        description,
+        file: nomeimg ? nomeimg : null,
+        filePath: nomeimg ? `/Images/${nomeimg}` : null,
+      };
 
-    try {
-      const newPost = Post.create(newPostData);
-      res.json({ message: "Post criado com sucesso!", post: newPost });
-    } catch (error) {
-      res.status(500).json({ message: "Erro ao criar o post", error });
+      try {
+        const newPost = Post.create(newPostData);
+        res.json({ message: "Post criado com sucesso!", post: newPost });
+      } catch (error) {
+        res.status(500).json({ message: "Erro ao criar o post", error });
+      }
+    }
+    else {
+      // No files were uploaded
+      var title = fields.title[0];
+      var description = fields.description[0];
+      var user = req.user;
+      const newPostData = {
+        user: user._id,
+        title,
+        description,
+        file: nomeimg ? nomeimg : null,
+        filePath: nomeimg ? `/Images/${nomeimg}` : null,
+      };
+
+      try {
+        const newPost = Post.create(newPostData);
+        res.json({ message: "Post criado com sucesso!", post: newPost });
+      } catch (error) {
+        res.status(500).json({ message: "Erro ao criar o post", error });
+      }
     }
   });
 });
@@ -66,7 +88,6 @@ const getPost = asyncHandler(async (req, res) => {
 
 const editPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
-  console.log(req.body);
   const { title, description } = req.body;
 
   try {

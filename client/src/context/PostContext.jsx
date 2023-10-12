@@ -60,6 +60,27 @@ const PostProvider = ({ children }) => {
     }
   };
 
+  const comment = async (id, data) => {
+    try{
+      const response = await api.put(`/forum/rating/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const updatedPost = response.data;
+      const updatedPosts = posts.map((post) =>
+        post._id === id ? updatedPost : post
+      );
+      setPosts(updatedPosts);
+
+      toast.success("Comentário adicionado com sucesso!");
+    } catch{
+      toast.error("Erro ao adicionar comentário");
+    }
+  };
+
   const get = async (id) => {
     try {
       const response = await api.get(`forum/get-post/${id}`, {
@@ -116,6 +137,7 @@ const PostProvider = ({ children }) => {
     <PostContext.Provider
       value={{
         posts,
+        comment,
         register,
         list,
         get,

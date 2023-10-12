@@ -1,4 +1,4 @@
-import {  Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { Fragment, useState } from "react";
@@ -11,11 +11,10 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [, setCurrent] = useState("/");
+  const [current, setCurrent] = useState("/");
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const location = useLocation();
-
   const navigation = [
     { name: "Página Inicial", href: "/", current: location.pathname === "/" },
     { name: "Fórum", href: "/forum", current: location.pathname.startsWith("/forum") },
@@ -41,17 +40,19 @@ export default function Navbar() {
             <div className="flex h-16 justify-between">
               <div className="flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-10 w-auto"
-                    src="../../images/logo.png"
-                    alt="LearnIT logo"
-                  />
+                  <Link to="/">
+                    <img
+                      className="h-10 w-auto"
+                      src="../../images/logo.png"
+                      alt="LearnIT logo"
+                    />
+                  </Link>
                 </div>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {navigation.map((item) => (
-                    <a
+                    <Link 
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       onClick={onClick}
                       className={classNames(
                         item.current
@@ -62,7 +63,7 @@ export default function Navbar() {
                       aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>

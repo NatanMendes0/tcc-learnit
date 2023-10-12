@@ -12,9 +12,9 @@ const cors = require("cors");
 dbConnect();
 
 // ROUTES
-
 const authRouter = require("./routes/authRouter");
 const forumRouter = require("./routes/forumRouter");
+const materialRouter = require("./routes/materialRouter");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
@@ -56,6 +56,7 @@ app.use(helmet());
 
 app.use("/api/user", authRouter);
 app.use("/api/forum", forumRouter);
+app.use("/api/material", materialRouter);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -18,11 +18,6 @@ function Educator() {
                     <p className='font-semibold text-lg text-justify px-8 py-3'>
                         e nos informe sobre o seu interesse em compartilhar seus conhecimentos em manutenção de computadores. Estamos ansiosos para ouvir de você e discutir as possibilidades de colaboração. Venha fazer parte da nossa equipe de educadores e contribua para o ensino e aprendizado na área de tecnologia!
                     </p>
-                    <div className='text-center mt-5'>
-                        <button className='btn hover:bg-primary active:bg-sky-900'>
-                            <a href="mailto:equipeLearnit@gmail.com">Enviar email</a>
-                        </button>
-                    </div>
                 </div>
             </div>
             <div className="flex mx-auto items-center justify-center text-lg gap-x-2 mt-6">

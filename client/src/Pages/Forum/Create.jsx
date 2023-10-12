@@ -19,13 +19,10 @@ export default function Create() {
   const onSubmit = async (data) => {
     try {
       await postContext.register(data);
-      console.log(data)
-      toast.success("Tópico criado com sucesso!");
       navigate("../forum", { replace: false });
-      window.location.reload();
+      toast.success("Tópico criado com sucesso!");
     } catch (error) {
       toast.error(error.message);
-      console.log(error);
     }
   };
 

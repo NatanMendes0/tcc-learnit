@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { usePost } from '../../context/PostContext';
+
 import { toast } from 'react-toastify';
 
 import ptBR from "date-fns/locale/pt-BR";
@@ -14,6 +17,11 @@ function Post() {
     const [post, setPost] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
+
+    const postContext = usePost();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from || '/forum';
 
     const openModal = (imageUrl) => {
         setModalImageUrl(imageUrl);
@@ -41,13 +49,29 @@ function Post() {
         async function fetchPost() {
             const postData = await getPost();
             setPost(postData);
-            console.log("Post data: ", postData);
         }
         fetchPost();
     }, []);
 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm()
+
+    const onSubmit = async (data) => {
+        console.log(data) //comentário
+        try {
+            const response = await postContext.comment(id, data);
+            toast.success(response.message);
+            navigate(from);
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
+
     return (
-        //Todo - melhorar estilização e adicionar seção de comentários
+        //TODO - melhorar estilização e adicionar seção de comentários
         <>
             <div className='mt-auto relative isolate py-12 sm:py-38 lg:pb-20'>
                 <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-lg">
@@ -128,9 +152,64 @@ function Post() {
                             )}
                         </div>
                     </div>
-                    <div className='p-5 rounded-b-lg bg-red-600'>
-                        <h1 className='text-white text-2xl'>Inserir comentário [ficcional]</h1>
+                    <div className='p-5 rounded-b-lg bg-gray-400'>
+                        {/* aqui vai o form para inserção de comentário */}
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <label
+                                htmlFor='comment' className='sr-only'>
+                            </label>
+                            <div>
+                                <input
+                                    id='comment'
+                                    name='comment'
+                                    type='text'
+                                    autoComplete='comment'
+                                    {...register('comment', {
+                                        minLength: {
+                                            value: 3,
+                                            message: 'Mínimo de 3 caracteres',
+                                        },
+                                        maxLength: {
+                                            value: 300,
+                                            message: 'Máximo de 300 caracteres',
+                                        },
+                                        value: postContext.ratings, //talvez de erro
+                                    })}
+                                    className='block w-full appearance-none rounded-md border border-gray-300 bg-transparent px-3 py-2 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+                                />
+                                {errors.comment && (
+                                    <span className='text-sm text-red-500'>
+                                        {errors.comment.message}
+                                    </span>
+                                )}
+                            </div>
+                            <div>
+                                <button
+                                    type='submit'
+                                    className='text-white flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+                                    comentar
+                                </button>
+                            </div>
+                        </form>
                     </div>
+                </div>
+                <div className='p-5 mt-5 mx-auto max-w-6xl'>
+                    <h1 className="subtitle text-2xl">Comentários</h1>
+                    {post.ratings && post.ratings !== 0 ? (
+                        <div>
+                            <ul>
+                                {post.ratings.map((rating, index) => (
+                                    <li key={index}>
+                                        Comentário: {rating.comment}<br />
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <div>
+                            <p className='text-black'>Nenhum comentário adicionado ainda!</p>
+                        </div>
+                    )}
                 </div>
             </div >
         </>

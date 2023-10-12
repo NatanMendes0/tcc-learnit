@@ -12,8 +12,6 @@ const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware')
 
 const router = express.Router()
 
-
-// router.post('/', authMiddleware, isAdmin, createPost) rota para criar post apenas para admins
 router.post('/', authMiddleware, createPost)
 router.get('/get-posts', getPosts)
 router.get('/get-post/:id', getPost)
