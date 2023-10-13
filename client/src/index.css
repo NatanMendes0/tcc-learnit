@@ -20,11 +20,13 @@ html {
     padding-top: 140px
 }
 
+#materials {
+    padding-top: 140px
+}
+
 .modal-transition {
     transition: opacity 0.3s ease-in-out;
 }
-
-
 
 .navbar {
     @apply flex px-44 py-3 items-center justify-between bg-bg_primary shadow-lg;
@@ -39,7 +41,7 @@ html {
 }
 
 .btn {
-    @apply text-xl font-normal px-3 py-2 shadow-lg rounded-lg text-white bg-secondary;
+    @apply px-3 py-2 shadow-lg rounded-lg text-white bg-primary hover:bg-secondary active:bg-sky-900 text-sm font-semibold;
 }
 
 .btn-secondary {

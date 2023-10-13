@@ -20,8 +20,8 @@ export default function Navbar() {
     { name: "Fórum", href: "/forum", current: location.pathname.startsWith("/forum") },
     {
       name: "Materiais",
-      href: "/materiais",
-      current: location.pathname.startsWith("/materiais"),
+      href: "/materials",
+      current: location.pathname.startsWith("/materials"),
     },
   ];
 

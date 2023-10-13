@@ -105,7 +105,7 @@ export default function Homepage() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 to="/forum/create"
-                className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary"
+                className="btn"
               >
                 Comente no Fórum
               </Link>
@@ -131,7 +131,7 @@ export default function Homepage() {
             <div className="mt-10 items-center justify-center gap-x-6">
               <Link
                 to="/forum/create"
-                className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-secondary "
+                className="btn"
               >
                 Insira sua dúvida!
               </Link>
@@ -142,9 +142,9 @@ export default function Homepage() {
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {posts.map((post) => (
               <div key={post._id}>
-                <Link to={`/forum/get-post/${post._id}`}>
-                  {post.file ? (
-                    <>
+                {post.file ? (
+                  <>
+                    <Link to={`/forum/get-post/${post._id}`}>
                       <div className="shadow-md relative w-full aspect-[16/9]">
                         {post.file && (
                           <img
@@ -173,6 +173,7 @@ export default function Homepage() {
                           </div>
                         </div>
                       </div>
+                    </Link>
                       <div className="p-4">
                         <div className="flex items-center gap-x-2">
                           <div className="relative flex items-center gap-x-2">
@@ -234,10 +235,10 @@ export default function Homepage() {
                           </div>
                         </div>
                       </div>
-                    </>
-                  ) : (
-                    <>
-                      {/* alterar o tamanho do card para ficar menor sem a imagem */}
+                  </>
+                ) : (
+                  <>
+                    <Link to={`/forum/get-post/${post._id}`}>
                       <div className="relative w-full">
                         <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
                         <div className="p-4">
@@ -259,6 +260,7 @@ export default function Homepage() {
                           </div>
                         </div>
                       </div>
+                    </Link>
                       <div className="p-4">
                         <div className="flex -mb-2 items-center gap-x-2">
                           <div className="relative flex items-center gap-x-2">
@@ -320,10 +322,8 @@ export default function Homepage() {
                           </div>
                         </div>
                       </div>
-                    </>
-                  )}
-
-                </Link>
+                  </>
+                )}
               </div>
             ))}
           </div>

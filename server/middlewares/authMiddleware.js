@@ -48,9 +48,11 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
 
 const isAdmin = asyncHandler(async (req, res, next) => {
   if (req.user.role === "admin") {
-    next();
+    next(); 
+  } else if (req.post && req.post.user.toString() === req.user._id.toString()) {
+    next(); 
   } else {
-    throw new Error("Você não é administrador.");
+    res.status(403).json({ message: "Você não tem permissão para acessar esta rota." });
   }
 });
 

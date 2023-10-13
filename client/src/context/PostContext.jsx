@@ -14,10 +14,8 @@ const PostProvider = ({ children }) => {
 
   const auth = useAuth();
 
-  /* Estado local para armazenar o token */
   const [token, setToken] = useState("");
 
-  /* Atualizar o token local sempre que o token do usuário for atualizado */
   useEffect(() => {
     if (auth.user.token) {
       setToken(auth.user.token);

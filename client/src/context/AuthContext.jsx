@@ -9,12 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children, user, setUser }) => {
-  const login = async (info, callback = () => {}) => {
+  const login = async (info, callback = () => { }) => {
     return await api
       .post("/user/login", info)
       .then((res) => {
         setUser(res.data);
         toast.success("Usuário logado com sucesso");
+        console.log(res.data);
         return callback();
       })
       .catch((err) => {
@@ -22,7 +23,7 @@ const AuthProvider = ({ children, user, setUser }) => {
       });
   };
 
-  const register = async (info, callback = () => {}) => {
+  const register = async (info, callback = () => { }) => {
     return await api
       .post("/user/register", info)
       .then((res) => {
@@ -33,7 +34,7 @@ const AuthProvider = ({ children, user, setUser }) => {
       .catch((err) => {
         toast.error(
           err.response?.data?.message ||
-            "Ocorreu um erro ao registrar o usuário"
+          "Ocorreu um erro ao registrar o usuário"
         );
       });
   };
