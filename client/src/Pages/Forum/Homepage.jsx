@@ -141,11 +141,11 @@ export default function Homepage() {
           {/* Posts section */}
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {posts.map((post) => (
-              <div key={post._id} className="bg-white rounded-lg shadow-lg">
+              <div key={post._id}>
                 <Link to={`/forum/get-post/${post._id}`}>
                   {post.file ? (
                     <>
-                      <div className="relative w-full aspect-[16/9]">
+                      <div className="shadow-md relative w-full aspect-[16/9]">
                         {post.file && (
                           <img
                             src={`http://localhost:5000/Public/Images/${post.file}`}
@@ -153,7 +153,7 @@ export default function Homepage() {
                             className="w-full h-full object-cover rounded-t-lg"
                           />
                         )}
-                        <div className="absolute inset-0 rounded-t-lg ring-1 ring-inset ring-gray-900/10" />
+                        <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
                         <div className="p-4">
                           <div className="mt-2 flex items-center gap-x-4 text-md">
                             <time dateTime={post.updatedAt} className="text-gray-500">
@@ -237,9 +237,9 @@ export default function Homepage() {
                     </>
                   ) : (
                     <>
-                    {/* alterar o tamanho do card para ficar menor sem a imagem */}
+                      {/* alterar o tamanho do card para ficar menor sem a imagem */}
                       <div className="relative w-full">
-                        <div className="absolute inset-0 rounded-t-lg ring-1 ring-inset ring-gray-900/10" />
+                        <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
                         <div className="p-4">
                           <div className="mt-2 flex items-center gap-x-4 text-md">
                             <time dateTime={post.updatedAt} className="text-gray-500">
