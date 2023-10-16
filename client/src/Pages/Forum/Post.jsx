@@ -37,6 +37,7 @@ function Post() {
     const getPost = async () => {
         try {
             const response = await api.get(`/forum/get-post/${id}`);
+            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error("Error fetching posts", error);
@@ -73,7 +74,7 @@ function Post() {
     return (
         //TODO - melhorar estilização e adicionar seção de comentários
         <>
-            <div className='mt-auto relative isolate py-12 sm:py-38 lg:pb-20'>
+            <div className='mt-auto isolate py-12'>
                 <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-lg">
                     <div>
                         <div className='bg-primary p-5 rounded-t-lg'>
@@ -154,59 +155,72 @@ function Post() {
                     </div>
                     <div className='p-5 rounded-b-lg bg-gray-400'>
                         {/* aqui vai o form para inserção de comentário */}
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <label
-                                htmlFor='comment' className='sr-only'>
-                            </label>
-                            <div>
-                                <input
-                                    id='comment'
-                                    name='comment'
-                                    type='text'
-                                    autoComplete='comment'
-                                    {...register('comment', {
-                                        minLength: {
-                                            value: 3,
-                                            message: 'Mínimo de 3 caracteres',
-                                        },
-                                        maxLength: {
-                                            value: 300,
-                                            message: 'Máximo de 300 caracteres',
-                                        },
-                                        value: postContext.ratings, //talvez de erro
-                                    })}
-                                    className='block w-full appearance-none rounded-md border border-gray-300 bg-transparent px-3 py-2 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
-                                />
-                                {errors.comment && (
-                                    <span className='text-sm text-red-500'>
-                                        {errors.comment.message}
-                                    </span>
-                                )}
-                            </div>
+                        <form onSubmit={handleSubmit(onSubmit)} className='flex w-auto gap-x-2 items-center'>
+                            <label htmlFor='comment' className='sr-only'></label>
+                            <input
+                                id="coment"
+                                name="coment"
+                                type="text"
+                                autoComplete="coment"
+                                placeholder='Adicione um comentário!'
+                                required
+                                {...register("coment", {
+                                    required: "Preencha o campo de comentário para adicionar",
+                                    minLength: {
+                                        value: 6,
+                                        message: "Mínimo de 6 caracteres",
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Máximo de 50 caracteres",
+                                    },
+                                    value: post.ratings,
+                                })}
+                                className="block w-full rounded-md border-0 py-2 shadow-md text-font_secondary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-md sm:leading-6"
+                            />
+                            {errors.coment && (
+                                <span className="text-sm text-red-500">
+                                    {errors.coment.message}
+                                </span>
+                            )}
                             <div>
                                 <button
                                     type='submit'
-                                    className='text-white flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                    comentar
+                                    className='text-white flex w-full items-center shadow-md justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-md font-medium  hover:bg-secondary'
+                                >
+                                    Comentar
                                 </button>
                             </div>
                         </form>
                     </div>
+
                 </div>
                 <div className='p-5 mt-5 mx-auto max-w-6xl'>
                     <h1 className="subtitle text-2xl">Comentários</h1>
                     {post.ratings && post.ratings !== 0 ? (
-                        <div>
+                        <div className='bg-gray-100 mt-5 rounded-md shadow-md'>
                             <ul>
                                 {post.ratings.map((rating, index) => (
                                     <li key={index}>
-                                        Comentário: {rating.comment}<br />
+                                        <div className="p-4">
+                                            <div className="flex items-center gap-x-2">
+                                                <div className="relative flex items-center gap-x-2">
+                                                    <UserCircleIcon className="h-12 text-primary" />
+                                                    <div className="text-sm leading-5">
+                                                        <p className="font-semibold text-secondary">
+                                                            {rating.postedby.username}
+                                                        </p>
+                                                        <p className="text-font_secondary text-lg">{rating.comment}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                     ) : (
-                        <div>
+                        <div className="block w-full rounded-md border-0 p-5 shadow-md text-font_secondary">
                             <p className='text-black'>Nenhum comentário adicionado ainda!</p>
                         </div>
                     )}

@@ -10,7 +10,6 @@ const PostSchema = new mongoose.Schema({
     file: String,
     ratings: [
         {
-            liked: Boolean,
             comment: String,
             postedby: {
                 type: mongoose.Schema.Types.ObjectId,

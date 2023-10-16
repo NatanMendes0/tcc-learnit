@@ -77,6 +77,7 @@ const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
   try {
     const post = await Post.findById(postId).populate("user");
+    console.log(post);
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }

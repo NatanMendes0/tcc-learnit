@@ -14,6 +14,7 @@ export default function Navbar() {
   const [current, setCurrent] = useState("/");
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
+  const auth = useAuth();
   const location = useLocation();
   const navigation = [
     { name: "Página Inicial", href: "/", current: location.pathname === "/" },
@@ -50,7 +51,7 @@ export default function Navbar() {
                 </div>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {navigation.map((item) => (
-                    <Link 
+                    <Link
                       key={item.name}
                       to={item.href}
                       onClick={onClick}
@@ -83,6 +84,9 @@ export default function Navbar() {
 
               <div className="hidden lg:ml-4 lg:flex lg:items-center">
                 {/* Profile dropdown */}
+                <h1 className="mr-3">
+                  Olá, {isLoggedIn && isLoggedIn ? auth.user.name : "visitante"}
+                </h1>
                 <Menu as="div" className="relative ml-1 flex-shrink-0">
                   <div>
                     <Menu.Button className="relative rounded-sm flex bg-white text-sm focus:outline-none">
@@ -176,6 +180,7 @@ export default function Navbar() {
             </div>
           </div>
 
+          {/* mobile menu items */}
           <Disclosure.Panel className="lg:hidden">
             <div className="space-y-1 pb-3 pt-2">
               {/* Current: "bg-sky-50 border-sky-500 text-sky-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
