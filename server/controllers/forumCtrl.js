@@ -76,7 +76,7 @@ const getPosts = asyncHandler(async (req, res) => {
 const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
   try {
-    const post = await Post.findById(postId).populate({path: "ratings", populate: [{path: "postedby", select: "name nickname"}]}).populate("user", "name nickname");
+    const post = await Post.findById(postId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname" }] }).populate("user", "name nickname");
     console.log(post);
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
@@ -88,9 +88,9 @@ const getPost = asyncHandler(async (req, res) => {
 });
 
 const editPost = asyncHandler(async (req, res) => {
-  console.log(req.params)
+  var id = req.params.id;
   var form = new formidable.IncomingForm();
-  form.parse(req, function (err, fields, files) {
+  form.parse(req, async function (err, fields, files) {
     if (err) throw err;
 
     if (files['file[]'] && Array.isArray(files['file[]']) && files['file[]'].length > 0) {
@@ -117,7 +117,12 @@ const editPost = asyncHandler(async (req, res) => {
       };
 
       try {
-        const newPost = Post.create(newPostData);
+        const post = await Post.findById(req.params.id);
+        post.title = title;
+        post.description = description;
+        post.file = nomeimg ? nomeimg : null;
+        post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
+        const newPost = post.save();
         res.json({ message: "Post criado com sucesso!", post: newPost });
       } catch (error) {
         res.status(500).json({ message: "Erro ao criar o post", error });
@@ -137,10 +142,15 @@ const editPost = asyncHandler(async (req, res) => {
       };
 
       try {
-        const newPost = Post.findByIdAndUpdate(req.params.id, newPostData);
+        const post = await Post.findById(req.params.id);
+        post.title = title;
+        post.description = description;
+        post.file = nomeimg ? nomeimg : null;
+        post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
+        const newPost = post.save();
         res.json({ message: "Post criado com sucesso!", post: newPost });
       } catch (error) {
-        // res.status(500).json({ message: "Erro ao criar o post", error });
+        res.status(500).json({ message: "Erro ao criar o post", error });
         throw error;
       }
     }
