@@ -19,7 +19,6 @@ const MaterialSchema = new mongoose.Schema({
     ],
     ratings: [
         {
-            liked: Boolean,
             comment: String,
             postedby: {
                 type: mongoose.Schema.Types.ObjectId,

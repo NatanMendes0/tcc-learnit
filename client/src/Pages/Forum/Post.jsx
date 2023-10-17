@@ -61,7 +61,6 @@ function Post() {
     } = useForm()
 
     const onSubmit = async (data) => {
-        console.log(data) //comentário
         try {
             const response = await postContext.comment(id, data);
             toast.success(response.message);

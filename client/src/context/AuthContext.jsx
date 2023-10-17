@@ -15,7 +15,6 @@ const AuthProvider = ({ children, user, setUser }) => {
       .then((res) => {
         setUser(res.data);
         toast.success("Usuário logado com sucesso");
-        console.log(res.data);
         return callback();
       })
       .catch((err) => {
