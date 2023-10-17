@@ -97,7 +97,7 @@ const PostProvider = ({ children }) => {
     try {
       const response = await api.put(`/forum/edit-post/${id}`, data, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });

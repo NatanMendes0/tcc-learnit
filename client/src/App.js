@@ -63,8 +63,8 @@ function App() {
 
   return (
     <AuthProvider user={user} setUser={setUser}>
-      <MaterialProvider>
-        <PostProvider>
+      <PostProvider>
+        <MaterialProvider>
           <QueryClientProvider client={queryClient}>
             <div className="relative flex flex-col min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary ">
               <BrowserRouter>
@@ -118,8 +118,8 @@ function App() {
               </BrowserRouter>
             </div>
           </QueryClientProvider>
-        </PostProvider>
-      </MaterialProvider>
+        </MaterialProvider>
+      </PostProvider>
     </AuthProvider >
   );
 }

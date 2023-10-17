@@ -10,11 +10,11 @@ const PostSchema = new mongoose.Schema({
     file: String,
     ratings: [
         {
-            comment: String,
             postedby: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
             },
+            comment: String,
         }
     ],
 },

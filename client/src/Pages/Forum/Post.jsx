@@ -208,7 +208,7 @@ function Post() {
                                                     <UserCircleIcon className="h-12 text-primary" />
                                                     <div className="text-sm leading-5">
                                                         <p className="font-semibold text-secondary">
-                                                            {rating.postedby.username}
+                                                            {rating.postedby.name}
                                                         </p>
                                                         <p className="text-font_secondary text-lg">{rating.comment}</p>
                                                     </div>

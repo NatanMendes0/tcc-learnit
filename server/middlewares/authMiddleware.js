@@ -10,7 +10,7 @@ const generateToken = (id) => {
 };
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
-  let token = null;
+  
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
