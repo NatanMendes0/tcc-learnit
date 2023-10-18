@@ -220,7 +220,7 @@ const getUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
-    const getUser = await User.findById(id);
+    const getUser = await await User.findById(id, 'name email nickname');
     res.json({
       getUser,
     });

@@ -22,7 +22,7 @@ export default function Edit() {
     async function fetchPostData() {
       try {
         const post = await postContext.get(id);
-        setValue("title", post.title);
+        setValue("title", post.title);        
         setValue("description", post.description);
         setValue("file", post.file);
       } catch (error) {

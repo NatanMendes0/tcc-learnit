@@ -1,29 +1,21 @@
 import React, { createContext, useEffect, useState } from "react";
-
 import api from "../api/index";
-
 import { useAuth } from "./AuthContext";
-
-/* Toast */
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
-
   const auth = useAuth();
-
   const [token, setToken] = useState("");
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     if (auth.user.token) {
       setToken(auth.user.token);
     }
   }, [auth.user.token]);
-
-
-  const [posts, setPosts] = useState([]);
 
   const register = async (info) => {
     try {
@@ -46,12 +38,7 @@ const PostProvider = ({ children }) => {
 
   const list = async () => {
     try {
-      const response = await api.get("/forum/get-posts", {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,          
-        },
-      });
-
+      const response = await api.get("/forum/get-posts");
       setPosts(response.data);
     } catch (error) {
       toast.error(error.response.data.message);
