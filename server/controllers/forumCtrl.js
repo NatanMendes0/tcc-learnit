@@ -173,40 +173,20 @@ const deletePost = asyncHandler(async (req, res) => {
 
 const rating = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const prodId = req.params.id;
-  const { liked, comment } = req.body;
+  const postID = req.params.id;
+  const { comment } = req.body;
   try {
-    const post = await Post.findById(prodId);
+    const post = await Post.findById(postID);
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
 
-    let alreadyRated = post.ratings.find(
-      (rating) => rating.postedby.toString() === _id.toString()
-    );
-
-    if (alreadyRated) {
-      alreadyRated.liked = liked;
-      alreadyRated.comment = comment;
-    } else {
-      post.ratings.push({
-        liked,
-        comment,
-        postedby: _id,
-      });
-    }
+    post.ratings.push({
+      comment,
+      postedby: _id,
+    });
 
     await post.save();
-
-    const totalLikes = post.ratings.filter(
-      (rating) => rating.liked === true
-    ).length;
-    const totalDislikes = post.ratings.filter(
-      (rating) => rating.liked === false
-    ).length;
-
-    post.totalLikes = totalLikes;
-    post.totalDislikes = totalDislikes;
 
     res.json(post);
   } catch (error) {

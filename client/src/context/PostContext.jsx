@@ -45,13 +45,13 @@ const PostProvider = ({ children }) => {
     }
   };
 
-  const comment = async (id, data) => {
+  const rating = async (id, data) => {
     try{
       const response = await api.put(`/forum/rating/${id}`, data, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
-          "Content-Type": "multipart/form-data",
         },
+        comment: data.comment
       });
 
       const updatedPost = response.data;
@@ -121,7 +121,7 @@ const PostProvider = ({ children }) => {
     <PostContext.Provider
       value={{
         posts,
-        comment,
+        rating,
         register,
         list,
         get,

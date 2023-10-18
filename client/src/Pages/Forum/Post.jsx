@@ -37,7 +37,6 @@ function Post() {
     const getPost = async () => {
         try {
             const response = await api.get(`/forum/get-post/${id}`);
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error("Error fetching posts", error);
@@ -62,16 +61,17 @@ function Post() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await postContext.comment(id, data);
-            toast.success(response.message);
-            navigate(from);
+            const response = await api.post(`/forum/rating/${id}`, {
+                comment: data.comment,
+            });
+            toast.success(response.data.message);
+            window.location.reload();
         } catch (error) {
             toast.error(error.response.data.message);
         }
-    }
+    };
 
     return (
-        //TODO - melhorar estilização e adicionar seção de comentários
         <>
             <div className='mt-auto isolate py-12'>
                 <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-lg">
@@ -153,27 +153,24 @@ function Post() {
                         </div>
                     </div>
                     <div className='p-5 rounded-b-lg bg-gray-400'>
-                        {/* aqui vai o form para inserção de comentário */}
                         <form onSubmit={handleSubmit(onSubmit)} className='flex w-auto gap-x-2 items-center'>
                             <label htmlFor='comment' className='sr-only'></label>
                             <input
-                                id="coment"
-                                name="coment"
+                                id="comment"
+                                name="comment"
                                 type="text"
-                                autoComplete="coment"
+                                autoComplete="comment"
                                 placeholder='Adicione um comentário!'
-                                required
-                                {...register("coment", {
+                                {...register("comment", {
                                     required: "Preencha o campo de comentário para adicionar",
                                     minLength: {
-                                        value: 6,
-                                        message: "Mínimo de 6 caracteres",
+                                        value: 2,
+                                        message: "Mínimo de 2 caracteres",
                                     },
                                     maxLength: {
                                         value: 50,
                                         message: "Máximo de 50 caracteres",
                                     },
-                                    value: post.ratings,
                                 })}
                                 className="block w-full rounded-md border-0 py-2 shadow-md text-font_secondary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-md sm:leading-6"
                             />
