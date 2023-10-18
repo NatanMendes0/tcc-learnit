@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { usePost } from '../../context/PostContext';
 
 import { toast } from 'react-toastify';
 
@@ -17,11 +16,6 @@ function Post() {
     const [post, setPost] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
-
-    const postContext = usePost();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from || '/forum';
 
     const openModal = (imageUrl) => {
         setModalImageUrl(imageUrl);

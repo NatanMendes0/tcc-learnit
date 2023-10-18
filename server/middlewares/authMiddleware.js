@@ -3,6 +3,10 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 
+const { getPost } = require("../controllers/forumCtrl");
+const Post = require("../models/postModel");
+
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
@@ -48,8 +52,13 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
 const isAdmin = asyncHandler(async (req, res, next) => {
   if (req.user.role === "admin") {
     next();
-  } else if (req.post && req.post.user.toString() === req.user._id.toString()) {
-    next();
+  } else if (req.user.role === "user") {
+    const post = await Post.findById(req.params.id);
+    if (post.user._id.toString() === req.user._id.toString()) {
+      next();
+    } else {
+      res.status(403).json({ message: "Você não tem permissão para acessar esta rota." });
+    }
   } else {
     res.status(403).json({ message: "Você não tem permissão para acessar esta rota." });
   }

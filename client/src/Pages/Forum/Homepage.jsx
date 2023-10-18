@@ -13,6 +13,7 @@ export default function Homepage() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const { user } = useAuth();
+  console.log(user)
 
   const getPosts = async () => {
     try {
@@ -179,7 +180,7 @@ export default function Homepage() {
                           </div>
                           <div className="ml-auto">
                             {/* delete btn */}
-                            {user && (user.name === post.user.name || user.role === "admin") && (
+                            {user && (user.role === "admin" || user._id === post.user._id) && (
                               <button
                                 onClick={() => handleDelete(post._id)}
                                 className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
@@ -201,7 +202,7 @@ export default function Homepage() {
                               </button>
                             )}
                             {/* edit btn */}
-                            {user && user.name === post.user.name && (
+                            {user && (user._id === post.user._id) && (
                               <Link to={`/forum/edit-post/${post._id}`}>
                                 <button
                                   className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
@@ -266,7 +267,7 @@ export default function Homepage() {
                           </div>
                           <div className="ml-auto">
                             {/* delete btn */}
-                            {user && (user.name === post.user.name || user.role === "admin") && (
+                            {user && (user.role === "admin" || user._id === post.user._id) && (
                               <button
                                 onClick={() => handleDelete(post._id)}
                                 className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
