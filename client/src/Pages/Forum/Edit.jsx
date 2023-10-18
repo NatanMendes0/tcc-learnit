@@ -24,8 +24,7 @@ export default function Edit() {
         const post = await postContext.get(id);
         setValue("title", post.title);
         setValue("description", post.description);
-        // Assuming you have a way to get the file name from the post data.
-        setFileName(post.fileName || "");
+        setValue("file", post.file);
       } catch (error) {
         toast.error(error.message);
         navigate("../forum", { replace: false });
@@ -38,7 +37,6 @@ export default function Edit() {
   const onSubmit = async (data) => {
     try {
       await postContext.updatePost(id, data);
-      toast.success("Tópico atualizado com sucesso!");
       navigate("../forum", { replace: false });
     } catch (error) {
       toast.error(error.message);
@@ -49,7 +47,7 @@ export default function Edit() {
     <>
       <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
         <form className="shadow-lg relative" onSubmit={handleSubmit(onSubmit)}>
-        <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
+          <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
             <label htmlFor="title" className="sr-only">
               Título
             </label>
@@ -161,6 +159,7 @@ export default function Edit() {
             </div>
           </div>
         </form>
+            <p className="text-gray-500 text-sm mt-2 text-center">*Se desejar manter a imagem da postagem, insira-a novamente.</p>
       </div>
     </>
   );

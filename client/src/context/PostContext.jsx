@@ -86,7 +86,6 @@ const PostProvider = ({ children }) => {
           Authorization: `Bearer ${auth.token}`,
         },
       });
-
       return response.data;
     } catch (error) {
       toast.error(error.response.data.message);
