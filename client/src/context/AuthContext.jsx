@@ -21,19 +21,16 @@ const AuthProvider = ({ children, user, setUser }) => {
   };
 
   const register = async (info, callback = () => { }) => {
-    return await api
-      .post("/user/register", info)
-      .then((res) => {
-        setUser(res.data);
-        toast.success("Usuário registrado com sucesso");
-        return callback();
-      })
-      .catch((err) => {
-        toast.error(
-          err.response?.data?.message ||
-          "Ocorreu um erro ao registrar o usuário"
-        );
-      });
+    try {
+      await api.post("/user/register", info);
+      toast.success("Usuário registrado com sucesso");
+      return callback();
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message ||
+        "Ocorreu um erro ao registrar o usuário"
+      );
+    }
   };
 
   const get = async (id) => {
@@ -54,11 +51,23 @@ const AuthProvider = ({ children, user, setUser }) => {
     });
     try {
       await api.put(`/user/edit-user/${id}`, data);
-      toast.success("Usuário atualizado com sucesso");      
+      toast.success("Usuário atualizado com sucesso");
     } catch (error) {
       toast.error(error.response?.data?.message || "Erro ao atualizar a postagem");
     }
   };
+
+  const remove = async (id) => {
+    try {
+      await api.delete(`/user/delete/${id}`);
+      setUser({});
+      toast.success("Usuário excluído com sucesso");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Erro ao excluir o usuário");
+    }
+  };
+
+  
 
   const logout = async (_) => {
     return await api.get("/user/logout").finally((_) => {
@@ -77,6 +86,7 @@ const AuthProvider = ({ children, user, setUser }) => {
         register,
         get,
         update,
+        remove,
         logout,
       }}
     >

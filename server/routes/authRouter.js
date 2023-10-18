@@ -10,6 +10,7 @@ const {
   updatePassword,
   forgotPasswordToken,
   resetPassword,
+  deleteUser,
   handleLoggedIn,
 } = require('../controllers/userCtrl')
 const { authMiddleware } = require('../middlewares/authMiddleware')
@@ -31,6 +32,8 @@ router.get('/logout', logout)
 router.get('/:id', authMiddleware, getUser)
 
 router.put('/edit-user/:id', authMiddleware, updateUser)
+
+router.delete('/delete-user/:id', authMiddleware, deleteUser);
 
 
 module.exports = router

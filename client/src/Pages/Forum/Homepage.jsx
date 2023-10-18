@@ -47,15 +47,6 @@ export default function Homepage() {
     }
   };
 
-  //TODO - função de editar o post
-  // const handleEdit = async (id) => {
-  //   try {
-  //     await api.get(`/forum/edit-post/${id}`);      
-  //   } catch (error) {
-  //     console.error("Error editing post:", error);
-  //   }
-  // };
-
   return (
     <>
       <div className="relative isolate py-20 sm:py-38 lg:pb-40">
@@ -239,7 +230,7 @@ export default function Homepage() {
                 ) : (
                   <>
                     <Link to={`/forum/get-post/${post._id}`}>
-                      <div className="relative w-full">
+                      <div className="relative bg-white shadow-md full">
                         <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
                         <div className="p-4">
                           <div className="mt-2 flex items-center gap-x-4 text-md">

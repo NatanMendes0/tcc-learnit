@@ -29,13 +29,24 @@ export default function Account() {
         fetchUserData();
     }, [id, navigate, authContext, setValue]);
 
-    //todo - função que atualiza o usuário
     const onSubmit = async (data) => {
         try {
             await authContext.update(id, data);
             navigate("../", { replace: false });
         } catch (error) {
             toast.error(error.message);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await authContext.remove(id);
+            toast.success("Usuário deletado com sucesso!");
+            navigate("../", { replace: false });
+        } catch (error) {
+            console.error("Error deleting user:", error);
+            toast.error(error.response.data.message);
+            navigate("../", { replace: false })
         }
     };
 
@@ -152,8 +163,18 @@ export default function Account() {
                         </div>
                     </div> */}
                 </div>
-                <div className="mt-10 mx-auto text-center">
-                    <button type="submit" className="btn px-7">Salvar</button>
+                <div className="flex">
+                    <div className="mt-10 mx-auto text-center">
+                        <button
+                            onClick={() => handleDelete(authContext.user._id)}
+                            className="btn-secondary bg-gray-400 hover:bg-gray-500 px-6"
+                        >
+                            Deletar conta
+                        </button>
+                    </div>
+                    <div className="mt-10 mx-auto text-center">
+                        <button type="submit" className="btn-secondary hover:bg-secondary px-12">Salvar</button>
+                    </div>
                 </div>
             </form>
         </div>
