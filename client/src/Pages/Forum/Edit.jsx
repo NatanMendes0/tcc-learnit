@@ -43,6 +43,10 @@ export default function Edit() {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/forum");
+  };
+
   return (
     <>
       <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
@@ -150,6 +154,13 @@ export default function Edit() {
               </div>
               <div className="flex-shrink-0">
                 <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="mr-2 inline-flex items-center rounded-md bg-gray-300 px-6 py-2 text-md font-semibold text-gray-700 shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                >
+                  Cancelar
+                </button>
+                <button
                   type="submit"
                   className="inline-flex items-center rounded-md bg-primary px-6 py-2 text-md font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:bg-sky-700"
                 >
@@ -159,7 +170,9 @@ export default function Edit() {
             </div>
           </div>
         </form>
-            <p className="text-gray-500 text-sm mt-2 text-center">*Se desejar manter a imagem da postagem, insira-a novamente.</p>
+        <p className="text-gray-500 text-sm mt-2 text-center">
+          *Se desejar manter a imagem da postagem, insira-a novamente.
+        </p>
       </div>
     </>
   );

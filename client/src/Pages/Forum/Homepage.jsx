@@ -52,7 +52,7 @@ export default function Homepage() {
     <>
       <div className="relative isolate py-20 sm:py-38 lg:pb-40">
         <svg
-          className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+          className="absolute inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
           aria-hidden="true"
         >
           <defs>
@@ -67,12 +67,6 @@ export default function Homepage() {
               <path d="M100 200V.5M.5 .5H200" fill="none" />
             </pattern>
           </defs>
-          <svg x="50%" y={-1} className="overflow-visible fill-gray-50">
-            <path
-              d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
-              strokeWidth={0}
-            />
-          </svg>
           <rect
             width="100%"
             height="100%"
@@ -159,7 +153,7 @@ export default function Homepage() {
                               <span className="absolute inset-0" />
                               {post.title}
                             </h3>
-                            <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-4 overflow-ellipsis">
+                            <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
                               {post.description}
                             </p>
                           </div>
@@ -246,7 +240,7 @@ export default function Homepage() {
                               <span className="absolute inset-0" />
                               {post.title}
                             </h3>
-                            <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-4 overflow-ellipsis">
+                            <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
                               {post.description}
                             </p>
                           </div>

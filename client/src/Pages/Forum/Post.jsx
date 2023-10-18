@@ -68,7 +68,7 @@ function Post() {
     return (
         <>
             <div className='mt-auto isolate py-12'>
-                <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-lg">
+                <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-xl">
                     <div>
                         <div className='bg-primary p-5 rounded-t-lg'>
                             <h1 className='title text-4xl text-white text-left'>{post.title}</h1>
@@ -166,7 +166,7 @@ function Post() {
                                         message: "Máximo de 50 caracteres",
                                     },
                                 })}
-                                className="block w-full rounded-md border-0 py-2 shadow-md text-font_secondary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-md sm:leading-6"
+                                className="block w-full rounded-md border-0 py-2 shadow-xl text-font_secondary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-md sm:leading-6"
                             />
                             {errors.coment && (
                                 <span className="text-sm text-red-500">
@@ -176,7 +176,7 @@ function Post() {
                             <div>
                                 <button
                                     type='submit'
-                                    className='text-white flex w-full items-center shadow-md justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-md font-medium  hover:bg-secondary'
+                                    className='text-white flex w-full items-center shadow-xl justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-md font-medium  hover:bg-secondary'
                                 >
                                     Comentar
                                 </button>
@@ -188,7 +188,7 @@ function Post() {
                 <div className='p-5 mt-5 mx-auto max-w-6xl'>
                     <h1 className="subtitle text-2xl">Comentários</h1>
                     {post.ratings && post.ratings !== 0 ? (
-                        <div className='bg-gray-100 mt-5 rounded-md shadow-md'>
+                        <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
                             <ul>
                                 {post.ratings.map((rating, index) => (
                                     <li key={index}>
@@ -197,9 +197,14 @@ function Post() {
                                                 <div className="relative flex items-center gap-x-2">
                                                     <UserCircleIcon className="h-12 text-primary" />
                                                     <div className="text-sm leading-5">
-                                                        <p className="font-semibold text-secondary">
-                                                            {rating.postedby.name}
-                                                        </p>
+                                                        <div className="flex items-center gap-x-2">
+                                                            <p className="text-lg font-extrabold text-secondary">
+                                                                {rating.postedby.name}
+                                                            </p>
+                                                            <p className="font-bold text-base text-secondary">
+                                                                @{rating.postedby.nickname}
+                                                            </p>
+                                                        </div>
                                                         <p className="text-font_secondary text-lg">{rating.comment}</p>
                                                     </div>
                                                 </div>
@@ -210,7 +215,7 @@ function Post() {
                             </ul>
                         </div>
                     ) : (
-                        <div className="block w-full rounded-md border-0 p-5 shadow-md text-font_secondary">
+                        <div className="block w-full rounded-md border-0 p-5 shadow-xl text-font_secondary">
                             <p className='text-black'>Nenhum comentário adicionado ainda!</p>
                         </div>
                     )}
