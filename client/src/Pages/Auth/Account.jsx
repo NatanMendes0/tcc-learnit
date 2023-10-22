@@ -15,8 +15,6 @@ export default function Account() {
         async function fetchUserData() {
             try {
                 const user = await authContext.get(id);
-                console.log(user);
-
                 setValue("name", user.getUser.name);
                 setValue("nickname", user.getUser.nickname);
                 setValue("email", user.getUser.email);
@@ -39,13 +37,12 @@ export default function Account() {
     };
 
     const handleDelete = async (id) => {
+        console.log("console.log do account - ", id)
         try {
             await authContext.remove(id);
-            toast.success("Usuário deletado com sucesso!");
             navigate("../", { replace: false });
         } catch (error) {
             console.error("Error deleting user:", error);
-            toast.error(error.response.data.message);
             navigate("../", { replace: false })
         }
     };
@@ -163,20 +160,18 @@ export default function Account() {
                         </div>
                     </div> */}
                 </div>
-                <div className="flex">
-                    <div className="mt-10 mx-auto text-center">
-                        <button
-                            onClick={() => handleDelete(authContext.user._id)}
-                            className="btn-secondary bg-gray-400 hover:bg-gray-500 px-6"
-                        >
-                            Deletar conta
-                        </button>
-                    </div>
-                    <div className="mt-10 mx-auto text-center">
-                        <button type="submit" className="btn-secondary hover:bg-secondary px-12">Salvar</button>
-                    </div>
+                <div className="mt-10 mx-auto text-center">
+                    <button type="submit" className="btn-secondary hover:bg-secondary px-12">Salvar</button>
                 </div>
             </form>
+            <div className="mt-10 mx-auto text-center">
+                <button
+                    onClick={() => handleDelete(authContext.user._id)}
+                    className="btn-secondary bg-gray-400 hover:bg-gray-500 px-6"
+                >
+                    Deletar conta
+                </button>
+            </div>
         </div>
     )
 }

@@ -187,7 +187,7 @@ function Post() {
                 </div>
                 <div className='p-5 mt-5 mx-auto max-w-6xl'>
                     <h1 className="subtitle text-2xl">Comentários</h1>
-                    {post.ratings && post.ratings !== 0 ? (
+                    {post.ratings && post.ratings.length > 0 ? (
                         <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
                             <ul>
                                 {post.ratings.map((rating, index) => (

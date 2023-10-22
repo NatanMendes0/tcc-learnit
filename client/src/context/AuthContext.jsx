@@ -2,7 +2,6 @@ import React, { createContext } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Navigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -58,8 +57,9 @@ const AuthProvider = ({ children, user, setUser }) => {
   };
 
   const remove = async (id) => {
+    console.log("console.log do authcontext - ", id)
     try {
-      await api.delete(`/user/delete/${id}`);
+      await api.delete(`/user/delete-user/${id}`);
       setUser({});
       toast.success("Usuário excluído com sucesso");
     } catch (error) {
@@ -67,7 +67,7 @@ const AuthProvider = ({ children, user, setUser }) => {
     }
   };
 
-  
+
 
   const logout = async (_) => {
     return await api.get("/user/logout").finally((_) => {

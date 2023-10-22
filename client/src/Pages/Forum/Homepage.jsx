@@ -13,7 +13,6 @@ export default function Homepage() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const { user } = useAuth();
-  console.log(user)
 
   const getPosts = async () => {
     try {
@@ -52,7 +51,7 @@ export default function Homepage() {
     <>
       <div className="relative isolate py-20 sm:py-38 lg:pb-40">
         <svg
-          className="absolute inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
+          className="absolute -z-50 inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
           aria-hidden="true"
         >
           <defs>

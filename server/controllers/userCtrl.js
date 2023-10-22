@@ -300,11 +300,12 @@ const resetPassword = asyncHandler(async (req, res) => {
 
 // delete a user
 const deleteUser = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  if (!validateMongoDbId(id)) {
+  const userId = req.params.id;
+  console.log("console.log do ctrl - ", userId);
+  if (!validateMongoDbId(userId)) {
     return res.status(400).json({ message: "ID inválido" });
   }
-  const user = await User.findById(id);
+  const user = await User.findById(userId);
   if (!user) {
     return res.status(404).json({ message: "Usuário não encontrado" });
   }

@@ -203,7 +203,7 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-            
+
             {/* mobile menu items */}
             <Disclosure.Panel className="lg:hidden">
               <div className="space-y-1 pb-3 pt-2">

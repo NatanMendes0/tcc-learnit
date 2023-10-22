@@ -33,7 +33,6 @@ router.get('/:id', authMiddleware, getUser)
 
 router.put('/edit-user/:id', authMiddleware, updateUser)
 
-router.delete('/delete-user/:id', authMiddleware, deleteUser);
-
+router.delete('/delete-user/:id', authMiddleware, deleteUser)
 
 module.exports = router
