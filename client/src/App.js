@@ -30,6 +30,8 @@ import PostEdit from "./Pages/Forum/Edit";
 import Materials from "./Pages/Materials/Homepage";
 import MaterialsCreate from "./Pages/Materials/Create";
 
+import Material from "./Pages/Materials/Material";
+
 import Register from "./Pages/Auth/Register";
 import Login from "./Pages/Auth/Login";
 import Account from "./Pages/Auth/Account";
@@ -103,6 +105,8 @@ function App() {
                   />
 
                   <Route path="/materials" element={<Materials />} />
+
+                  <Route path="/materials/get-material/:id" element={<Material />} />
 
                   <Route
                     path="/materials/create"

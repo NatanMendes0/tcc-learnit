@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useMaterial } from "../../context/MaterialContext";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import api from "../../api";
@@ -15,11 +14,9 @@ export default function Homepage() {
     const [Materials, setMaterials] = useState([]);
     const { user } = useAuth();
 
-    const materialContext = useMaterial();
-
     const getMaterials = async () => {
         try {
-            const response = await materialContext.list();
+            const response = await api.get("/materials/get-materials");
             return response.data;
         } catch (error) {
             console.error("Error fetching materials:", error);
@@ -38,7 +35,7 @@ export default function Homepage() {
 
     const handleDelete = async (id) => {
         try {
-            await api.delete(`/forum/delete-material/${id}`);
+            await api.delete(`/materials/delete-material/${id}`);
             toast.success("Material deletado com sucesso!");
             const materialsData = await getMaterials();
             setMaterials(materialsData.reverse());
@@ -54,7 +51,7 @@ export default function Homepage() {
         <>
             <div className="relative isolate py-20 sm:py-38 lg:pb-40">
                 <svg
-                    className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+                    className="absolute -z-50 inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
                     aria-hidden="true"
                 >
                     <defs>
@@ -69,12 +66,6 @@ export default function Homepage() {
                             <path d="M100 200V.5M.5 .5H200" fill="none" />
                         </pattern>
                     </defs>
-                    <svg x="50%" y={-1} className="overflow-visible fill-gray-50">
-                        <path
-                            d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
-                            strokeWidth={0}
-                        />
-                    </svg>
                     <rect
                         width="100%"
                         height="100%"
@@ -126,7 +117,7 @@ export default function Homepage() {
                         {user && user.role === "admin" && (
                             <button
                                 onClick={() => navigate("/materials/create")}
-                                className="btn mt-10">                            
+                                className="btn mt-10">
                                 Adicionar novo material
                             </button>
                         )}
@@ -136,13 +127,13 @@ export default function Homepage() {
                     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                         {Materials.map((Material) => (
                             <div key={Material._id}>
-                                <Link to={`/forum/get-Material/${Material._id}`}>
-                                    {Material.file ? (
+                                <Link to={`/materials/get-material/${Material._id}`}>
+                                    {Material.content[0].stepContent.file ? (
                                         <>
                                             <div className="shadow-md relative w-full aspect-[16/9]">
-                                                {Material.file && (
+                                                {Material.content[0].stepContent.file && (
                                                     <img
-                                                        src={`http://localhost:5000/Public/Images/${Material.file}`}
+                                                        src={`http://localhost:5000/Public/Images/${Material.content[0].stepContent.file}`}
                                                         alt="imagem do Material"
                                                         className="w-full h-full object-cover rounded-t-lg"
                                                     />
@@ -159,10 +150,10 @@ export default function Homepage() {
                                                     <div className="group relative">
                                                         <h3 className="mt-3 text-lg font-semibold leading-5 text-gray-900 group-hover:text-gray-600">
                                                             <span className="absolute inset-0" />
-                                                            {Material.title}
+                                                            {Material.content[0].stepContent.title}
                                                         </h3>
                                                         <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                                                            {Material.description}
+                                                            {Material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -245,10 +236,10 @@ export default function Homepage() {
                                                     <div className="group relative">
                                                         <h3 className="mt-3 text-lg font-semibold leading-5 text-gray-900 group-hover:text-gray-600">
                                                             <span className="absolute inset-0" />
-                                                            {Material.title}
+                                                            {Material.content[0].stepContent.title}
                                                         </h3>
                                                         <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                                                            {Material.description}
+                                                            {Material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
                                                 </div>

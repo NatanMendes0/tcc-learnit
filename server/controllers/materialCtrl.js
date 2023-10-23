@@ -86,7 +86,7 @@ const createMaterial = asyncHandler(async (req, res, next) => {
 
 const getMaterials = asyncHandler(async (req, res, next) => {
     try {
-        const materials = await Material.find({}).populate('user', 'name');
+        const materials = await Material.find({}).populate('user');
         res.json(materials);
     } catch (error) {
         res.status(500).json({ message: 'Erro ao obter os materiais', error });

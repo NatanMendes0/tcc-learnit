@@ -37,12 +37,8 @@ const MaterialProvider = ({ children }) => {
 
     const list = async () => {
         try {
-            const response = await api.get("/materials/get-materials", { //todo - criar rota
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
+            const response = await api.get("/materials/get-materials", {
             });
-
             setMaterials(response.data);
         } catch (error) {
             toast.error(error.response.data.message);
