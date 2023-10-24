@@ -18,6 +18,6 @@ router.get('/get-materials', getMaterials)
 router.get('/get-material/:id', getMaterial)
 router.put('/edit-material/:id', authMiddleware, isAdmin, editMaterial)
 router.delete('/delete-material/:id', authMiddleware, isAdmin, deleteMaterial)
-router.put('/rating/:id', authMiddleware, rating)
+router.post('/rating/:id', authMiddleware, rating)
 
 module.exports = router

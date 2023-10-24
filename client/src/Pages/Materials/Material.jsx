@@ -30,8 +30,7 @@ function Material() {
 
     const getMaterial = async () => {
         try {
-            const response = await api.get(`/materials/get-Material/${id}`);
-            console.log("Dados retornados:", response.data);
+            const response = await api.get(`/materials/get-material/${id}`);
             return response.data;
         } catch (error) {
             console.error("Error fetching Materials", error);
@@ -55,6 +54,7 @@ function Material() {
     } = useForm()
 
     const onSubmit = async (data) => {
+        console.log(data)
         try {
             const response = await api.post(`/materials/rating/${id}`, {
                 comment: data.comment,
@@ -68,24 +68,92 @@ function Material() {
 
     return (
         <>
-            {/* {material && material.map((materialItem) => (
-                materialItem.content.map((contentItem) => (
-                    <div key={contentItem._id}>
-                        <h2>{contentItem.stepContent.title}</h2>
-                        <p>{contentItem.stepContent.text}</p>
-                        <img src={contentItem.stepContent.file} alt="Imagem do conteúdo" />
-                        <p>{contentItem.stepContent.note}</p>
+            <div>
+                {material && material.content.map((materialItem) => (
+                    <div key={materialItem._id}>
+                        <h2>{materialItem.stepContent.title}</h2>
+                        <p>{materialItem.stepContent.text}</p>
+                        <img className='w-20' src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`} alt="Imagem do conteúdo" onClick={() => openModal(materialItem.stepContent.file)} />
+                        <p>{materialItem.stepContent.note}</p>
                     </div>
-                ))
-            ))} */}
-            {material && material.content.map((materialItem) => (
-                <div key={materialItem._id}>
-                    <h2>{materialItem.stepContent.title}</h2>
-                    <p>{materialItem.stepContent.text}</p>
-                    <img src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`} alt="Imagem do conteúdo" onClick={() => openModal(materialItem.stepContent.file)} />
-                    <p>{materialItem.stepContent.note}</p>
+                ))}
+
+                {/* add comment */}
+                <div className='p-5 rounded-b-lg bg-gray-400'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='flex w-auto gap-x-2 items-center'>
+                        <label htmlFor='comment' className='sr-only'></label>
+                        <input
+                            id="comment"
+                            name="comment"
+                            type="text"
+                            autoComplete="comment"
+                            placeholder='Adicione um comentário!'
+                            {...register("comment", {
+                                required: "Preencha o campo de comentário para adicionar",
+                                minLength: {
+                                    value: 2,
+                                    message: "Mínimo de 2 caracteres",
+                                },
+                                maxLength: {
+                                    value: 50,
+                                    message: "Máximo de 50 caracteres",
+                                },
+                            })}
+                            className="block w-full rounded-md border-0 py-2 shadow-xl text-font_secondary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-md sm:leading-6"
+                        />
+                        {errors.coment && (
+                            <span className="text-sm text-red-500">
+                                {errors.coment.message}
+                            </span>
+                        )}
+                        <div>
+                            <button
+                                type='submit'
+                                className='text-white flex w-full items-center shadow-xl justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-md font-medium  hover:bg-secondary'
+                            >
+                                Comentar
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            ))}
+
+                {/* comment section */}
+                <div className='p-5 mt-5 mx-auto max-w-6xl'>
+                    <h1 className="subtitle text-2xl">Comentários</h1>
+                    {material.ratings && material.ratings.length > 0 ? (
+                        <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
+                            <ul>
+                                {material.ratings.map((rating, index) => (
+                                    <li key={index}>
+                                        <div className="p-4">
+                                            <div className="flex items-center gap-x-2">
+                                                <div className="relative flex items-center gap-x-2">
+                                                    <UserCircleIcon className="h-12 text-primary" />
+                                                    <div className="text-sm leading-5">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <p className="text-lg font-extrabold text-secondary">
+                                                                {rating.postedby.name}
+                                                            </p>
+                                                            <p className="font-bold text-base text-secondary">
+                                                                @{rating.postedby.nickname}
+                                                            </p>
+                                                        </div>
+                                                        <p className="text-font_secondary text-lg">{rating.comment}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <div className="block w-full rounded-md border-0 p-5 shadow-xl text-font_secondary">
+                            <p className='text-black'>Nenhum comentário adicionado ainda!</p>
+                        </div>
+                    )}
+                </div>
+            </div>
         </>
     );
 }

@@ -39,11 +39,9 @@ export default function Homepage() {
             toast.success("Material deletado com sucesso!");
             const materialsData = await getMaterials();
             setMaterials(materialsData.reverse());
-            navigate("../forum", { replace: false });
         } catch (error) {
             console.error("Error deleting Material:", error);
             toast.error(error.response.data.message);
-            navigate("../forum", { replace: false })
         }
     };
 
@@ -125,24 +123,24 @@ export default function Homepage() {
 
                     {/* Materials section */}
                     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                        {Materials.map((Material) => (
-                            <div key={Material._id}>
-                                <Link to={`/materials/get-material/${Material._id}`}>
-                                    {Material.content[0].stepContent.file ? (
-                                        <>
+                        {Materials.map((material) => (
+                            <div key={material._id}>
+                                {material.content[0].stepContent.file ? (
+                                    <>
+                                        <Link to={`/materials/get-material/${material._id}`}>
                                             <div className="shadow-md relative w-full aspect-[16/9]">
-                                                {Material.content[0].stepContent.file && (
+                                                {material.content[0].stepContent.file && (
                                                     <img
-                                                        src={`http://localhost:5000/Public/Images/${Material.content[0].stepContent.file}`}
-                                                        alt="imagem do Material"
+                                                        src={`http://localhost:5000/Public/Images/${material.content[0].stepContent.file}`}
+                                                        alt="imagem do material"
                                                         className="w-full h-full object-cover rounded-t-lg"
                                                     />
                                                 )}
                                                 <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
                                                 <div className="p-4">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
-                                                        <time dateTime={Material.updatedAt} className="text-gray-500">
-                                                            {format(new Date(Material.updatedAt), "MMMM, dd yyyy", {
+                                                        <time dateTime={material.updatedAt} className="text-gray-500">
+                                                            {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
                                                                 locale: ptBR,
                                                             })}
                                                         </time>
@@ -150,32 +148,55 @@ export default function Homepage() {
                                                     <div className="group relative">
                                                         <h3 className="mt-3 text-lg font-semibold leading-5 text-gray-900 group-hover:text-gray-600">
                                                             <span className="absolute inset-0" />
-                                                            {Material.content[0].stepContent.title}
+                                                            {material.content[0].stepContent.title}
                                                         </h3>
-                                                        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                                                            {Material.content[0].stepContent.text}
+                                                        <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
+                                                            {material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="p-4">
-                                                <div className="flex items-center gap-x-2">
-                                                    <div className="relative flex items-center gap-x-2">
-                                                        <UserCircleIcon className="h-12 text-primary" />
-                                                        <div className="text-sm leading-5">
-                                                            <p className="font-semibold text-secondary">
-                                                                <span className="absolute inset-0" />
-                                                                {Material.user.name}
-                                                            </p>
-                                                            <p className="text-secondary">@{Material.user.nickname}</p>
-                                                        </div>
+                                        </Link>
+                                        <div className="p-4">
+                                            <div className="flex items-center gap-x-2">
+                                                <div className="relative flex items-center gap-x-2">
+                                                    <UserCircleIcon className="h-12 text-primary" />
+                                                    <div className="text-sm leading-5">
+                                                        <p className="font-semibold text-secondary">
+                                                            <span className="absolute inset-0" />
+                                                            {material.user.name}
+                                                        </p>
+                                                        <p className="text-secondary">@{material.user.nickname}</p>
                                                     </div>
-                                                    <div className="ml-auto">
-                                                        {/* delete btn */}
-                                                        {user && (user.name === Material.user.name || user.role === "admin") && (
+                                                </div>
+                                                <div className="ml-auto">
+                                                    {/* delete btn */}
+                                                    {user && (user.role === "admin" || user._id === material.user._id) && (
+                                                        <button
+                                                            onClick={() => handleDelete(material._id)}
+                                                            className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                                                        >
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                strokeWidth={1.5}
+                                                                stroke="currentColor"
+                                                                className="w-6 h-6"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                />
+                                                            </svg>
+                                                        </button>
+                                                    )}
+                                                    {/* edit btn */}
+                                                    {user && (user._id === material.user._id) && (
+                                                        <Link to={`/forum/edit-material/${material._id}`}>
                                                             <button
-                                                                onClick={() => handleDelete(Material._id)}
-                                                                className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                                                                className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
                                                             >
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
@@ -188,47 +209,25 @@ export default function Homepage() {
                                                                     <path
                                                                         strokeLinecap="round"
                                                                         strokeLinejoin="round"
-                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                                                                     />
                                                                 </svg>
                                                             </button>
-                                                        )}
-                                                        {/* edit btn */}
-                                                        {user && user.name === Material.user.name && (
-                                                            <Link to={`/forum/edit-Material/${Material._id}`}>
-                                                                <button
-                                                                    className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
-                                                                >
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none"
-                                                                        viewBox="0 0 24 24"
-                                                                        strokeWidth={1.5}
-                                                                        stroke="currentColor"
-                                                                        className="w-6 h-6"
-                                                                    >
-                                                                        <path
-                                                                            strokeLinecap="round"
-                                                                            strokeLinejoin="round"
-                                                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                                                                        />
-                                                                    </svg>
-                                                                </button>
-                                                            </Link>
-                                                        )}
-                                                    </div>
+                                                        </Link>
+                                                    )}
                                                 </div>
                                             </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            {/* alterar o tamanho do card para ficar menor sem a imagem */}
-                                            <div className="relative w-full">
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link to={`/forum/get-material/${material._id}`}>
+                                            <div className="relative bg-white shadow-md full">
                                                 <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
                                                 <div className="p-4">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
-                                                        <time dateTime={Material.updatedAt} className="text-gray-500">
-                                                            {format(new Date(Material.updatedAt), "MMMM, dd yyyy", {
+                                                        <time dateTime={material.updatedAt} className="text-gray-500">
+                                                            {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
                                                                 locale: ptBR,
                                                             })}
                                                         </time>
@@ -236,32 +235,55 @@ export default function Homepage() {
                                                     <div className="group relative">
                                                         <h3 className="mt-3 text-lg font-semibold leading-5 text-gray-900 group-hover:text-gray-600">
                                                             <span className="absolute inset-0" />
-                                                            {Material.content[0].stepContent.title}
+                                                            {material.title}
                                                         </h3>
-                                                        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                                                            {Material.content[0].stepContent.text}
+                                                        <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
+                                                            {material.description}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="p-4">
-                                                <div className="flex -mb-2 items-center gap-x-2">
-                                                    <div className="relative flex items-center gap-x-2">
-                                                        <UserCircleIcon className="h-12 text-primary" />
-                                                        <div className="text-sm leading-5">
-                                                            <p className="font-semibold text-secondary">
-                                                                <span className="absolute inset-0" />
-                                                                {Material.user.name}
-                                                            </p>
-                                                            <p className="text-secondary">@{Material.user.nickname}</p>
-                                                        </div>
+                                        </Link>
+                                        <div className="p-4">
+                                            <div className="flex -mb-2 items-center gap-x-2">
+                                                <div className="relative flex items-center gap-x-2">
+                                                    <UserCircleIcon className="h-12 text-primary" />
+                                                    <div className="text-sm leading-5">
+                                                        <p className="font-semibold text-secondary">
+                                                            <span className="absolute inset-0" />
+                                                            {material.user.name}
+                                                        </p>
+                                                        <p className="text-secondary">@{material.user.nickname}</p>
                                                     </div>
-                                                    <div className="ml-auto">
-                                                        {/* delete btn */}
-                                                        {user && (user.name === Material.user.name || user.role === "admin") && (
+                                                </div>
+                                                <div className="ml-auto">
+                                                    {/* delete btn */}
+                                                    {user && (user.role === "admin" || user._id === material.user._id) && (
+                                                        <button
+                                                            onClick={() => handleDelete(material._id)}
+                                                            className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                                                        >
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                strokeWidth={1.5}
+                                                                stroke="currentColor"
+                                                                className="w-6 h-6"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                />
+                                                            </svg>
+                                                        </button>
+                                                    )}
+                                                    {/* edit btn */}
+                                                    {user && user.name === material.user.name && (
+                                                        <Link to={`/forum/edit-material/${material._id}`}>
                                                             <button
-                                                                onClick={() => handleDelete(Material._id)}
-                                                                className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                                                                className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
                                                             >
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
@@ -274,41 +296,17 @@ export default function Homepage() {
                                                                     <path
                                                                         strokeLinecap="round"
                                                                         strokeLinejoin="round"
-                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                                                                     />
                                                                 </svg>
                                                             </button>
-                                                        )}
-                                                        {/* edit btn */}
-                                                        {user && user.name === Material.user.name && (
-                                                            <Link to={`/forum/edit-Material/${Material._id}`}>
-                                                                <button
-                                                                    className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
-                                                                >
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none"
-                                                                        viewBox="0 0 24 24"
-                                                                        strokeWidth={1.5}
-                                                                        stroke="currentColor"
-                                                                        className="w-6 h-6"
-                                                                    >
-                                                                        <path
-                                                                            strokeLinecap="round"
-                                                                            strokeLinejoin="round"
-                                                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                                                                        />
-                                                                    </svg>
-                                                                </button>
-                                                            </Link>
-                                                        )}
-                                                    </div>
+                                                        </Link>
+                                                    )}
                                                 </div>
                                             </div>
-                                        </>
-                                    )}
-
-                                </Link>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         ))}
                     </div>

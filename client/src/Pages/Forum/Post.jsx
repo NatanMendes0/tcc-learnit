@@ -183,8 +183,9 @@ function Post() {
                             </div>
                         </form>
                     </div>
-
                 </div>
+
+                {/* comment section */}
                 <div className='p-5 mt-5 mx-auto max-w-6xl'>
                     <h1 className="subtitle text-2xl">Comentários</h1>
                     {post.ratings && post.ratings.length > 0 ? (

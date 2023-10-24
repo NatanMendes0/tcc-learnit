@@ -93,10 +93,10 @@ const getMaterials = asyncHandler(async (req, res, next) => {
     }
 });
 
-const getMaterial = asyncHandler(async (req, res, next) => {
+const getMaterial = asyncHandler(async (req, res) => {
     const materialId = req.params.id;
     try {
-        const material = await Material.findById(materialId).populate('user', 'name');
+        const material = await Material.findById(materialId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname" }] }).populate("user", "name nickname");
         if (!material) {
             res.status(404).json({ message: 'Material não encontrado' });
             return;
@@ -146,39 +146,19 @@ const deleteMaterial = asyncHandler(async (req, res) => {
 const rating = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     const prodId = req.params.id;
-    const { liked, comment } = req.body;
+    const { comment } = req.body;
     try {
-        const Material = await Material.findById(prodId);
-        if (!Material) {
+        const material = await Material.findById(prodId);
+        if (!material) {
             return res.status(404).json({ message: "Material não encontrado" });
         }
 
-        let alreadyRated = Material.ratings.find(
-            (rating) => rating.Materialedby.toString() === _id.toString()
-        );
+        material.ratings.push({
+            comment,
+            postedby: _id,
+        });
 
-        if (alreadyRated) {
-            alreadyRated.liked = liked;
-            alreadyRated.comment = comment;
-        } else {
-            Material.ratings.push({
-                liked,
-                comment,
-                Materialedby: _id,
-            });
-        }
-
-        await Material.save();
-
-        const totalLikes = Material.ratings.filter(
-            (rating) => rating.liked === true
-        ).length;
-        const totalDislikes = Material.ratings.filter(
-            (rating) => rating.liked === false
-        ).length;
-
-        Material.totalLikes = totalLikes;
-        Material.totalDislikes = totalDislikes;
+        await material.save();
 
         res.json(Material);
     } catch (error) {
