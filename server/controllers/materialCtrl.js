@@ -7,8 +7,6 @@ const formidable = require('formidable');
 const fs = require('fs');
 
 const createMaterial = asyncHandler(async (req, res, next) => {
-    var step = 0; // todo - adicionar metodo que verifica o ultimo step e incrementa
-    
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
         if (err) throw err;
@@ -33,7 +31,6 @@ const createMaterial = asyncHandler(async (req, res, next) => {
                 user: user._id,
                 content: [
                     {
-                        steps: step++,
                         stepContent: {
                             title: title,
                             text: text,
@@ -143,6 +140,21 @@ const deleteMaterial = asyncHandler(async (req, res) => {
     }
 });
 
+const addStep = asyncHandler(async (req, res, next) => {
+    const materialId = req.params.id;
+    try {
+        const material = await Material.findById(materialId);
+        if (!material) {
+            res.status(404).json({ message: 'Material não encontrado' });
+            return;
+        }
+        const step = material.steps.length + 1;
+        res.json({ step });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao obter o material', error });
+    }
+});
+
 const rating = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     const prodId = req.params.id;
@@ -174,5 +186,6 @@ module.exports = {
     getMaterial,
     editMaterial,
     deleteMaterial,
+    addStep,
     rating,
 };
