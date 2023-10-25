@@ -138,7 +138,7 @@ export default function Homepage() {
                             className="w-full h-full object-cover rounded-t-lg"
                           />
                         )}
-                        <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
+                        <div className="absolute rounded-lg" />
                         <div className="p-4">
                           <div className="mt-2 flex items-center gap-x-4 text-md">
                             <time dateTime={post.updatedAt} className="text-gray-500">
@@ -225,7 +225,7 @@ export default function Homepage() {
                   <>
                     <Link to={`/forum/get-post/${post._id}`}>
                       <div className="relative bg-white shadow-md full">
-                        <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
+                        <div className="absolute rounded-lg" />
                         <div className="p-4">
                           <div className="mt-2 flex items-center gap-x-4 text-md">
                             <time dateTime={post.updatedAt} className="text-gray-500">

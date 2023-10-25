@@ -23,6 +23,7 @@ export default function Create() {
       toast.success("Material criado com sucesso!");
     } catch (error) {
       toast.error(error.message);
+      navigate("../materials", { replace: false });
     }
   };
 
@@ -85,7 +86,7 @@ export default function Create() {
                 </div>
               </div>
             </div>
-            
+
             {/* Adicione o campo de nota */}
             <label htmlFor="note" className="sr-only">
               Nota

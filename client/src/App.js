@@ -31,6 +31,9 @@ import Materials from "./Pages/Materials/Homepage";
 import MaterialsCreate from "./Pages/Materials/Create";
 
 import Material from "./Pages/Materials/Material";
+// import MaterialEdit from "./Pages/Materials/Edit";
+import AddStep from "./Pages/Materials/AddStep";
+
 
 import Register from "./Pages/Auth/Register";
 import Login from "./Pages/Auth/Login";
@@ -68,7 +71,7 @@ function App() {
       <PostProvider>
         <MaterialProvider>
           <QueryClientProvider client={queryClient}>
-            <div className="relative flex flex-col min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary ">
+            <div className="relative flex flex-col min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary">
               <BrowserRouter>
                 <Navbar />
                 <Routes>
@@ -113,6 +116,24 @@ function App() {
                     element={
                       <PrivateRoute>
                         <MaterialsCreate />
+                      </PrivateRoute>
+                    }
+                  />
+
+                  {/* <Route
+                    path="/materials/edit-material/:id"
+                    element={
+                      <PrivateRoute>
+                        <MaterialEdit />
+                      </PrivateRoute>
+                    }
+                  /> */}
+
+                  <Route
+                    path="/materials/add-step/:id"
+                    element={
+                      <PrivateRoute>
+                        <AddStep />
                       </PrivateRoute>
                     }
                   />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { toast } from 'react-toastify';
@@ -69,17 +69,34 @@ function Material() {
     return (
         <>
             <div>
-                {material && material.content.map((materialItem) => (
-                    <div key={materialItem._id}>
-                        <h2>{materialItem.stepContent.title}</h2>
-                        <p>{materialItem.stepContent.text}</p>
-                        <img className='w-20' src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`} alt="Imagem do conteúdo" onClick={() => openModal(materialItem.stepContent.file)} />
-                        <p>{materialItem.stepContent.note}</p>
-                    </div>
-                ))}
+                <div className='my-10'>
+                    {material && material.content.map((materialItem) => (
+                        <div key={materialItem._id}>
+                            <img className='w-20' src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`} alt="Imagem do conteúdo" onClick={() => openModal(materialItem.stepContent.file)} />
+                            <h2>{materialItem.stepContent.title}</h2>
+                            <p>{materialItem.stepContent.text}</p>
+                            <p>{materialItem.stepContent.note}</p>
+
+                            {/* doing */}
+                            <Link to={`/materials/add-step/${material._id}`}>
+                                <p className='bg-blue-500 text-white'>Adicionar passo</p>
+                            </Link>
+
+                            {/* todo */}
+                            <Link to={`/materials/edit-material/${materialItem._id}`}>
+                                <p className='bg-gray-500 text-white'>Editar passo</p>
+                            </Link>
+
+                            {/* todo */}
+                            <Link to="#">
+                                <p className='bg-red-500 text-white'>Apagar passo</p>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
 
                 {/* add comment */}
-                <div className='p-5 rounded-b-lg bg-gray-400'>
+                <div className='p-5 rounded-lg bg-gray-400'>
                     <form onSubmit={handleSubmit(onSubmit)} className='flex w-auto gap-x-2 items-center'>
                         <label htmlFor='comment' className='sr-only'></label>
                         <input

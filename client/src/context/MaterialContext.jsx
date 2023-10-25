@@ -94,8 +94,31 @@ const MaterialProvider = ({ children }) => {
                 (material) => material._id !== id
             );
             setMaterials(newMaterials);
-
             toast.success("Material removido com sucesso!");
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    };
+
+    const registerStep = async (stepData, materialId) => {
+        try {
+            const response = await api.post(`/materials/add-step/${materialId}`, stepData, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            const newMaterials = materials.map((material) => {
+                if (material._id === materialId) {
+                    return {
+                        ...material,
+                        steps: [...material.steps, response.data],
+                    };
+                }
+                return material;
+            });
+            setMaterials(newMaterials);
+            toast.success("Passo registrado com sucesso!");
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -110,6 +133,7 @@ const MaterialProvider = ({ children }) => {
                 get,
                 remove,
                 update,
+                registerStep,
             }}
         >
             {children}

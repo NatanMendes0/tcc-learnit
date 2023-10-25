@@ -1,14 +1,21 @@
-const { number } = require('joi')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
+//todo - adicionar no relatorio a mudança dos campos
 const MaterialSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    steps: {
+        type: Number,
+        default: 0,
+      },
     content: [
         {
-            steps: Number,
+            step: {
+                type: Number,
+                default: 0,
+            },
             stepContent: {
                 title: String,
                 text: String,
@@ -26,9 +33,14 @@ const MaterialSchema = new mongoose.Schema({
             },
         }
     ],
-    Likes: Number,
 },
     { timestamps: true }
-)
+);
 
-module.exports = mongoose.model('Material', MaterialSchema)
+// count the number of steps
+MaterialSchema.pre('save', function (next) {
+    this.steps = this.content.length;
+    next();
+});
+
+module.exports = mongoose.model('Material', MaterialSchema);

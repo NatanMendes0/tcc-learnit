@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const createMaterial = asyncHandler(async (req, res, next) => {
     var step = 0; // todo - adicionar metodo que verifica o ultimo step e incrementa
-
+    
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
         if (err) throw err;

@@ -136,7 +136,7 @@ export default function Homepage() {
                                                         className="w-full h-full object-cover rounded-t-lg"
                                                     />
                                                 )}
-                                                <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
+                                                <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
                                                 <div className="p-4">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
                                                         <time dateTime={material.updatedAt} className="text-gray-500">
@@ -174,7 +174,7 @@ export default function Homepage() {
                                                     {user && (user.role === "admin" || user._id === material.user._id) && (
                                                         <button
                                                             onClick={() => handleDelete(material._id)}
-                                                            className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                                                            className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
                                                         >
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -192,29 +192,6 @@ export default function Homepage() {
                                                             </svg>
                                                         </button>
                                                     )}
-                                                    {/* edit btn */}
-                                                    {user && (user._id === material.user._id) && (
-                                                        <Link to={`/forum/edit-material/${material._id}`}>
-                                                            <button
-                                                                className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
-                                                            >
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                    strokeWidth={1.5}
-                                                                    stroke="currentColor"
-                                                                    className="w-6 h-6"
-                                                                >
-                                                                    <path
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                                                                    />
-                                                                </svg>
-                                                            </button>
-                                                        </Link>
-                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -223,7 +200,7 @@ export default function Homepage() {
                                     <>
                                         <Link to={`/forum/get-material/${material._id}`}>
                                             <div className="relative bg-white shadow-md full">
-                                                <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-gray-900/10" />
+                                                <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
                                                 <div className="p-4">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
                                                         <time dateTime={material.updatedAt} className="text-gray-500">
@@ -261,7 +238,7 @@ export default function Homepage() {
                                                     {user && (user.role === "admin" || user._id === material.user._id) && (
                                                         <button
                                                             onClick={() => handleDelete(material._id)}
-                                                            className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                                                            className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
                                                         >
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -278,29 +255,6 @@ export default function Homepage() {
                                                                 />
                                                             </svg>
                                                         </button>
-                                                    )}
-                                                    {/* edit btn */}
-                                                    {user && user.name === material.user.name && (
-                                                        <Link to={`/forum/edit-material/${material._id}`}>
-                                                            <button
-                                                                className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
-                                                            >
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                    strokeWidth={1.5}
-                                                                    stroke="currentColor"
-                                                                    className="w-6 h-6"
-                                                                >
-                                                                    <path
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                                                                    />
-                                                                </svg>
-                                                            </button>
-                                                        </Link>
                                                     )}
                                                 </div>
                                             </div>
