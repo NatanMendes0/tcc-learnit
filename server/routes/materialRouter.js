@@ -8,6 +8,7 @@ const {
     deleteMaterial,
     rating,
     addStep,
+    deleteStep,
 } = require('../controllers/materialCtrl')
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware')
 
@@ -20,6 +21,7 @@ router.get('/get-material/:id', getMaterial)
 router.put('/edit-material/:id', authMiddleware, isAdmin, editMaterial)
 router.delete('/delete-material/:id', authMiddleware, isAdmin, deleteMaterial)
 router.post('/add-step/:id', authMiddleware, isAdmin, addStep)
+router.delete('/:materialId/delete-step/:stepId', authMiddleware, isAdmin, deleteStep)
 router.post('/rating/:id', authMiddleware, rating)
 
 module.exports = router

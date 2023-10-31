@@ -79,13 +79,13 @@ export default function Account() {
                                     },
                                 })}
                             />
-                            {errors.name && (
-                                <span className="text-sm text-red-500">
-                                    {errors.name.message}
-                                </span>
-                            )}
                         </div>
                     </div>
+                    {errors.name && (
+                        <span className="text-sm text-red-500">
+                            {errors.name.message}
+                        </span>
+                    )}
                     <div>
                         <label htmlFor="nickname" className="block text-sm font-semibold leading-6 text-gray-900">Nome de usuário</label>
                         <div className="flex">
@@ -101,6 +101,12 @@ export default function Account() {
                                     className="block w-full rounded-r-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
                                     {...register("nickname", {
                                         required: "Campo obrigatório",
+                                        validate: (value) => {
+                                            const regex = /^\S*$/; // no spaces
+                                            return (
+                                                regex.test(value) || "Campo não pode conter espaços"
+                                            );
+                                        },
                                         minLength: {
                                             value: 3,
                                             message: "Digite um título com ao menos 3 caracteres",
@@ -111,13 +117,13 @@ export default function Account() {
                                         },
                                     })}
                                 />
-                                {errors.name && (
-                                    <span className="text-sm text-red-500">
-                                        {errors.name.message}
-                                    </span>
-                                )}
                             </div>
                         </div>
+                        {errors.nickname && (
+                            <span className="text-sm text-red-500">
+                                {errors.nickname.message}
+                            </span>
+                        )}
                     </div>
                     <div>
                         <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">Email</label>

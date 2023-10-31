@@ -7,6 +7,7 @@ const formidable = require('formidable');
 const fs = require('fs');
 
 const createMaterial = asyncHandler(async (req, res, next) => {
+    var step = 0;
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
         if (err) throw err;
@@ -31,6 +32,7 @@ const createMaterial = asyncHandler(async (req, res, next) => {
                 user: user._id,
                 content: [
                     {
+                        step: step + 1,
                         stepContent: {
                             title: title,
                             text: text,
@@ -41,7 +43,6 @@ const createMaterial = asyncHandler(async (req, res, next) => {
                     },
                 ],
             };
-
             try {
                 const newMaterial = Material.create(newMaterialData);
                 res.json({ message: 'Material criado com sucesso!', material: newMaterial });
@@ -59,7 +60,7 @@ const createMaterial = asyncHandler(async (req, res, next) => {
                 user: user._id,
                 content: [
                     {
-                        steps: step++,
+                        steps: step + 1,
                         stepContent: {
                             title: title,
                             text: text,
@@ -130,8 +131,8 @@ const editMaterial = asyncHandler(async (req, res) => {
 const deleteMaterial = asyncHandler(async (req, res) => {
     const materialId = req.params.id;
     try {
-        const deletedMaterial = await Material.findByIdAndDelete(materialId);
-        if (!deletedMaterial) {
+        const deletedStep = await Material.findByIdAndDelete(materialId);
+        if (!deletedStep) {
             return res.status(404).json({ message: "Material não encontrado" });
         }
         res.json({ message: "Material deletado com sucesso!" });
@@ -140,20 +141,140 @@ const deleteMaterial = asyncHandler(async (req, res) => {
     }
 });
 
+// todo - arrumar a lógica de inserção
 const addStep = asyncHandler(async (req, res, next) => {
-    const materialId = req.params.id;
+    // const materialId = req.params.id;
+    // console.log(materialId)
+    // try {
+    //     const material = await Material.findById(materialId);
+    //     if (!material) {
+    //         res.status(404).json({ message: 'Material não encontrado' });
+    //         return;
+    //     }
+    //     const step = material.steps.length + 1;
+    //     res.json({ step });
+    // } catch (error) {
+    //     res.status(500).json({ message: 'Erro ao obter o material', error });
+    // }
+
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+        if (err) throw err;
+
+        if (files['file[]'] && Array.isArray(files['file[]']) && files['file[]'].length > 0) {
+            // One file was uploaded
+            var oldpath = files['file[]'][0].filepath;
+            var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+            var ext = path.extname(files['file[]'][0].originalFilename);
+            var nomeimg = hash + ext;
+            var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
+
+            fs.rename(oldpath, newpath, function (err) {
+                if (err) throw err;
+            });
+
+            const materialId = req.params.id;
+            const material = Material.findById(materialId);
+
+            var title = fields.title[0];
+            var text = fields.text[0];
+            var note = fields.note[0];
+            var user = req.user;
+
+            const newMaterialData = {
+                user: user._id,
+                step: material.step.length + 1,
+                stepContent: {
+                    title: title,
+                    text: text,
+                    file: nomeimg ? nomeimg : null,
+                    filePath: nomeimg ? `/Images/${nomeimg}` : null,
+                    note: note ? note : null,
+                }
+            };
+
+            material.content.push(newMaterialData);
+
+            try {
+                material.save();
+                console.log("material salvo: ", material);
+            } catch (error) {
+                res.status(500).json({ message: 'Erro ao criar o material', error });
+            }
+        }
+        else {
+            // No files were uploaded
+            var title = fields.title[0];
+            var text = fields.text[0];
+            var note = fields.note[0];
+            var user = req.user;
+            const newMaterialData = {
+                user: user._id,
+                content: [
+                    {
+                        steps: step++,
+                        stepContent: {
+                            title: title,
+                            text: text,
+                            file: nomeimg ? nomeimg : null,
+                            filePath: nomeimg ? `/Images/${nomeimg}` : null,
+                            note: note ? note : null,
+                        }
+                    },
+                ],
+            };
+
+            try {
+                const newMaterial = Material.create(newMaterialData);
+                res.json({ message: 'Material criado com sucesso!', material: newMaterial });
+            } catch (error) {
+                res.status(500).json({ message: 'Erro ao criar o material', error });
+            }
+        }
+    });
+});
+
+const deleteStep = asyncHandler(async (req, res) => {
+    const materialId = req.params.materialId;
+    const stepId = req.params.stepId;
+
     try {
         const material = await Material.findById(materialId);
         if (!material) {
-            res.status(404).json({ message: 'Material não encontrado' });
-            return;
+            return res.status(404).json({ message: "Material não encontrado" });
         }
-        const step = material.steps.length + 1;
-        res.json({ step });
+
+        material.findByIdAndDelete(material.content[stepId]);
+
+        await material.save();
+
+        res.json({ message: "Passo deletado com sucesso!" });
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao obter o material', error });
+        res.status(500).json({ message: "Erro ao deletar o Passo: ", error });
     }
+
+    // try {
+    //     const material = await Material.findById(materialId);
+    //     if (!material) {
+    //         return res.status(404).json({ message: "Material não encontrado" });
+    //     }
+
+    //     const stepIndex = material.content.findIndex(step => step._id === stepId);
+
+    //     if (stepIndex === -1) {
+    //         return res.status(404).json({ message: "Passo não encontrado" });
+    //     }
+
+    //     material.content.remove(material.content[stepIndex]); // Remove o passo do array de passos
+
+    //     await material.save(); // Salva o material após a remoção
+
+    //     res.json({ message: "Passo deletado com sucesso!" });
+    // } catch (error) {
+    //     res.status(500).json({ message: "Erro ao deletar o Passo", error });
+    // }
 });
+
 
 const rating = asyncHandler(async (req, res) => {
     const { _id } = req.user;
@@ -187,5 +308,6 @@ module.exports = {
     editMaterial,
     deleteMaterial,
     addStep,
+    deleteStep,
     rating,
 };
