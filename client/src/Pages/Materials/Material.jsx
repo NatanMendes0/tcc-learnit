@@ -43,7 +43,6 @@ function Material() {
         async function fetchMaterial() {
             const MaterialData = await getMaterial();
             setMaterial(MaterialData);
-            console.log(MaterialData);
         }
         fetchMaterial();
     }, []);
@@ -55,7 +54,6 @@ function Material() {
     } = useForm()
 
     const onSubmit = async (data) => {
-        console.log(data)
         try {
             const response = await api.post(`/materials/rating/${id}`, {
                 comment: data.comment,
@@ -127,7 +125,7 @@ function Material() {
                                     <img
                                         src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`}
                                         alt="imagem do post"
-                                        className="w-[40%] rounded-3xl aspect-[16/9] sm:aspect-[2/1] lg:aspect-[16/9] object-contain"
+                                        className="w-[40%] rounded-3xl sm:aspect-[2/1] lg:aspect-[16/9] object-cover h-full"
                                     />
                                 </div>
                             ) : (
@@ -255,8 +253,8 @@ function Material() {
                     {material.ratings && material.ratings.length > 0 ? (
                         <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
                             <ul>
-                                {material.ratings.map((rating, index) => (
-                                    <li key={index}>
+                                {material.ratings.map((rating) => (
+                                    <li key={rating._id}>
                                         <div className="p-4">
                                             <div className="flex items-center gap-x-2">
                                                 <div className="relative flex items-center gap-x-2">

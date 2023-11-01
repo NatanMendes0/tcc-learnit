@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
@@ -11,29 +11,13 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [current, setCurrent] = useState("/");
-  const [isHeaderFixed, setHeaderFixed] = useState(false); // Novo estado para controlar a classe CSS
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const auth = useAuth();
   const location = useLocation();
 
-  // Adicionar um evento de rolagem para atualizar o estado de "isHeaderFixed"
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setHeaderFixed(true);
-      } else {
-        setHeaderFixed(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+  console.log(current);
+  
   const navigation = [
     { name: "Página Inicial", href: "/", current: location.pathname === "/" },
     { name: "Fórum", href: "/forum", current: location.pathname.startsWith("/forum") },
@@ -149,7 +133,7 @@ export default function Navbar() {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
+                              <button
                                 onClick={logout}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
@@ -157,7 +141,7 @@ export default function Navbar() {
                                 )}
                               >
                                 Sair
-                              </a>
+                              </button>
                             )}
                           </Menu.Item>
                         </>

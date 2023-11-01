@@ -146,7 +146,6 @@ const addStep = asyncHandler(async (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, async function (err, fields, files) {
         if (err) throw err;
-
         if (files['file[]'] && Array.isArray(files['file[]']) && files['file[]'].length > 0) {
             // One file was uploaded
             var oldpath = files['file[]'][0].filepath;

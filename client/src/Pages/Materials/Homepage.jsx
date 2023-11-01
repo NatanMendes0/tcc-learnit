@@ -96,7 +96,7 @@ export default function Homepage() {
                                 to="/forum"
                                 className="text-sm font-semibold leading-6 text-font_secondary hover:text-secondary"
                             >
-                                Acesse o Fórum <span aria-hidden="true">→</span>
+                                Acesse os materiais <span aria-hidden="true">→</span>
                             </Link>
                         </div>
                     </div>
