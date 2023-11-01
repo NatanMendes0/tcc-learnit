@@ -9,13 +9,9 @@ const MaterialSchema = new mongoose.Schema({
     steps: {
         type: Number,
         default: 0,
-      },
+    },
     content: [
         {
-            step: {
-                type: Number,
-                default: 0,
-            },
             stepContent: {
                 title: String,
                 text: String,

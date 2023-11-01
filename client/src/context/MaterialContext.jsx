@@ -100,16 +100,17 @@ const MaterialProvider = ({ children }) => {
         }
     };
 
-    const registerStep = async (stepData, materialId) => {
+    const registerStep = async (info, id) => {
+        console.log("info recebida do registerStep: ", info);
         try {
-            const response = await api.post(`/materials/add-step/${materialId}`, stepData, {
+            const response = await api.post(`/materials/add-step/${id}`, info, {
                 headers: {
-                    Authorization: `Bearer ${auth.token}`,
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data",
                 },
             });
             const newMaterials = materials.map((material) => {
-                if (material._id === materialId) {
+                if (material._id === id) {
                     return {
                         ...material,
                         steps: [...material.steps, response.data],

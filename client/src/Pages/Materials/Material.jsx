@@ -104,8 +104,8 @@ function Material() {
                     </div>
                 ) : null}
 
-                <div className="mx-auto p-4 max-w-6xl bg-tertiary rounded-lg shadow-2xl mt-12">
-                    {material && material.content.map((materialItem) => (
+                {material && material.content.map((materialItem) => (
+                    <div className="mx-auto p-4 max-w-6xl bg-tertiary rounded-lg shadow-2xl mt-12">
                         <div key={materialItem._id}>
                             <h1 className='title px-2 mt-3 text-4xl text-font_primary text-left'>{materialItem.stepContent.title}</h1>
                             <p className='subtitle px-2 mt-3 text-left'>{materialItem.stepContent.text}</p>
@@ -154,15 +154,6 @@ function Material() {
                                 </div>
                             )}
                             <div className="flex items-center mt-5 justify-around">
-                                <Link to={`/materials/add-step/${material._id}`}>
-                                    <button className='text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                        </svg>
-                                    </button>
-                                </Link>
-
-
                                 <Link to={`/materials/edit-material/${materialItem._id}`}>
                                     <button
                                         className="text-white cursor-pointer bg-gray-700 p-2 hover:bg-gray-800 rounded-lg"
@@ -204,7 +195,19 @@ function Material() {
                                 </button>
                             </div>
                         </div>
-                    ))}
+                    </div>
+                ))}
+                <div className="mx-auto mt-8 text-center">
+                    <Link to={`/materials/add-step/${material._id}`}>
+                        <div className='flex justify-center items-center'>
+                            <button className='text-white flex items-center gap-x-2 cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg'>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                Adicionar novo
+                            </button>
+                        </div>
+                    </Link>
                 </div>
 
                 {/* add comment */}
