@@ -133,7 +133,7 @@ export default function Navbar() {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <button
+                              <Link
                                 onClick={logout}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
@@ -141,7 +141,7 @@ export default function Navbar() {
                                 )}
                               >
                                 Sair
-                              </button>
+                              </Link>
                             )}
                           </Menu.Item>
                         </>

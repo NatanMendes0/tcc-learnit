@@ -52,7 +52,6 @@ const MaterialProvider = ({ children }) => {
                     Authorization: `Bearer ${auth.token}`,
                 },
             });
-
             return response.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -125,6 +124,30 @@ const MaterialProvider = ({ children }) => {
         }
     };
 
+    const deleteStep = async (id, stepId) => {
+        try {
+            await api.delete(`/materials/delete-step/${id}/${stepId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const newMaterials = materials.map((material) => {
+                if (material._id === id) {
+                    return {
+                        ...material,
+                        steps: material.steps.filter((step) => step._id !== stepId),
+                    };
+                }
+                return material;
+            });
+            setMaterials(newMaterials);
+            toast.success("Passo removido com sucesso!");
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
+
     return (
         <MaterialContext.Provider
             value={{
@@ -135,6 +158,7 @@ const MaterialProvider = ({ children }) => {
                 remove,
                 update,
                 registerStep,
+                deleteStep,
             }}
         >
             {children}

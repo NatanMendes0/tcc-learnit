@@ -20,7 +20,6 @@ export default function AddStep() {
     const onSubmit = async (data) => {
         try {
             await materialContext.registerStep(data, id);
-            toast.success("Passo criado com sucesso!");
             navigate(`../materials/get-material/${id}`, { replace: false });
         } catch (error) {
             toast.error(error.message || "Erro ao criar passo" + error);

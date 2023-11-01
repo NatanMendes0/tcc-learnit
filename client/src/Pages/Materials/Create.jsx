@@ -20,7 +20,6 @@ export default function Create() {
     try {
       await materialContext.register(data);
       navigate("../materials", { replace: false });
-      toast.success("Material criado com sucesso!");
     } catch (error) {
       toast.error(error.message);
       navigate("../materials", { replace: false });
