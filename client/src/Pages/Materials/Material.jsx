@@ -108,11 +108,11 @@ function Material() {
                     <div className="mx-auto p-4 max-w-6xl bg-tertiary rounded-lg shadow-2xl mt-12">
                         <div key={materialItem._id}>
                             <h1 className='title px-2 mt-3 text-4xl text-font_primary text-left'>{materialItem.stepContent.title}</h1>
-                            <p className='subtitle px-2 mt-3 text-left'>{materialItem.stepContent.text}</p>
+                            <p className='text-xl text-justify px-2 mt-3'>{materialItem.stepContent.text}</p>
                             <p className='subtitle text-base mt-3 px-2 text-left'>Nota: {materialItem.stepContent.note}</p>
                             {materialItem.stepContent.file ? (
                                 <div
-                                    className="relative cursor-pointer mt-3 flex justify-center items-center"
+                                    className="relative cursor-pointer mt-10 flex justify-center items-center"
                                     onClick={() =>
                                         openModal(`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`)
                                     }
