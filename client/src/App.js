@@ -31,8 +31,8 @@ import Materials from "./Pages/Materials/Homepage";
 import MaterialsCreate from "./Pages/Materials/Create";
 
 import Material from "./Pages/Materials/Material";
-// import MaterialEdit from "./Pages/Materials/Edit";
 import AddStep from "./Pages/Materials/AddStep";
+import EditStep from "./Pages/Materials/EditStep";
 
 
 import Register from "./Pages/Auth/Register";
@@ -120,20 +120,20 @@ function App() {
                     }
                   />
 
-                  {/* <Route
-                    path="/materials/edit-material/:id"
-                    element={
-                      <PrivateRoute>
-                        <MaterialEdit />
-                      </PrivateRoute>
-                    }
-                  /> */}
-
                   <Route
                     path="/materials/add-step/:id"
                     element={
                       <PrivateRoute>
                         <AddStep />
+                      </PrivateRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/materials/edit-step/:id/:stepId"
+                    element={
+                      <PrivateRoute>
+                        <EditStep />
                       </PrivateRoute>
                     }
                   />

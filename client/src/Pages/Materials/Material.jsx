@@ -126,7 +126,7 @@ function Material() {
                                 {user && user.role === "admin" && (
                                     <div className="flex items-center gap-x-1">
                                         {/* edit btn */}
-                                        <Link to={`/materials/edit-material/${materialItem._id}`}>
+                                        <Link to={`/materials/edit-step/${material._id}/${materialItem._id}`}>
                                             <button className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@ function Material() {
                                         </Link>
 
                                         {/* delete btn */}
-                                        {material && material.content.length > 1 && (
+                                        {material && material.content.length > 1 ? (
                                             <button
                                                 onClick={() => handleDelete(material._id, materialItem._id)}
                                                 className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"
@@ -166,7 +166,7 @@ function Material() {
                                                     />
                                                 </svg>
                                             </button>
-                                        ) || (
+                                        ) : (
                                                 <button
                                                     onClick={() => handleDeleteMaterial(material._id)}
                                                     className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"

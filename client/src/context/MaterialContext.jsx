@@ -124,6 +124,56 @@ const MaterialProvider = ({ children }) => {
         }
     };
 
+    const getStep = async (id, stepId) => {
+        try {
+            const response = await api.get(
+                `/materials/get-step/${id}/${stepId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    };
+
+    const updateStep = async (id, stepId, data) => {
+        try {
+            const response = await api.put(
+                `/materials/edit-step/${id}/${stepId}`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            const updatedStep = response.data;
+            const updatedMaterials = materials.map((material) => {
+                if (material._id === id) {
+                    return {
+                        ...material,
+                        steps: material.steps.map((step) =>
+                            step._id === stepId ? updatedStep : step
+                        ),
+                    };
+                }
+                return material;
+            });
+            setMaterials(updatedMaterials);
+            toast.success("Passo atualizado com sucesso!");
+        } catch (error) {
+            toast.error(
+                error.response?.data?.message || "Erro ao atualizar o passo"
+            );
+        }
+    };
+
     const deleteStep = async (id, stepId) => {
         try {
             await api.delete(`/materials/delete-step/${id}/${stepId}`, {
@@ -158,6 +208,8 @@ const MaterialProvider = ({ children }) => {
                 remove,
                 update,
                 registerStep,
+                getStep,
+                updateStep,
                 deleteStep,
             }}
         >
