@@ -3,7 +3,7 @@ import React, { createContext } from "react";
 import api from "../api";
 
 /* Toast */
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AuthContext = createContext();
@@ -41,7 +41,7 @@ const AuthProvider = ({ children, user, setUser }) => {
   const logout = async (_) => {
     return await api.get("/user/logout").finally((_) => {
       toast.success("Deslogado com sucesso");
-      setUser({})
+      setUser({});
     });
   };
 
@@ -56,7 +56,6 @@ const AuthProvider = ({ children, user, setUser }) => {
         logout,
       }}
     >
-      <ToastContainer />
       {children}
     </AuthContext.Provider>
   );

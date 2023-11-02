@@ -22,6 +22,7 @@
     "joi": "^17.9.2",
     "joi-password-complexity": "^5.2.0",
     "jsonwebtoken": "^9.0.1",
+    "mongodb": "^6.0.0",
     "mongoose": "^7.4.1",
 <<<<<<< HEAD
     "morgan": "^1.10.0",

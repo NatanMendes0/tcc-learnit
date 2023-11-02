@@ -14,7 +14,7 @@ dbConnect();
 // ROUTES
 
 const authRouter = require("./routes/authRouter");
-const blogRouter = require("./routes/blogRouter");
+const forumRouter = require("./routes/forumRouter");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
@@ -30,7 +30,8 @@ const forumRoutes = require("./routes/forum");
 >>>>>>> forum
 
 /* CORS */
-const whitelist = ["http://localhost:3000"];
+/*
+const whitelist = "http://localhost:3000";
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -46,19 +47,29 @@ const corsOptions = {
   },
   withCredentials: true,
 };
+*/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use(cors(corsOptions));
+=======
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Origem permitida
+    credentials: true, // Permite credenciais (cookies, autenticação etc.)
+  })
+);
+app.use(cookieParser());
+>>>>>>> create-post
 
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use(helmet());
 
 app.use("/api/user", authRouter);
-app.use("/api/blog", blogRouter);
+app.use("/api/forum", forumRouter);
 
 app.use(notFound);
 app.use(errorHandler);

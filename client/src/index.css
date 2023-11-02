@@ -1,5 +1,25 @@
 @tailwind base;
 
+html {
+  scroll-behavior: smooth;
+}
+
+#quem-somos{
+    padding-top: 150px
+}
+
+#sobre-plataforma{
+    padding-top: 100px
+}
+
+#contato{
+    padding-top: 20px
+}
+
+#forum{
+    padding-top: 140px
+}
+
 .navbar{
     @apply flex px-44 py-3 items-center justify-between bg-bg_primary shadow-lg;
 }
@@ -32,20 +52,19 @@
     @apply flex-1 mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-14 lg:max-w-7xl lg:px-8 mt-12 -mb-1;
 }
 
-.footer{
-    @apply bg-primary text-white mt-64;
+.footer {
+  @apply bg-primary text-white text-center py-4 text-lg mt-auto;
 }
 
 @tailwind components;
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 7px;
 }
 ::-webkit-scrollbar-track {
     background-color: white;
 }
 ::-webkit-scrollbar-thumb {
     background-color: #0284C7;
-    border-radius: 8px;
 }
