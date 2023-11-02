@@ -17,6 +17,7 @@ export default function Homepage() {
     const getMaterials = async () => {
         try {
             const response = await api.get("/materials/get-materials");
+            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error("Error fetching materials:", error);
@@ -198,7 +199,7 @@ export default function Homepage() {
                                     </>
                                 ) : (
                                     <>
-                                        <Link to={`/forum/get-material/${material._id}`}>
+                                        <Link to={`/materials/get-material/${material._id}`}>
                                             <div className="relative bg-white shadow-md full">
                                                 <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
                                                 <div className="p-4">
@@ -212,10 +213,10 @@ export default function Homepage() {
                                                     <div className="group relative">
                                                         <h3 className="mt-3 text-lg font-semibold leading-5 text-gray-900 group-hover:text-gray-600">
                                                             <span className="absolute inset-0" />
-                                                            {material.title}
+                                                            {material.content[0].stepContent.title}
                                                         </h3>
                                                         <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
-                                                            {material.description}
+                                                        {material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
                                                 </div>
