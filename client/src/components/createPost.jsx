@@ -18,7 +18,7 @@ function CreatePost() {
     formData.append("email", user.email);
 
     axios
-      .post("http://localhost:8080/api/createPost", formData)
+      .post("http://localhost:5000/api/createPost", formData)
       .then((res) => {
         if (res.data === "Post criado com sucesso!") {
           console.log(res.data);
