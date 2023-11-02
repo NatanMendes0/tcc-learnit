@@ -49,7 +49,7 @@ export default function Homepage() {
 
   return (
     <>
-      <div className="relative isolate py-20 sm:py-38 lg:pb-40">
+      <div className="relative isolate py-16 sm:py-38 lg:pb-40">
         <svg
           className="absolute -z-50 inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
           aria-hidden="true"
@@ -73,8 +73,9 @@ export default function Homepage() {
             fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
           />
         </svg>
+
         {/* Hero section */}
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 mt-2.5 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-3xl font-bold tracking-tight text-primary sm:text-5xl">
               Fórum

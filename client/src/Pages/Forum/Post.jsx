@@ -69,7 +69,7 @@ function Post() {
 
     return (
         <>
-            <div className='mt-auto isolate py-12'>
+            <div className='mt-auto isolate py-14'>
                 <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-xl">
                     <div>
                         <div className='bg-primary p-5 flex justify-between rounded-t-lg'>
@@ -103,7 +103,7 @@ function Post() {
                                     <>
                                         <div className="flex justify-between px-4 items-center">
                                             <div className="relative flex items-center gap-x-2">
-                                                <UserCircleIcon className="h-12 text-primary" />
+                                                <UserCircleIcon className="h-14 text-primary" />
                                                 <div className="flex gap-x-2">
                                                     <p className="font-semibold text-xl text-secondary">
                                                         {post.user.name}
@@ -186,15 +186,15 @@ function Post() {
                                         message: "Mínimo de 2 caracteres",
                                     },
                                     maxLength: {
-                                        value: 50,
-                                        message: "Máximo de 50 caracteres",
+                                        value: 2000,
+                                        message: "Máximo de 2000 caracteres",
                                     },
                                 })}
                                 className="block w-full rounded-md border-0 py-2 shadow-xl text-font_secondary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-md sm:leading-6"
                             />
-                            {errors.coment && (
+                            {errors.comment && (
                                 <span className="text-sm text-red-500">
-                                    {errors.coment.message}
+                                    {errors.comment.message}
                                 </span>
                             )}
                             <div>
@@ -220,20 +220,18 @@ function Post() {
                                         <div className="p-4">
                                             <div className="flex items-center gap-x-2">
                                                 <div className="relative flex items-center gap-x-2">
-                                                    <UserCircleIcon className="h-12 text-primary" />
-                                                    <div className="text-sm leading-5">
-                                                        <div className="flex items-center gap-x-2">
-                                                            <p className="text-lg font-extrabold text-secondary">
-                                                                {rating.postedby.name}
-                                                            </p>
-                                                            <p className="font-bold text-base text-secondary">
-                                                                @{rating.postedby.nickname}
-                                                            </p>
-                                                        </div>
-                                                        <p className="text-font_secondary text-lg">{rating.comment}</p>
+                                                    <div className="flex items-center justify-center text-primary">
+                                                        <UserCircleIcon className="h-14 w-14 min-h-14 min-w-14" />
+                                                    </div>
+                                                    <div className="flex gap-x-2">
+                                                        <p className="font-semibold text-xl text-secondary">
+                                                        {rating.postedby.name}
+                                                        </p>
+                                                        <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <p className="text-font_secondary text-lg ml-16 -mt-5">{rating.comment}</p>
                                         </div>
                                     </li>
                                 ))}
