@@ -27,6 +27,7 @@ const MaterialProvider = ({ children }) => {
                 },
             });
             setMaterials(response.data);
+            toast.success("Material criado com sucesso!");
             return response.data;
         } catch (err) {
             throw new Error(
@@ -72,7 +73,6 @@ const MaterialProvider = ({ children }) => {
                 material._id === id ? updatedMaterial : material
             );
             setMaterials(updatedMaterials);
-
             toast.success("Material atualizado com sucesso!");
         } catch (error) {
             toast.error(
@@ -166,7 +166,6 @@ const MaterialProvider = ({ children }) => {
                 return material;
             });
             setMaterials(updatedMaterials);
-            toast.success("Passo atualizado com sucesso!");
         } catch (error) {
             toast.error(
                 error.response?.data?.message || "Erro ao atualizar o passo"

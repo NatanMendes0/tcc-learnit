@@ -15,7 +15,7 @@ const AuthProvider = ({ children, user, setUser }) => {
         return callback();
       })
       .catch((err) => {
-        toast.error(err.response?.data?.message || "Ocorreu um erro ao logar");
+        toast.error(err.response?.data?.message || "Ocorreu um erro ao realizar o login");
       });
   };
 
@@ -27,7 +27,7 @@ const AuthProvider = ({ children, user, setUser }) => {
     } catch (err) {
       toast.error(
         err.response?.data?.message ||
-        "Ocorreu um erro ao registrar o usuário"
+        "Não foi possível registrar o usuário"
       );
     }
   };
@@ -71,7 +71,7 @@ const AuthProvider = ({ children, user, setUser }) => {
 
   const logout = async (_) => {
     return await api.get("/user/logout").finally((_) => {
-      toast.success("Deslogado com sucesso");
+      toast.success("Sessão finalizada!");
       setUser({});
     });
   };

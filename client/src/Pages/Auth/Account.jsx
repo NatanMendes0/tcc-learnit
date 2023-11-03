@@ -171,12 +171,13 @@ export default function Account() {
                 </div>
             </form>
             <div className="mt-10 mx-auto text-center">
-                <button
+                <h1>*botão de deletar conta em desenvolvimento</h1>
+                {/* <button
                     onClick={() => handleDelete(authContext.user._id)}
                     className="btn-secondary bg-gray-400 hover:bg-gray-500 px-6"
                 >
                     Deletar conta
-                </button>
+                </button> */}
             </div>
         </div>
     )

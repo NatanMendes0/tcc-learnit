@@ -21,6 +21,7 @@ export default function AddStep() {
         try {
             await materialContext.registerStep(data, id);
             navigate(`../materials/get-material/${id}`, { replace: false });
+            toast.success("Passo criado com sucesso!");
         } catch (error) {
             toast.error(error.message || "Erro ao criar passo" + error);
             navigate(`../materials/get-material/${id}`, { replace: false });
@@ -30,6 +31,7 @@ export default function AddStep() {
     return (
         <>
             <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
+                <h1 className="subtitle text-3xl my-5">Adicione um novo passo!</h1>
                 <form className="shadow-lg relative" onSubmit={handleSubmit(onSubmit)}>
                     <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
                         <label htmlFor="title" className="sr-only">

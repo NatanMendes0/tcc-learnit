@@ -24,6 +24,7 @@ export default function EditStep() {
         const material = await materialContext.getStep(id, stepId);
         setValue("title", material.stepContent.title);
         setValue("text", material.stepContent.text);
+        setValue("note", material.stepContent.note);
       } catch (error) {
         toast.error(error.message);
         navigate(`../materials/get-material/${id}`, { replace: false });
@@ -37,6 +38,7 @@ export default function EditStep() {
     try {
       await materialContext.updateStep(id, stepId, data);
       navigate(`../materials/get-material/${id}`, { replace: false });
+      toast.success("Passo atualizado com sucesso!");
     } catch (error) {
       toast.error(error.message);
     }
@@ -49,6 +51,7 @@ export default function EditStep() {
   return (
     <>
       <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
+        <h1 className="subtitle text-3xl my-5">Edite seu passo!</h1>
         <form className="shadow-lg relative" onSubmit={handleSubmit(onSubmit)}>
           <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
             <label htmlFor="title" className="sr-only">
@@ -105,6 +108,19 @@ export default function EditStep() {
                 </div>
               </div>
             </div>
+
+          <label htmlFor="note" className="sr-only">
+            Nota
+          </label>
+          <textarea
+            id="note"
+            name="note"
+            placeholder="Nota (opcional)"
+            className="block w-full resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
+            {...register("note", {
+              required: false,
+            })}
+          />
           </div>
 
           <div className="absolute inset-x-px bottom-0">
@@ -163,7 +179,7 @@ export default function EditStep() {
                   type="submit"
                   className="inline-flex items-center rounded-md bg-primary px-6 py-2 text-md font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:bg-sky-700"
                 >
-                  Adicionar
+                  Editar
                 </button>
               </div>
             </div>

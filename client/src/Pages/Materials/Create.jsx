@@ -87,7 +87,6 @@ export default function Create() {
               </div>
             </div>
 
-            {/* Adicione o campo de nota */}
             <label htmlFor="note" className="sr-only">
               Nota
             </label>

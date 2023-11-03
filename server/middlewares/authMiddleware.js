@@ -2,8 +2,6 @@ const jwt = require("jsonwebtoken");
 
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
-
-const { getPost } = require("../controllers/forumCtrl");
 const Post = require("../models/postModel");
 
 

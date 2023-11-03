@@ -17,7 +17,6 @@ export default function Homepage() {
     const getMaterials = async () => {
         try {
             const response = await api.get("/materials/get-materials");
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error("Error fetching materials:", error);
@@ -103,7 +102,7 @@ export default function Homepage() {
                     </div>
                 </div>
 
-                {/* Forum section */}
+                {/* Materials section */}
                 <div className="mx-auto max-w-7xl px-6 lg:px-8" id="materials">
                     <div className="mx-auto max-w-2xl text-center">
                         <h1 className="text-3xl border-b-2 pb-2 border-font_secondary font-bold tracking-tight text-primary sm:text-5xl">
@@ -111,7 +110,7 @@ export default function Homepage() {
                         </h1>
                         <p className="mt-3 text-lg font-semibold leading-8 text-font_secondary">
                             Visualize os nossos materiais disponíveis. <br />
-                            Novos materiais são Materialados pelos nossos educadores regularmente!
+                            Novos materiais são adicionados pelos nossos educadores regularmente!
                         </p>
                         {user && user.role === "admin" && (
                             <button
@@ -172,7 +171,7 @@ export default function Homepage() {
                                                 </div>
                                                 <div className="ml-auto">
                                                     {/* delete btn */}
-                                                    {user && (user.role === "admin" || user._id === material.user._id) && (
+                                                    {user && user.role === "admin" && (
                                                         <button
                                                             onClick={() => handleDelete(material._id)}
                                                             className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
