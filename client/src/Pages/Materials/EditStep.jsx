@@ -109,18 +109,25 @@ export default function EditStep() {
               </div>
             </div>
 
-          <label htmlFor="note" className="sr-only">
-            Nota
-          </label>
-          <textarea
-            id="note"
-            name="note"
-            placeholder="Nota (opcional)"
-            className="block w-full resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
-            {...register("note", {
-              required: false,
-            })}
-          />
+            <label htmlFor="note" className="sr-only">
+              Nota
+            </label>
+            <textarea
+              id="note"
+              name="note"
+              placeholder="Nota (opcional)"
+              className="block w-full resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
+              {...register("note", {
+                minLength: {
+                  value: 3,
+                  message: "Digite um título com ao menos 3 caracteres",
+                },
+                maxLength: {
+                  value: 700,
+                  message: "Máximo de 30 caracteres",
+                },
+              })}
+            />
           </div>
 
           <div className="absolute inset-x-px bottom-0">

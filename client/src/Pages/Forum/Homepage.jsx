@@ -29,7 +29,6 @@ export default function Homepage() {
       const postsData = await getPosts();
       setPosts(postsData.reverse());
     }
-
     fetchPosts();
   }, []);
 

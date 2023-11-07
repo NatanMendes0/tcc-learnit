@@ -37,12 +37,11 @@ export default function Account() {
     };
 
     const handleDelete = async (id) => {
-        console.log("console.log do account - ", id)
         try {
             await authContext.remove(id);
             navigate("../", { replace: false });
         } catch (error) {
-            console.error("Error deleting user:", error);
+            console.error("Erro ao deletar o usuário:", error);
             navigate("../", { replace: false })
         }
     };
@@ -171,13 +170,12 @@ export default function Account() {
                 </div>
             </form>
             <div className="mt-10 mx-auto text-center">
-                <h1>*botão de deletar conta em desenvolvimento</h1>
-                {/* <button
+                <button
                     onClick={() => handleDelete(authContext.user._id)}
                     className="btn-secondary bg-gray-400 hover:bg-gray-500 px-6"
                 >
                     Deletar conta
-                </button> */}
+                </button>
             </div>
         </div>
     )

@@ -100,7 +100,6 @@ const MaterialProvider = ({ children }) => {
     };
 
     const registerStep = async (info, id) => {
-        console.log("info recebida do registerStep: ", info);
         try {
             const response = await api.post(`/materials/add-step/${id}`, info, {
                 headers: {

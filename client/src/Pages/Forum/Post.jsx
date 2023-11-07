@@ -29,7 +29,6 @@ function Post() {
         setModalImageUrl('');
     };
 
-
     const getPost = async () => {
         try {
             const response = await api.get(`/forum/get-post/${id}`);
@@ -47,12 +46,13 @@ function Post() {
             setPost(postData);
         }
         fetchPost();
-    }, []);
+    }, [post]); // Adicione "post" como dependência
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
     } = useForm()
 
     const onSubmit = async (data) => {
@@ -60,8 +60,9 @@ function Post() {
             const response = await api.post(`/forum/rating/${id}`, {
                 comment: data.comment,
             });
+            setPost(response.data);
+            setValue("comment", "");
             toast.success(response.data.message);
-            window.location.reload();
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -99,7 +100,7 @@ function Post() {
                         </div>
                         <div className='py-5'>
                             <h1>
-                                {post.user ? (
+                                {post && post.user ? (
                                     <>
                                         <div className="flex justify-between px-4 items-center">
                                             <div className="relative flex items-center gap-x-2">
@@ -225,7 +226,7 @@ function Post() {
                                                     </div>
                                                     <div className="flex gap-x-2">
                                                         <p className="font-semibold text-xl text-secondary">
-                                                        {rating.postedby.name}
+                                                            {rating.postedby.name}
                                                         </p>
                                                         <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
                                                     </div>

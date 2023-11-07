@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-//todo - adicionar no relatorio a mudança dos campos
 const MaterialSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,

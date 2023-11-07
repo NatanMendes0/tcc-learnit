@@ -11,6 +11,8 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
 const sendEmail = require("./emailCtrl");
+const Post = require("../models/postModel");
+const Material = require("../models/materialModel");
 const MAX_LOGIN_ATTEMPTS = 5;
 
 //create a new user
@@ -83,47 +85,47 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
 
 // Check if user is logged in
 const handleLoggedIn = asyncHandler(async (req, res) => {
-    const cookie = req.cookies;
-    
-    let refreshToken = cookie.refreshToken;
+  const cookie = req.cookies;
 
-    if (!refreshToken) {
-      return res.sendStatus(204);
-    }
+  let refreshToken = cookie.refreshToken;
 
-    const findUser = await User.findOne({ refreshToken });
+  if (!refreshToken) {
+    return res.sendStatus(204);
+  }
 
-    if (!findUser) {
-      res.clearCookie("refreshToken", {
-        httpOnly: true,
-        secure: true,
-      });
+  const findUser = await User.findOne({ refreshToken });
 
-      return res.sendStatus(204);
-    }
-
-    refreshToken = await generateRefreshToken(findUser.id);
-
-    findUser.refreshToken = refreshToken;
-    await findUser.save();
-
-    res.cookie("refreshToken", refreshToken, {
+  if (!findUser) {
+    res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
-      maxAge: 72 * 60 * 60 * 1000,
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    return res.sendStatus(204);
+  }
 
-    res.json({
-      _id: findUser?._id,
-      name: findUser?.name,
-      email: findUser?.email,
-      role: findUser?.role,
-      nickname: findUser?.nickname,
-      token: refreshToken,
-    });
+  refreshToken = await generateRefreshToken(findUser.id);
+
+  findUser.refreshToken = refreshToken;
+  await findUser.save();
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 72 * 60 * 60 * 1000,
+  });
+
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
+  res.json({
+    _id: findUser?._id,
+    name: findUser?.name,
+    email: findUser?.email,
+    role: findUser?.role,
+    nickname: findUser?.nickname,
+    token: refreshToken,
+  });
 });
 
 // handle refresh token
@@ -229,6 +231,7 @@ const getUser = asyncHandler(async (req, res) => {
   }
 });
 
+// todo - update password
 const updatePassword = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { password } = req.body;
@@ -243,6 +246,7 @@ const updatePassword = asyncHandler(async (req, res) => {
   }
 });
 
+// todo - forgot password token
 const forgotPasswordToken = asyncHandler(async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -268,6 +272,7 @@ const forgotPasswordToken = asyncHandler(async (req, res) => {
   }
 });
 
+// todo - reset password
 const resetPassword = asyncHandler(async (req, res) => {
   const { password } = req.body;
   const { token } = req.params;
@@ -298,20 +303,37 @@ const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
-// delete a user
+// delete a user and all his posts, materials and comments
 const deleteUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  console.log("console.log do ctrl - ", userId);
-  if (!validateMongoDbId(userId)) {
-    return res.status(400).json({ message: "ID inválido" });
-  }
   const user = await User.findById(userId);
+
   if (!user) {
     return res.status(404).json({ message: "Usuário não encontrado" });
   }
-  await user.remove();
-  res.json({ message: "Usuário deletado com sucesso" });
+
+  // Delete all posts of the user
+  await Post.deleteMany({ user: userId });
+
+  // Delete all materials of the user
+  await Material.deleteMany({ user: userId });
+
+  // Delete all comments of the user in posts
+  await Post.updateMany({ "ratings.postedBy": userId }, { $pull: { ratings: { postedBy: userId } } });
+
+  // Delete all comments of the user in materials
+  await Material.updateMany({ "ratings.postedBy": userId }, { $pull: { ratings: { postedBy: userId } } });
+
+  // Delete the user
+  const deletedUser = await User.findByIdAndDelete(userId);
+
+  if (!deletedUser) {
+    return res.status(404).json({ message: "Material não encontrado" });
+  }
+
+  res.json({ message: "Usuário e todo seu conteúdos deletados com sucesso" });
 });
+
 
 module.exports = {
   handleLoggedIn,

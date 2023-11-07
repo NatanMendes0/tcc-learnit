@@ -57,7 +57,6 @@ const AuthProvider = ({ children, user, setUser }) => {
   };
 
   const remove = async (id) => {
-    console.log("console.log do authcontext - ", id)
     try {
       await api.delete(`/user/delete-user/${id}`);
       setUser({});
@@ -66,8 +65,6 @@ const AuthProvider = ({ children, user, setUser }) => {
       toast.error(error.response?.data?.message || "Erro ao excluir o usuário");
     }
   };
-
-
 
   const logout = async (_) => {
     return await api.get("/user/logout").finally((_) => {

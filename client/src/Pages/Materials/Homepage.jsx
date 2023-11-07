@@ -29,7 +29,6 @@ export default function Homepage() {
             const materialsData = await getMaterials();
             setMaterials(materialsData.reverse());
         }
-
         fetchMaterials();
     }, []);
 

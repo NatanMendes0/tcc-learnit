@@ -18,31 +18,11 @@ const materialRouter = require("./routes/materialRouter");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
-const app = express();
-
-/* CORS */
-/*
-const whitelist = "http://localhost:3000";
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(
-        new Error(
-          "The CORS policy for this site does not allow access from the specified Origin."
-        )
-      );
-    }
-  },
-  withCredentials: true,
-};
-*/
+const app = express();   
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Origem permitida
+    origin: "http://localhost:3000",
     credentials: true, // Permite credenciais (cookies, autenticação etc.)
   })
 );

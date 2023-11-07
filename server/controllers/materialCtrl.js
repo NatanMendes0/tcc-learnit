@@ -176,7 +176,6 @@ const addStep = asyncHandler(async (req, res) => {
 
             try {
                 await material.save();
-                console.log("material salvo: ", material);
                 res.json({ message: 'Passo criado com sucesso!', material: newStepData });
             } catch (error) {
                 res.status(500).json({ message: 'Erro ao criar o material', error });
@@ -204,7 +203,6 @@ const addStep = asyncHandler(async (req, res) => {
 
             try {
                 await material.save();
-                console.log("material salvo: ", material);
                 res.json({ message: 'Passo criado com sucesso!', material: newStepData });
             } catch (error) {
                 res.status(500).json({ message: 'Erro ao criar o material', error });
@@ -213,7 +211,6 @@ const addStep = asyncHandler(async (req, res) => {
     });
 });
 
-//todo - arrumar logicas de edicao
 const editStep = asyncHandler(async (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, async function (err, fields, files) {
@@ -233,6 +230,7 @@ const editStep = asyncHandler(async (req, res) => {
 
             var title = fields.title[0];
             var text = fields.text[0];
+            var note = fields.note[0];
             var user = req.user;
 
             try {
@@ -240,6 +238,7 @@ const editStep = asyncHandler(async (req, res) => {
                 const step = material.content.id(req.params.stepId);
                 step.stepContent.title = title;
                 step.stepContent.text = text;
+                step.stepContent.note = note;
                 step.stepContent.file = nomeimg ? nomeimg : null;
                 step.stepContent.filePath = nomeimg ? `/Images/${nomeimg}` : null;
                 const newStep = await material.save();
@@ -252,6 +251,7 @@ const editStep = asyncHandler(async (req, res) => {
             // No files were uploaded
             var title = fields.title[0];
             var text = fields.text[0];
+            var note = fields.note[0];
             var user = req.user;
 
             try {
@@ -259,6 +259,7 @@ const editStep = asyncHandler(async (req, res) => {
                 const step = material.content.id(req.params.stepId);
                 step.stepContent.title = title;
                 step.stepContent.text = text;
+                step.stepContent.note = note;
                 step.stepContent.file = nomeimg ? nomeimg : null;
                 step.stepContent.filePath = nomeimg ? `/Images/${nomeimg}` : null;
                 const newStep = await material.save();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../context/AuthContext';
 import { useMaterial } from '../../context/MaterialContext';
@@ -20,6 +20,7 @@ function Material() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
     const materialContext = useMaterial();
+    const navigate = useNavigate(); 
 
     const openModal = (imageUrl) => {
         setModalImageUrl(imageUrl);
@@ -49,12 +50,13 @@ function Material() {
             setMaterial(MaterialData);
         }
         fetchMaterial();
-    }, []);
+    }, [material]);
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
     } = useForm()
 
     const onSubmit = async (data) => {
@@ -63,7 +65,7 @@ function Material() {
                 comment: data.comment,
             });
             toast.success(response.data.message);
-            window.location.reload();
+            setValue("comment", "");
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -84,7 +86,9 @@ function Material() {
         try {
             await api.delete(`/materials/delete-material/${id}`);
             toast.success("Material deletado com sucesso!");
-            window.location.href = "/materials";
+            // window.location.href = "/materials";
+            navigate('../materials', { replace: false });
+
         } catch (error) {
             console.error("Error deleting Material:", error);
             toast.error(error.response.data.message);
@@ -190,7 +194,9 @@ function Material() {
                                     </div>
                                 )}
                             </div>
-                            <p className='text-xl text-justify px-2 mt-3'>{materialItem.stepContent.text}</p>
+                            <p className='text-xl text-justify px-2 mt-3' style={{ whiteSpace: 'pre-line' }}>
+                                {materialItem.stepContent.text}
+                            </p>
                             {materialItem.stepContent.note ? (
                                 <div className="max-w-2xl">
                                     <p className='subtitle text-base mt-3 px-2 text-left'>Nota: {materialItem.stepContent.note}</p>
@@ -241,7 +247,6 @@ function Material() {
                                     </div>
                                 </div>
                             )}
-
                         </div>
                     </div>
                 ))}
