@@ -49,7 +49,7 @@ const PostProvider = ({ children }) => {
     try{
       const response = await api.put(`/forum/rating/${id}`, data, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
         comment: data.comment
       });
@@ -70,7 +70,7 @@ const PostProvider = ({ children }) => {
     try {
       const response = await api.get(`forum/get-post/${id}`, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       return response.data;
@@ -104,7 +104,7 @@ const PostProvider = ({ children }) => {
     try {
       await api.delete(`/posts/${id}`, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 

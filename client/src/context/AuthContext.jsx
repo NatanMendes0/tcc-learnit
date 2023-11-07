@@ -70,6 +70,8 @@ const AuthProvider = ({ children, user, setUser }) => {
     return await api.get("/user/logout").finally((_) => {
       toast.success("Sessão finalizada!");
       setUser({});
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
     });
   };
 

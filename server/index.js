@@ -18,14 +18,16 @@ const materialRouter = require("./routes/materialRouter");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
-const app = express();   
+const app = express(); 
 
+// ORIGIN ACCEPT
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true, // Permite credenciais (cookies, autenticação etc.)
   })
 );
+
 app.use(cookieParser());
 app.use('/Public', express.static(path.join(__dirname, 'Public')));
 app.use(morgan("dev"));

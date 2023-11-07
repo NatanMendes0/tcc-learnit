@@ -51,7 +51,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
   if (req.user.role === "admin") {
     next();
   } else if (req.user.role === "user") {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id); // Check if the user is the author of the post
     if (post.user._id.toString() === req.user._id.toString()) {
       next();
     } else {
