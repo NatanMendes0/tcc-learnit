@@ -308,6 +308,9 @@ const deleteStep = asyncHandler(async (req, res) => {
 
 
 const rating = asyncHandler(async (req, res) => {
+    if (!req.cookies.refreshToken) {
+        return res.status(401).json({ message: "Você não realizou seu login" });
+    }
     const { _id } = req.user;
     const prodId = req.params.id;
     const { comment } = req.body;
@@ -324,7 +327,7 @@ const rating = asyncHandler(async (req, res) => {
 
         await material.save();
 
-        res.json(Material);
+        res.json({ message: "Comentário adicionado!", material: material });
     } catch (error) {
         res
             .status(500)

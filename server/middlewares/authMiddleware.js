@@ -4,7 +4,6 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const Post = require("../models/postModel");
 
-
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",

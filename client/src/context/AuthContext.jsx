@@ -52,7 +52,7 @@ const AuthProvider = ({ children, user, setUser }) => {
       await api.put(`/user/edit-user/${id}`, data);
       toast.success("Usuário atualizado com sucesso");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao atualizar a postagem");
+      toast.error(error.response?.data?.message || "Erro ao atualizar o usuário");
     }
   };
 
@@ -70,8 +70,6 @@ const AuthProvider = ({ children, user, setUser }) => {
     return await api.get("/user/logout").finally((_) => {
       toast.success("Sessão finalizada!");
       setUser({});
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
     });
   };
 

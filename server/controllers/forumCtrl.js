@@ -172,6 +172,10 @@ const deletePost = asyncHandler(async (req, res) => {
 });
 
 const rating = asyncHandler(async (req, res) => {
+  if (!req.cookies.refreshToken) {
+    return res.status(401).json({ message: "Você não realizou seu login" });
+  }
+
   const { _id } = req.user;
   const postID = req.params.id;
   const { comment } = req.body;
@@ -188,7 +192,7 @@ const rating = asyncHandler(async (req, res) => {
 
     await post.save();
 
-    res.json(post);
+    res.json({ message: "Comentário adicionado!", post: post });
   } catch (error) {
     res
       .status(500)

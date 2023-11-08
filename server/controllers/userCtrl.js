@@ -179,10 +179,19 @@ const logout = asyncHandler(async (req, res) => {
       refreshToken: "",
     });
 
-    res.clearCookie("refreshToken", {
-      httpOnly: true,
-      secure: true,
-    });
+    if (req.cookies.refreshToken) {
+      res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: true,
+      });
+    }
+
+    if (req.cookies.token) {
+      res.clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+      });
+    }
 
     return res.sendStatus(204);
   } catch (error) {
