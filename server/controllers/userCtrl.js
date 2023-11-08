@@ -218,20 +218,32 @@ const logout = asyncHandler(async (req, res) => {
 // update a user
 const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  const {name, nickname, email, password} = req.body
   validateMongoDbId(id);
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      {
-        name: req?.body?.name,
-        nickname: req?.body?.nickname,
-        email: req?.body?.email,
-      },
-      {
-        new: true,
-      }
-    );
-    res.json(updatedUser);
+
+    const user = await User.findById(id)
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    
+    if(name) {
+      user.name = name
+    }
+    if(nickname) {
+      user.nickname = nickname
+    }
+    if(email) {
+      user.email = email
+    }
+    if(password) {
+      user.password = password
+    }
+
+    await user.save()
+
+    res.json(user);
   } catch (error) {
     throw new Error(error);
   }

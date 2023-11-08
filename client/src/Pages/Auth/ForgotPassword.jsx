@@ -33,7 +33,7 @@ export default function Login() {
       <div className=" mt-auto justify-center sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-            Reseta senha troxa
+            Resetar senha
           </h2>
         </div>
 

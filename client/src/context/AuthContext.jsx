@@ -64,7 +64,7 @@ const AuthProvider = ({ children, user, setUser }) => {
       ...user,
       name: data.name,
       email: data.email,
-      nickname: data.nickname
+      nickname: data.nickname,
     });
     try {
       await api.put(`/user/edit-user/${id}`, data);
