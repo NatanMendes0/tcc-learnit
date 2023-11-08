@@ -41,6 +41,24 @@ const AuthProvider = ({ children, user, setUser }) => {
     }
   };
 
+  const createResetToken = async (email) => {
+    try {
+      await api.post("/user/forgot-password-token", email);
+      toast.success("Um e-mail foi enviado para você!");
+    } catch (error) {
+      toast.error("Não foi possível enviar o e-mail");
+    }
+  }
+
+  const resetPassword = async (data) => {
+    try {
+      await api.put("/user/reset-password/" + data.token, {password :data.password});
+      toast.success("Senha alterada com sucesso!");
+    } catch (error) {
+      toast.error("Não foi possível alterar a senha");
+    }
+  }
+
   const update = async (id, data) => {
     setUser({
       ...user,
@@ -81,6 +99,8 @@ const AuthProvider = ({ children, user, setUser }) => {
         setUser,
         login,
         register,
+        createResetToken,
+        resetPassword,
         get,
         update,
         remove,

@@ -7,7 +7,6 @@ const {
   updateUser,
   handleRefreshToken,
   logout,
-  updatePassword,
   forgotPasswordToken,
   resetPassword,
   deleteUser,
@@ -22,7 +21,6 @@ router.post('/register', createUser)
 router.post('/forgot-password-token', forgotPasswordToken)
 router.put('/reset-password/:token', resetPassword)
 
-router.put('/password', authMiddleware, updatePassword)
 router.post('/login', loginUserCtrl)
 router.get('/relogin', handleLoggedIn)
 

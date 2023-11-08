@@ -37,6 +37,8 @@ import EditStep from "./Pages/Materials/EditStep";
 
 import Register from "./Pages/Auth/Register";
 import Login from "./Pages/Auth/Login";
+import ForgotPassword from "./Pages/Auth/ForgotPassword";
+import ResetPassword from "./Pages/Auth/ResetPassword";
 import Account from "./Pages/Auth/Account";
 
 import Educator from "./Pages/Educator/Homepage";
@@ -80,6 +82,10 @@ function App() {
                   <Route path="/register" element={<Register />} />
 
                   <Route path="/login" element={<Login />} />
+
+                  <Route path="/forgot-password" element={<ForgotPassword/>}/>
+
+                  <Route path="/reset-password/:token" element={<ResetPassword/>}/>
 
                   <Route path="/account/:id" element={<Account />} />
 
