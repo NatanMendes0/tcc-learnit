@@ -2,24 +2,30 @@ const User = require("../models/userModel");
 
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../config/jwtToken");
-
 const { generateRefreshToken } = require("../config/refreshtoken");
-const bcrypt = require("bcrypt");
-const fs = require("fs");
+
 const validateMongoDbId = require("../utils/validateMongodbId");
 const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
-const crypto = require("crypto");
-const sendEmail = require("./emailCtrl");
+const nodemailer = require('nodemailer')
+const { v4: uuidv4, validate: uuidValidate } = require("uuid");
+
 const Post = require("../models/postModel");
 const Material = require("../models/materialModel");
+const PasswordReset = require("../models/passwordResetModel");
 const MAX_LOGIN_ATTEMPTS = 5;
+
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD,
+  },
+});
 
 //create a new user
 const createUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
   const findUser = await User.findOne({ email: email });
-
   if (!findUser) {
     const newUser = await User.create(req.body);
     res.json(newUser);
@@ -54,7 +60,6 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
         httpOnly: true,
         maxAge: 72 * 60 * 60 * 1000,
       });
-
       res.json({
         _id: findUser?._id,
         name: findUser?.name,
@@ -86,38 +91,28 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
 // Check if user is logged in
 const handleLoggedIn = asyncHandler(async (req, res) => {
   const cookie = req.cookies;
-
   let refreshToken = cookie.refreshToken;
-
   if (!refreshToken) {
     return res.sendStatus(204);
   }
-
   const findUser = await User.findOne({ refreshToken });
-
   if (!findUser) {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
     });
-
     return res.sendStatus(204);
   }
-
   refreshToken = await generateRefreshToken(findUser.id);
-
   findUser.refreshToken = refreshToken;
   await findUser.save();
-
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
     sameSite: "None",
     maxAge: 72 * 60 * 60 * 1000,
   });
-
   await new Promise((resolve) => setTimeout(resolve, 100));
-
   res.json({
     _id: findUser?._id,
     name: findUser?.name,
@@ -159,14 +154,11 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
 const logout = asyncHandler(async (req, res) => {
   try {
     const cookie = req.cookies;
-
     if (!cookie?.refreshToken) {
       throw new Error("Nenhuma atualização de token nos cookies");
     }
-
     const refreshToken = cookie.refreshToken;
     const user = await User.findOne({ refreshToken });
-
     if (!user) {
       res.clearCookie("refreshToken", {
         httpOnly: true,
@@ -174,25 +166,21 @@ const logout = asyncHandler(async (req, res) => {
       });
       return res.sendStatus(204);
     }
-
     await User.findByIdAndUpdate(user._id, {
       refreshToken: "",
     });
-
     if (req.cookies.refreshToken) {
       res.clearCookie("refreshToken", {
         httpOnly: true,
         secure: true,
       });
     }
-
     if (req.cookies.token) {
       res.clearCookie("token", {
         httpOnly: true,
         secure: true,
       });
     }
-
     return res.sendStatus(204);
   } catch (error) {
     const errorMessage = error.message;
@@ -207,20 +195,30 @@ const logout = asyncHandler(async (req, res) => {
 // update a user
 const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  const { name, nickname, email, password } = req.body
   validateMongoDbId(id);
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      {
-        name: req?.body?.name,
-        nickname: req?.body?.nickname,
-        email: req?.body?.email,
-      },
-      {
-        new: true,
-      }
-    );
-    res.json(updatedUser);
+    const user = await User.findById(id)
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    if (name) {
+      user.name = name
+    }
+    if (nickname) {
+      user.nickname = nickname
+    }
+    if (email) {
+      user.email = email
+    }
+    if (password) {
+      user.password = password
+    }
+
+    await user.save()
+
+    res.json(user);
   } catch (error) {
     throw new Error(error);
   }
@@ -231,84 +229,12 @@ const getUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
-    const getUser = await await User.findById(id, 'name email nickname');
+    const getUser = await await User.findById(id, "name email nickname");
     res.json({
       getUser,
     });
   } catch (error) {
     throw new Error(error);
-  }
-});
-
-// todo - update password
-const updatePassword = asyncHandler(async (req, res) => {
-  const { _id } = req.user;
-  const { password } = req.body;
-  validateMongoDbId(_id);
-  const user = await User.findById(_id);
-  if (password) {
-    user.password = password;
-    const updatePassword = await user.save();
-    res.json(updatePassword);
-  } else {
-    res.json(user);
-  }
-});
-
-// todo - forgot password token
-const forgotPasswordToken = asyncHandler(async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-  if (!user)
-    throw new Error(
-      "Não há nenhum usuário com esse e-mail na nossa base de dados."
-    );
-  try {
-    const token = await user.createPasswordResetToken();
-    await user.save();
-    const emailTemplate = fs.readFileSync("./views/password.ejs", "utf-8");
-    const html = ejs.render(emailTemplate, { token: token });
-    // const data = {
-    //   to: email,
-    //   text: 'Redefinição de senha',
-    //   subject: 'Link de recuperação de senha',
-    //   html: html,
-    // }
-    // sendEmail(data)
-    res.json(token);
-  } catch (error) {
-    throw new Error(error);
-  }
-});
-
-// todo - reset password
-const resetPassword = asyncHandler(async (req, res) => {
-  const { password } = req.body;
-  const { token } = req.params;
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-  const user = await User.findOne({
-    passwordResetToken: hashedToken,
-    passwordResetExpires: { $gt: Date.now() },
-  });
-  if (!user) throw new Error("Token expirado! Tente novamente mais tarde.");
-
-  const passwordCrypt = await bcrypt.hash(password, 10);
-
-  const updatePassword = await User.findOneAndUpdate(
-    {
-      passwordResetToken: hashedToken,
-    },
-    {
-      password: passwordCrypt,
-      passwordResetToken: undefined,
-      passwordResetExpires: undefined,
-    }
-  );
-
-  if (updatePassword) {
-    res.json(user);
-  } else {
-    res.send("Erro ao atualizar senha");
   }
 });
 
@@ -321,19 +247,17 @@ const deleteUser = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Usuário não encontrado" });
   }
 
-  // Delete all posts of the user
   await Post.deleteMany({ user: userId });
-
-  // Delete all materials of the user
   await Material.deleteMany({ user: userId });
+  await Material.updateMany(
+    { "ratings.postedBy": userId },
+    { $pull: { ratings: { postedBy: userId } } }
+  );
+  await Post.updateMany(
+    { "ratings.postedBy": userId },
+    { $pull: { ratings: { postedBy: userId } } }
+  );
 
-  // Delete all comments of the user in posts
-  await Post.updateMany({ "ratings.postedBy": userId }, { $pull: { ratings: { postedBy: userId } } });
-
-  // Delete all comments of the user in materials
-  await Material.updateMany({ "ratings.postedBy": userId }, { $pull: { ratings: { postedBy: userId } } });
-
-  // Delete the user
   const deletedUser = await User.findByIdAndDelete(userId);
 
   if (!deletedUser) {
@@ -342,6 +266,94 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   res.json({ message: "Usuário e todo seu conteúdos deletados com sucesso" });
 });
+
+const forgotPasswordToken = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({ message: "Email não cadastrado" });
+  }
+
+  const request = await PasswordReset.findOne({ userId: user._id });
+
+  if (request) {
+    await PasswordReset.findByIdAndDelete(request._id);
+  }
+
+  let uuid = uuidv4();
+
+  await PasswordReset.create({
+    token: uuid,
+    userId: user._id,
+  });
+
+  let mailOptions = {
+    from: '"Learn It" <learnitequipe@gmail.com.com>',
+    to: user.email,
+    subject: "LeanrIT - Recuperação de senha",
+    html:
+      "Recupere sua senha clicando <a href='http://localhost:3000/reset-password/" +
+      uuid +
+      "'>aqui</a>",
+  };
+
+  transporter.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      console.log(err);
+      return res.status(422).json({
+        message: "Houve um problema, por favor tente novamente mais tarde",
+      });
+    } else {
+      console.log("Email sent");
+      return res.status(200).json({ message: "Email enviado com sucesso! *Lembre de verificar o spam." });
+    }
+  });
+};
+
+const validateToken = async (token) => {
+  let isValid = true;
+  let error = null;
+
+  if (!uuidValidate(token)) {
+    isValid = false;
+    error = "Token inválido";
+  }
+
+  const request = await PasswordReset.findOne({ token });
+  if (!request) {
+    isValid = false;
+    error = "Token inválido";
+  }
+
+  return { isValid, request, error };
+};
+
+const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  const { isValid, request, error } = await validateToken(token);
+
+  if (!isValid) {
+    return res.status(401).json({ message: error });
+  }
+
+  try {
+    const user = await User.findById(request.userId);
+
+    user.password = password;
+
+    await user.save();
+
+    await PasswordReset.findByIdAndDelete(request._id);
+
+    return res.status(200).json({ message: "Senha atualizada com sucesso!" });
+  } catch (error) {
+    return res.status(422).json({
+      message: "Houve um problema, por favor tente novamente mais tarde",
+    });
+  }
+};
 
 
 module.exports = {
@@ -353,7 +365,6 @@ module.exports = {
   handleRefreshToken,
   logout,
   deleteUser,
-  updatePassword,
   forgotPasswordToken,
   resetPassword,
 };

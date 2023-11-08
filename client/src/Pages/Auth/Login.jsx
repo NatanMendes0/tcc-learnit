@@ -147,7 +147,7 @@ export default function Login() {
                 </div>
               </div>
 
-              {/* <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <div className="text-sm leading-6">
                   <Link
                     to="/forgot-password"
@@ -156,7 +156,7 @@ export default function Login() {
                     Esqueceu a senha?
                   </Link>
                 </div>
-              </div> */}
+              </div>
 
               <div>
                 <button

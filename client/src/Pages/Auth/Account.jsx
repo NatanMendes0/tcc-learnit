@@ -152,18 +152,28 @@ export default function Account() {
                             )}
                         </div>
                     </div>
-                    {/* <div>
+                    <div>
                         <label htmlFor="password" className="block text-sm font-semibold leading-6 text-gray-900">Nova senha</label>
                         <div className="mt-2.5">
-                            <input type="password" name="password" id="password" autoComplete="new-password" className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
+                            <input type="password" name="password" id="password" autoComplete="new-password"
+                                {...register("password", {
+                                    minLength: {
+                                        value: 8,
+                                        message: "Digite uma senha com pelo menos 8 caracteres",
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Máximo de 50 caracteres",
+                                    },
+                                })}
+                                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
+                            {errors.password && (
+                                <span className="text-sm text-red-500">
+                                    {errors.password.message}
+                                </span>
+                            )}
                         </div>
                     </div>
-                    <div>
-                        <label htmlFor="password-confirm" className="block text-sm font-semibold leading-6 text-gray-900">Confirmação de senha</label>
-                        <div className="mt-2.5">
-                            <input type="password" name="password-confirm" id="password-confirm" autoComplete="new-password" className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
-                        </div>
-                    </div> */}
                 </div>
                 <div className="mt-10 mx-auto text-center">
                     <button type="submit" className="btn-secondary hover:bg-secondary px-12">Salvar</button>

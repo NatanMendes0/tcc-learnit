@@ -2,7 +2,6 @@ import React, { createContext } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const AuthContext = createContext();
 
 const AuthProvider = ({ children, user, setUser }) => {
@@ -18,7 +17,6 @@ const AuthProvider = ({ children, user, setUser }) => {
         toast.error(err.response?.data?.message || "Ocorreu um erro ao realizar o login");
       });
   };
-
   const register = async (info, callback = () => { }) => {
     try {
       await api.post("/user/register", info);
@@ -31,7 +29,6 @@ const AuthProvider = ({ children, user, setUser }) => {
       );
     }
   };
-
   const get = async (id) => {
     try {
       const response = await api.get(`user/${id}`);
@@ -40,6 +37,24 @@ const AuthProvider = ({ children, user, setUser }) => {
       toast.error(error.response.data.message);
     }
   };
+
+  const createResetToken = async (email) => {
+    try {
+      await api.post("/user/forgot-password-token", email);
+      toast.success("Um e-mail foi enviado para você!");
+    } catch (error) {
+      toast.error("Não foi possível enviar o e-mail");
+    }
+  }
+
+  const resetPassword = async (data) => {
+    try {
+      await api.put("/user/reset-password/" + data.token, { password: data.password });
+      toast.success("Senha alterada com sucesso!");
+    } catch (error) {
+      toast.error("Não foi possível alterar a senha");
+    }
+  }
 
   const update = async (id, data) => {
     setUser({
@@ -81,6 +96,8 @@ const AuthProvider = ({ children, user, setUser }) => {
         setUser,
         login,
         register,
+        createResetToken,
+        resetPassword,
         get,
         update,
         remove,
