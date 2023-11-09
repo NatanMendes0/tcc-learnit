@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../config/jwtToken");
-const { generateRefreshToken } = require("../config/refreshtoken");
+const { generateRefreshToken } = require("../config/refreshToken");
 
 const validateMongoDbId = require("../utils/validateMongodbId");
 const jwt = require("jsonwebtoken");
@@ -153,22 +153,6 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
 // logout fuction
 const logout = asyncHandler(async (req, res) => {
   try {
-    const cookie = req.cookies;
-    if (!cookie?.refreshToken) {
-      throw new Error("Nenhuma atualização de token nos cookies");
-    }
-    const refreshToken = cookie.refreshToken;
-    const user = await User.findOne({ refreshToken });
-    if (!user) {
-      res.clearCookie("refreshToken", {
-        httpOnly: true,
-        secure: true,
-      });
-      return res.sendStatus(204);
-    }
-    await User.findByIdAndUpdate(user._id, {
-      refreshToken: "",
-    });
     if (req.cookies.refreshToken) {
       res.clearCookie("refreshToken", {
         httpOnly: true,
@@ -181,7 +165,7 @@ const logout = asyncHandler(async (req, res) => {
         secure: true,
       });
     }
-    return res.sendStatus(204);
+    return res.sendStatus(200);
   } catch (error) {
     const errorMessage = error.message;
     const errorResponse = {
@@ -288,13 +272,11 @@ const forgotPasswordToken = async (req, res) => {
   });
 
   let mailOptions = {
-    from: '"Learn It" <learnitequipe@gmail.com.com>',
+    from: '"Learn It" <learnitequipe@gmail.com>',
     to: user.email,
     subject: "LeanrIT - Recuperação de senha",
     html:
-      "Recupere sua senha clicando <a href='http://localhost:3000/reset-password/" +
-      uuid +
-      "'>aqui</a>",
+      "Acessando dentro do IFSUL Câmpus Gravataí - Recupere sua senha clicando <a href='http://localhost:3000/reset-password/" + uuid + "'>aqui</a>",
   };
 
   transporter.sendMail(mailOptions, function (err, data) {

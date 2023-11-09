@@ -82,10 +82,13 @@ const AuthProvider = ({ children, user, setUser }) => {
   };
 
   const logout = async (_) => {
-    return await api.get("/user/logout").finally((_) => {
+    const logout = await api.get("/user/logout");
+    if (logout.status === 200) {
       toast.success("Sessão finalizada!");
       setUser({});
-    });
+    } else {
+      toast.error("Não foi possível finalizar a sessão");
+    }
   };
 
   return (

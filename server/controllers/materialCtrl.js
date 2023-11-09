@@ -278,14 +278,14 @@ const deleteStep = asyncHandler(async (req, res) => {
     try {
         const material = await Material.findById(materialId);
         if (!material) {
-            return res.status(404).json({ message: "Material not found" });
+            return res.status(404).json({ message: "Material não encontrado" });
         }
 
         // Find the index of the step to be deleted
         const stepIndex = material.content.findIndex(step => step._id.toString() === stepId);
 
         if (stepIndex === -1) {
-            return res.status(404).json({ message: "Step not found" });
+            return res.status(404).json({ message: "Passo nÃ£o encontrado" });
         }
 
         // Remove the step at the found index
@@ -295,14 +295,14 @@ const deleteStep = asyncHandler(async (req, res) => {
         if (material.content.length === 0) {
             // If there are no steps left, delete the entire material
             await Material.findByIdAndDelete(materialId);
-            res.json({ message: "Material and step deleted successfully" });
+            res.json({ message: "Material e passo deletado!" });
         } else {
             // If there are steps left, save the updated material
             await material.save();
-            res.json({ message: "Step deleted successfully" });
+            res.json({ message: "Passo deletado com sucesso" });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error while deleting the step", error: error.message });
+        res.status(500).json({ message: "Erro ao deletar postagem", error: error.message });
     }
 });
 

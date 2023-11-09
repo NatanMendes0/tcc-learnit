@@ -161,7 +161,7 @@ export default function Homepage() {
                     </Link>
                     <div className="p-4">
                       <div className="flex items-center gap-x-2">
-                        <div className="relative flex items-center gap-x-2">
+                        <div className="relative flex justify-between items-center gap-x-2">
                           <UserCircleIcon className="h-12 text-primary" />
                           <div className="text-sm leading-5">
                             <p className="font-semibold text-secondary">
@@ -172,6 +172,7 @@ export default function Homepage() {
                           </div>
                         </div>
                         <div className="ml-auto">
+                            <p className="text-primary font-bold">{post.user.role}</p>
                           {/* delete btn */}
                           {user && (user.role === "admin" || user._id === post.user._id) && (
                             <button
