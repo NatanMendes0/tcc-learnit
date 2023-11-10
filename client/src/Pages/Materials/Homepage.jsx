@@ -70,6 +70,7 @@ export default function Homepage() {
                         fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
                     />
                 </svg>
+
                 {/* Hero section */}
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-5xl text-center">
@@ -111,7 +112,7 @@ export default function Homepage() {
                             Visualize os nossos materiais disponíveis. <br />
                             Novos materiais são adicionados pelos nossos educadores regularmente!
                         </p>
-                        {user && user.role === "admin" && (
+                        {user && user.role === "Administrador" && (
                             <button
                                 onClick={() => navigate("/materials/create")}
                                 className="btn mt-10">
@@ -157,20 +158,21 @@ export default function Homepage() {
                                             </div>
                                         </Link>
                                         <div className="p-4">
-                                            <div className="flex items-center gap-x-2">
-                                                <div className="relative flex items-center gap-x-2">
-                                                    <UserCircleIcon className="h-12 text-primary" />
+                                            <div className="flex items-center gap-x-2 justify-between">
+                                                <div className="relative flex justify-between items-center gap-x-2">
+                                                    <UserCircleIcon className="h-14 text-primary" />
                                                     <div className="text-sm leading-5">
                                                         <p className="font-semibold text-secondary">
                                                             <span className="absolute inset-0" />
                                                             {material.user.name}
                                                         </p>
                                                         <p className="text-secondary">@{material.user.nickname}</p>
+                                                        <p className="text-primary font-bold">{material.user.role}</p>
                                                     </div>
                                                 </div>
-                                                <div className="ml-auto">
+                                                <div className="ml-auto flex items-center gap-x-2">
                                                     {/* delete btn */}
-                                                    {user && user.role === "admin" && (
+                                                    {user && user.role && material.user && material.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === material.user._id)) && (
                                                         <button
                                                             onClick={() => handleDelete(material._id)}
                                                             className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
@@ -190,6 +192,29 @@ export default function Homepage() {
                                                                 />
                                                             </svg>
                                                         </button>
+                                                    )}
+                                                    {/* edit btn */}
+                                                    {user && user.name === material.user.name && (
+                                                        <Link to={`/forum/edit-post/${material._id}`}>
+                                                            <button
+                                                                className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    strokeWidth={1.5}
+                                                                    stroke="currentColor"
+                                                                    className="w-6 h-6"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                                    />
+                                                                </svg>
+                                                            </button>
+                                                        </Link>
                                                     )}
                                                 </div>
                                             </div>
@@ -214,7 +239,7 @@ export default function Homepage() {
                                                             {material.content[0].stepContent.title}
                                                         </h3>
                                                         <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
-                                                        {material.content[0].stepContent.text}
+                                                            {material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -230,11 +255,12 @@ export default function Homepage() {
                                                             {material.user.name}
                                                         </p>
                                                         <p className="text-secondary">@{material.user.nickname}</p>
+                                                        <p className="text-primary font-bold">{material.user.role}</p>
                                                     </div>
                                                 </div>
-                                                <div className="ml-auto">
+                                                <div className="ml-auto flex items-center gap-x-2">
                                                     {/* delete btn */}
-                                                    {user && (user.role === "admin" || user._id === material.user._id) && (
+                                                    {user && user.role && material.user && material.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === material.user._id)) && (
                                                         <button
                                                             onClick={() => handleDelete(material._id)}
                                                             className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
@@ -254,6 +280,29 @@ export default function Homepage() {
                                                                 />
                                                             </svg>
                                                         </button>
+                                                    )}
+                                                    {/* edit btn */}
+                                                    {user && user.name === material.user.name && (
+                                                        <Link to={`/materiasl/edit-material/${material._id}`}>
+                                                            <button
+                                                                className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    strokeWidth={1.5}
+                                                                    stroke="currentColor"
+                                                                    className="w-6 h-6"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                                    />
+                                                                </svg>
+                                                            </button>
+                                                        </Link>
                                                     )}
                                                 </div>
                                             </div>

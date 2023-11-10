@@ -76,7 +76,7 @@ const getPosts = asyncHandler(async (req, res) => {
 const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
   try {
-    const post = await Post.findById(postId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname" }] }).populate("user", "name nickname");
+    const post = await Post.findById(postId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname role" }] }).populate("user", "name nickname role");
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
@@ -122,7 +122,7 @@ const editPost = asyncHandler(async (req, res) => {
         post.file = nomeimg ? nomeimg : null;
         post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
         const newPost = post.save();
-        res.json({ message: "Post criado com sucesso!", post: newPost });
+        return res.sendStatus(200);        
       } catch (error) {
         res.status(500).json({ message: "Erro ao criar o post", error });
       }
@@ -147,10 +147,9 @@ const editPost = asyncHandler(async (req, res) => {
         post.file = nomeimg ? nomeimg : null;
         post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
         const newPost = post.save();
-        res.json({ message: "Post criado com sucesso!", post: newPost });
+        return res.sendStatus(200);        
       } catch (error) {
         res.status(500).json({ message: "Erro ao criar o post", error });
-        throw error;
       }
     }
   });

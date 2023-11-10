@@ -251,6 +251,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   res.json({ message: "Usuário e todo seu conteúdos deletados com sucesso" });
 });
 
+// forgot password
 const forgotPasswordToken = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -292,6 +293,7 @@ const forgotPasswordToken = async (req, res) => {
   });
 };
 
+// validate reset password token
 const validateToken = async (token) => {
   let isValid = true;
   let error = null;
@@ -310,6 +312,7 @@ const validateToken = async (token) => {
   return { isValid, request, error };
 };
 
+// reset password
 const resetPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;

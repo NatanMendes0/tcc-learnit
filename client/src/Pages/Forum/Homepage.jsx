@@ -160,24 +160,24 @@ export default function Homepage() {
                       </div>
                     </Link>
                     <div className="p-4">
-                      <div className="flex items-center gap-x-2">
+                      <div className="flex items-center gap-x-2 justify-between">
                         <div className="relative flex justify-between items-center gap-x-2">
-                          <UserCircleIcon className="h-12 text-primary" />
+                          <UserCircleIcon className="h-14 text-primary" />
                           <div className="text-sm leading-5">
                             <p className="font-semibold text-secondary">
                               <span className="absolute inset-0" />
                               {post.user.name}
                             </p>
                             <p className="text-secondary">@{post.user.nickname}</p>
+                            <p className="text-primary font-bold">{post.user.role}</p>
                           </div>
                         </div>
-                        <div className="ml-auto">
-                            <p className="text-primary font-bold">{post.user.role}</p>
+                        <div className="ml-auto flex items-center gap-x-2">
                           {/* delete btn */}
-                          {user && (user.role === "admin" || user._id === post.user._id) && (
+                          {user && user.role && post.user && post.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === post.user._id)) && (
                             <button
                               onClick={() => handleDelete(post._id)}
-                              className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                              className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +196,7 @@ export default function Homepage() {
                             </button>
                           )}
                           {/* edit btn */}
-                          {user && (user._id === post.user._id) && (
+                          {user && user.name === post.user.name && (
                             <Link to={`/forum/edit-post/${post._id}`}>
                               <button
                                 className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
@@ -248,23 +248,24 @@ export default function Homepage() {
                       </div>
                     </Link>
                     <div className="p-4">
-                      <div className="flex -mb-2 items-center gap-x-2">
-                        <div className="relative flex items-center gap-x-2">
-                          <UserCircleIcon className="h-12 text-primary" />
+                      <div className="flex items-center gap-x-2 justify-between">
+                        <div className="relative flex justify-between items-center gap-x-2">
+                          <UserCircleIcon className="h-14 text-primary" />
                           <div className="text-sm leading-5">
                             <p className="font-semibold text-secondary">
                               <span className="absolute inset-0" />
                               {post.user.name}
                             </p>
                             <p className="text-secondary">@{post.user.nickname}</p>
+                            <p className="text-primary font-bold">{post.user.role}</p>
                           </div>
                         </div>
-                        <div className="ml-auto">
+                        <div className="ml-auto flex items-center gap-x-2">
                           {/* delete btn */}
-                          {user && (user.role === "admin" || user._id === post.user._id) && (
+                          {user && user.role && post.user && post.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === post.user._id)) && (
                             <button
                               onClick={() => handleDelete(post._id)}
-                              className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                              className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

@@ -118,6 +118,7 @@ export default function EditStep() {
               placeholder="Nota (opcional)"
               className="block w-full resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
               {...register("note", {
+                required: false,
                 minLength: {
                   value: 3,
                   message: "Digite um título com ao menos 3 caracteres",

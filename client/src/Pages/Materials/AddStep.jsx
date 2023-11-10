@@ -21,7 +21,6 @@ export default function AddStep() {
         try {
             await materialContext.registerStep(data, id);
             navigate(`../materials/get-material/${id}`, { replace: false });
-            toast.success("Passo criado com sucesso!");
         } catch (error) {
             toast.error(error.message || "Erro ao criar passo" + error);
             navigate(`../materials/get-material/${id}`, { replace: false });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { toast } from 'react-toastify';
@@ -18,6 +18,8 @@ function Post() {
     const { user } = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
+
+    const navigate = useNavigate();
 
     const openModal = (imageUrl) => {
         setModalImageUrl(imageUrl);
@@ -46,7 +48,7 @@ function Post() {
             setPost(postData);
         }
         fetchPost();
-    }, [post]); // Adicione "post" como dependência
+    }, [post]);
 
     const {
         register,
@@ -68,6 +70,17 @@ function Post() {
         }
     };
 
+    const handleDelete = async (id) => {
+        try {
+            await api.delete(`/forum/delete-post/${id}`);
+            toast.success("Post deletado com sucesso!");
+            navigate("../forum", { replace: false });
+        } catch (error) {
+            console.error("Error deleting post:", error);
+            toast.error(error.response.data.message);
+        }
+    };
+
     return (
         <>
             <div className='mt-auto isolate py-14'>
@@ -75,10 +88,33 @@ function Post() {
                     <div>
                         <div className='bg-primary p-5 flex justify-between rounded-t-lg'>
                             <h1 className='title text-4xl text-white text-left'>{post.title}</h1>
-                            {user && post.user && (user._id === post.user._id) && (
-                                <Link to={`/forum/edit-post/${post._id}`}>
+                            <div>
+                                {user && post.user && (user._id === post.user._id) && (
+                                    <Link to={`/forum/edit-post/${post._id}`}>
+                                        <button
+                                            className="text-white mr-2 cursor-pointer bg-secondary p-2 hover:bg-sky-800 rounded-lg"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth={1.5}
+                                                stroke="currentColor"
+                                                className="w-6 h-6"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </Link>
+                                )}
+                                {user && user.role && post.user && post.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === post.user._id)) && (
                                     <button
-                                        className="text-white z-50 cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
+                                        onClick={() => handleDelete(post._id)}
+                                        className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -91,12 +127,12 @@ function Post() {
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
-                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                                             />
                                         </svg>
                                     </button>
-                                </Link>
-                            )}
+                                )}
+                            </div>
                         </div>
                         <div className='py-5'>
                             <h1>
@@ -111,6 +147,7 @@ function Post() {
                                                     </p>
                                                     <p className="text-secondary font-semibold text-lg">@{post.user.nickname}</p>
                                                 </div>
+                                                <p className="text-primary font-bold">{post.user.role}</p>
                                             </div>
                                             <div>
                                                 <time dateTime={post.updatedAt} className="text-gray-700 text-lg">
@@ -229,6 +266,7 @@ function Post() {
                                                             {rating.postedby.name}
                                                         </p>
                                                         <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
+                                                        <p className="text-primary font-bold text-lg">| {rating.postedby.role}</p>
                                                     </div>
                                                 </div>
                                             </div>

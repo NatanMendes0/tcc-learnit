@@ -47,9 +47,9 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
 });
 
 const isAdmin = asyncHandler(async (req, res, next) => {
-  if (req.user.role === "admin") {
+  if (req.user.role === "Administrador" || req.user.role === "Educador") {
     next();
-  } else if (req.user.role === "user") {
+  } else if (req.user.role === "Aprendiz") {
     const post = await Post.findById(req.params.id); // Check if the user is the author of the post
     if (post.user._id.toString() === req.user._id.toString()) {
       next();

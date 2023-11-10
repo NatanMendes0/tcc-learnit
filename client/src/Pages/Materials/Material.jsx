@@ -20,7 +20,7 @@ function Material() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
     const materialContext = useMaterial();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const openModal = (imageUrl) => {
         setModalImageUrl(imageUrl);
@@ -111,6 +111,8 @@ function Material() {
                                 <p className="text-white font-semibold text-lg">@{material.user.nickname}</p>
                             </div>
                         </div>
+                        <p className="text-white -mt-2 font-semibold border-b-2 border-primary text-lg">{material.user.role} da plataforma</p>
+                        
                         <div>
                             <time dateTime={material.updatedAt} className="text-gray-200 text-lg">
                                 {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
@@ -127,7 +129,7 @@ function Material() {
                         <div key={materialItem._id}>
                             <div className='flex justify-between'>
                                 <h1 className='title px-2 mt-3 text-4xl text-font_primary text-left'>{materialItem.stepContent.title}</h1>
-                                {user && user.role === "admin" && (
+                                {user && user.role === "Administrador" && (
                                     <div className="flex items-center gap-x-1">
                                         {/* edit btn */}
                                         <Link to={`/materials/edit-step/${material._id}/${materialItem._id}`}>
@@ -252,8 +254,8 @@ function Material() {
                 ))}
 
 
-                {/* add new step (admin only) */}
-                {user && user.role === "admin" && (
+                {/* add new step (Administrador only) */}
+                {user && user.role === "Administrador" && (
                     <div className="mx-auto mt-8 text-center">
                         <Link to={`/materials/add-step/${material._id}`}>
                             <div className='flex justify-center items-center'>
@@ -337,6 +339,7 @@ function Material() {
                                                             <p className="font-bold text-base text-secondary">
                                                                 @{rating.postedby.nickname}
                                                             </p>
+                                                            <p className="text-primary font-bold text-lg">| {rating.postedby.role}</p>
                                                         </div>
                                                         <p className="text-font_secondary text-lg">{rating.comment}</p>
                                                     </div>

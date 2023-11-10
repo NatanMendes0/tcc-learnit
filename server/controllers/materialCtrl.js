@@ -94,7 +94,7 @@ const getMaterials = asyncHandler(async (req, res, next) => {
 const getMaterial = asyncHandler(async (req, res) => {
     const materialId = req.params.id;
     try {
-        const material = await Material.findById(materialId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname" }] }).populate("user", "name nickname");
+        const material = await Material.findById(materialId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname role" }] }).populate("user", "name nickname role");
         if (!material) {
             res.status(404).json({ message: 'Material nÃ£o encontrado' });
             return;
@@ -278,7 +278,7 @@ const deleteStep = asyncHandler(async (req, res) => {
     try {
         const material = await Material.findById(materialId);
         if (!material) {
-            return res.status(404).json({ message: "Material não encontrado" });
+            return res.status(404).json({ message: "Material nï¿½o encontrado" });
         }
 
         // Find the index of the step to be deleted

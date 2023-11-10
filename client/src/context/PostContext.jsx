@@ -22,7 +22,7 @@ const PostProvider = ({ children }) => {
       const response = await api.post("/forum/", info, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type":"multipart/form-data"
+          "Content-Type": "multipart/form-data"
         },
       });
 
@@ -46,7 +46,7 @@ const PostProvider = ({ children }) => {
   };
 
   const rating = async (id, data) => {
-    try{
+    try {
       const response = await api.put(`/forum/rating/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const PostProvider = ({ children }) => {
       setPosts(updatedPosts);
 
       toast.success("Comentário adicionado com sucesso!");
-    } catch{
+    } catch {
       toast.error("Erro ao adicionar comentário");
     }
   };
@@ -80,23 +80,22 @@ const PostProvider = ({ children }) => {
   };
 
   const updatePost = async (id, data) => {
-    try {
-      const response = await api.put(`/forum/edit-post/${id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    const response = await api.put(`/forum/edit-post/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
+    if (response.status === 200) {
       const updatedPost = response.data;
       const updatedPosts = posts.map((post) =>
         post._id === id ? updatedPost : post
       );
       setPosts(updatedPosts);
-
       toast.success("Postagem atualizada com sucesso!");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao atualizar a postagem");
+    } else {
+      toast.error("Erro ao atualizar a postagem");
     }
   };
 
