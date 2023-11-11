@@ -6,8 +6,8 @@ import { useMaterial } from '../../context/MaterialContext';
 
 import { toast } from 'react-toastify';
 
-import ptBR from "date-fns/locale/pt-BR";
 import { format } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 
 import { UserCircleIcon } from '@heroicons/react/20/solid';
 
@@ -64,10 +64,12 @@ function Material() {
             const response = await api.post(`/materials/rating/${id}`, {
                 comment: data.comment,
             });
-            toast.success(response.data.message);
+            if (response.status === 200) {
+                toast.success("Comentário adicionado!");
+            }
             setValue("comment", "");
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error("Você não está logado! Faça seu login!");
         }
     };
 
@@ -112,7 +114,7 @@ function Material() {
                             </div>
                         </div>
                         <p className="text-white -mt-2 font-semibold border-b-2 border-primary text-lg">{material.user.role} da plataforma</p>
-                        
+
                         <div>
                             <time dateTime={material.updatedAt} className="text-gray-200 text-lg">
                                 {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
@@ -325,30 +327,32 @@ function Material() {
                     {material.ratings && material.ratings.length > 0 ? (
                         <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
                             <ul>
-                                {material.ratings.map((rating) => (
-                                    <li key={rating._id}>
-                                        <div className="p-4">
-                                            <div className="flex items-center gap-x-2">
-                                                <div className="relative flex items-center gap-x-2">
-                                                    <UserCircleIcon className="h-12 text-primary" />
-                                                    <div className="text-sm leading-5">
-                                                        <div className="flex items-center gap-x-2">
-                                                            <p className="text-lg font-extrabold text-secondary">
+                                {material.ratings
+                                    .map((rating, index) => (
+                                        <li key={index}>
+                                            <div className="p-4">
+                                                <div className="flex items-center gap-x-2">
+                                                    <div className="relative flex items-center gap-x-2 w-full">
+                                                        <div className="flex items-center justify-center text-primary">
+                                                            <UserCircleIcon className="h-14 w-14 min-h-14 min-w-14" />
+                                                        </div>
+                                                        <div className="flex gap-x-2">
+                                                            <p className="font-semibold text-xl text-secondary">
                                                                 {rating.postedby.name}
                                                             </p>
-                                                            <p className="font-bold text-base text-secondary">
-                                                                @{rating.postedby.nickname}
-                                                            </p>
+                                                            <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
                                                             <p className="text-primary font-bold text-lg">| {rating.postedby.role}</p>
                                                         </div>
-                                                        <p className="text-font_secondary text-lg">{rating.comment}</p>
                                                     </div>
                                                 </div>
+                                                <p className="text-font_secondary text-lg ml-16 -mt-5">{rating.comment}</p>
                                             </div>
-                                        </div>
-                                    </li>
-                                ))}
+                                        </li>
+                                    ))
+                                    .reverse()
+                                }
                             </ul>
+
                         </div>
                     ) : (
                         <div className="block w-full rounded-md border-0 p-5 shadow-xl text-font_secondary">

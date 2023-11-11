@@ -191,11 +191,9 @@ const rating = asyncHandler(async (req, res) => {
 
     await post.save();
 
-    res.json({ message: "Comentário adicionado!", post: post });
+    return res.sendStatus(200)
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Erro ao avaliar o post", error: error.message });
+    res.status(500).json(errorResponse);
   }
 });
 

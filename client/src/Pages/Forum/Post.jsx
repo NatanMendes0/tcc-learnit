@@ -62,11 +62,13 @@ function Post() {
             const response = await api.post(`/forum/rating/${id}`, {
                 comment: data.comment,
             });
-            setPost(response.data);
+            if (response.status === 200) {
+                toast.success("Comentário adicionado!");
+                setPost(response.data);
+            }
             setValue("comment", "");
-            toast.success(response.data.message);
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error("Você não está logado! Faça seu login!");
         }
     };
 
@@ -253,27 +255,30 @@ function Post() {
                     {post.ratings && post.ratings.length > 0 ? (
                         <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
                             <ul>
-                                {post.ratings.map((rating, index) => (
-                                    <li key={index}>
-                                        <div className="p-4">
-                                            <div className="flex items-center gap-x-2">
-                                                <div className="relative flex items-center gap-x-2">
-                                                    <div className="flex items-center justify-center text-primary">
-                                                        <UserCircleIcon className="h-14 w-14 min-h-14 min-w-14" />
-                                                    </div>
-                                                    <div className="flex gap-x-2">
-                                                        <p className="font-semibold text-xl text-secondary">
-                                                            {rating.postedby.name}
-                                                        </p>
-                                                        <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
-                                                        <p className="text-primary font-bold text-lg">| {rating.postedby.role}</p>
+                                {post.ratings
+                                    .map((rating, index) => (
+                                        <li key={index}>
+                                            <div className="p-4">
+                                                <div className="flex items-center gap-x-2">
+                                                    <div className="relative flex items-center gap-x-2 w-full">
+                                                            <div className="flex items-center justify-center text-primary">
+                                                                <UserCircleIcon className="h-14 w-14 min-h-14 min-w-14" />
+                                                            </div>
+                                                            <div className="flex gap-x-2">
+                                                                <p className="font-semibold text-xl text-secondary">
+                                                                    {rating.postedby.name}
+                                                                </p>
+                                                                <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
+                                                                <p className="text-primary font-bold text-lg">| {rating.postedby.role}</p>
+                                                            </div>
                                                     </div>
                                                 </div>
+                                                <p className="text-font_secondary text-lg ml-16 -mt-5">{rating.comment}</p>
                                             </div>
-                                            <p className="text-font_secondary text-lg ml-16 -mt-5">{rating.comment}</p>
-                                        </div>
-                                    </li>
-                                ))}
+                                        </li>
+                                    ))
+                                    .reverse()
+                                }
                             </ul>
                         </div>
                     ) : (

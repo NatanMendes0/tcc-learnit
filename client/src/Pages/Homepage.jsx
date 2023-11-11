@@ -33,7 +33,7 @@ const navigation = [
     href: "#sobre-plataforma",
   },
   {
-    name: "Contato?",
+    name: "Contato",
     href: "#contato",
   },
 ];
