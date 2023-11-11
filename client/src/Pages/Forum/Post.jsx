@@ -169,7 +169,7 @@ function Post() {
                                 <div
                                     className="relative cursor-pointer flex justify-center items-center"
                                     onClick={() =>
-                                        openModal(`http://localhost:5000/Public/Images/${post.file}`)
+                                        openModal(`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`)
                                     }
                                 >
                                     <div className='text-center text-gray-400 text-md'>
@@ -180,7 +180,7 @@ function Post() {
                                     </svg>
 
                                     <img
-                                        src={`http://localhost:5000/Public/Images/${post.file}`}
+                                        src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`}
                                         alt="imagem do post"
                                         className="w-[40%] rounded-2xl aspect-[16/9] sm:aspect-[2/1] lg:aspect-[16/9] object-contain"
                                     />

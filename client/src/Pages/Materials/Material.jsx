@@ -212,7 +212,7 @@ function Material() {
                                 <div
                                     className="relative cursor-pointer mt-10 flex justify-center items-center"
                                     onClick={() =>
-                                        openModal(`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`)
+                                        openModal(`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${materialItem.stepContent.file}`)
                                     }
                                 >
                                     <div className='text-center text-gray-400 text-md'>
@@ -223,7 +223,7 @@ function Material() {
                                     </svg>
 
                                     <img
-                                        src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`}
+                                        src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${materialItem.stepContent.file}`}
                                         alt="imagem do post"
                                         className="w-[40%] rounded-3xl sm:aspect-[2/1] lg:aspect-[16/9] object-cover h-full"
                                     />
