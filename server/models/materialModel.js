@@ -15,7 +15,10 @@ const MaterialSchema = new mongoose.Schema({
                 title: String,
                 text: String,
                 file: String,
-                note: String,
+                note: {
+                    type: String,
+                    required: false,
+                },
             }
         },
     ],

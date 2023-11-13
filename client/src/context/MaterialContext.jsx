@@ -26,9 +26,12 @@ const MaterialProvider = ({ children }) => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            setMaterials(response.data);
-            toast.success("Material criado com sucesso!");
-            return response.data;
+
+            if (response.status === 200) {
+                toast.success("Material criado com sucesso!");
+                setMaterials(response.data);
+                return response.data;
+            }
         } catch (err) {
             throw new Error(
                 err.response?.data?.message || "Ocorreu um erro ao criar o material"
@@ -100,27 +103,13 @@ const MaterialProvider = ({ children }) => {
     };
 
     const registerStep = async (info, id) => {
-        try {
-            const response = await api.post(`/materials/add-step/${id}`, info, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            const newMaterials = materials.map((material) => {
-                if (material._id === id) {
-                    return {
-                        ...material,
-                        steps: [...material.steps, response.data],
-                    };
-                }
-                return material;
-            });
-            setMaterials(newMaterials);
-            toast.success("Passo registrado com sucesso!");
-        } catch (error) {
-            toast.error(error.response.data.message);
-        }
+        const response = await api.post(`/materials/add-step/${id}`, info, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return response.data;
     };
 
     const getStep = async (id, stepId) => {
@@ -151,7 +140,6 @@ const MaterialProvider = ({ children }) => {
                     },
                 }
             );
-
             const updatedStep = response.data;
             const updatedMaterials = materials.map((material) => {
                 if (material._id === id) {
@@ -167,7 +155,7 @@ const MaterialProvider = ({ children }) => {
             setMaterials(updatedMaterials);
         } catch (error) {
             toast.error(
-                error.response?.data?.message || "Erro ao atualizar o passo"
+                error.response?.data?.message
             );
         }
     };
@@ -188,7 +176,7 @@ const MaterialProvider = ({ children }) => {
                     };
                 }
                 return material;
-            });
+            });            
             setMaterials(newMaterials);
             toast.success("Passo removido com sucesso!");
         } catch (error) {

@@ -79,8 +79,7 @@ function Material() {
             const MaterialData = await getMaterial();
             setMaterial(MaterialData);
         } catch (error) {
-            console.error("Error deleting Material:", error);
-            toast.error("Erro ao deletar passo!");
+            toast.success("Passo apagado com sucesso!")
         }
     };
 
@@ -88,7 +87,6 @@ function Material() {
         try {
             await api.delete(`/materials/delete-material/${id}`);
             toast.success("Material deletado com sucesso!");
-            // window.location.href = "/materials";
             navigate('../materials', { replace: false });
 
         } catch (error) {
@@ -131,72 +129,78 @@ function Material() {
                         <div key={materialItem._id}>
                             <div className='flex justify-between'>
                                 <h1 className='title px-2 mt-3 text-4xl text-font_primary text-left'>{materialItem.stepContent.title}</h1>
-                                {user && user.role === "Administrador" && (
-                                    <div className="flex items-center gap-x-1">
-                                        {/* edit btn */}
-                                        <Link to={`/materials/edit-step/${material._id}/${materialItem._id}`}>
-                                            <button className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="w-6 h-6"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </Link>
+                                <div className="flex items-center gap-x-1">
+                                    {user && user._id === material.user._id && (
+                                        <>
+                                            {/* edit btn */}
+                                            <Link to={`/materials/edit-step/${material._id}/${materialItem._id}`}>
+                                                <button className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        strokeWidth={1.5}
+                                                        stroke="currentColor"
+                                                        className="w-6 h-6"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </Link>
+                                        </>
+                                    )}
 
-                                        {/* delete btn */}
-                                        {material && material.content.length > 1 ? (
-                                            <button
-                                                onClick={() => handleDelete(material._id, materialItem._id)}
-                                                className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="w-6 h-6"
+                                    {/* delete btn */}
+                                    {user && user.role && (user.role === "Administrador" || user.role === "Educador") && (
+                                        <div className="flex items-center gap-x-1">
+                                            {material.content.length > 1 ? (
+                                                <button
+                                                    onClick={() => handleDelete(material._id, materialItem._id)}
+                                                    className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"
                                                 >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        ) : (
-                                            <button
-                                                onClick={() => handleDeleteMaterial(material._id)}
-                                                className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="w-6 h-6"
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        strokeWidth={1.5}
+                                                        stroke="currentColor"
+                                                        className="w-6 h-6"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => handleDeleteMaterial(material._id)}
+                                                    className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"
                                                 >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        )}
-                                    </div>
-                                )}
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        strokeWidth={1.5}
+                                                        stroke="currentColor"
+                                                        className="w-6 h-6"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <p className='text-xl text-justify px-2 mt-3' style={{ whiteSpace: 'pre-line' }}>
                                 {materialItem.stepContent.text}
@@ -256,8 +260,8 @@ function Material() {
                 ))}
 
 
-                {/* add new step (Administrador only) */}
-                {user && user.role === "Administrador" && (
+                {/* add new step (Administrador and Educador only) */}
+                {user && (user.role === "Administrador" || user.role === "Educador") && (
                     <div className="mx-auto mt-8 text-center">
                         <Link to={`/materials/add-step/${material._id}`}>
                             <div className='flex justify-center items-center'>

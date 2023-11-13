@@ -38,7 +38,7 @@ export default function EditStep() {
     try {
       await materialContext.updateStep(id, stepId, data);
       navigate(`../materials/get-material/${id}`, { replace: false });
-      toast.success("Passo atualizado com sucesso!");
+      toast.success("Passo editado com sucesso!");
     } catch (error) {
       toast.error(error.message);
     }
@@ -119,14 +119,6 @@ export default function EditStep() {
               className="block w-full resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
               {...register("note", {
                 required: false,
-                minLength: {
-                  value: 3,
-                  message: "Digite um título com ao menos 3 caracteres",
-                },
-                maxLength: {
-                  value: 700,
-                  message: "Máximo de 30 caracteres",
-                },
               })}
             />
           </div>

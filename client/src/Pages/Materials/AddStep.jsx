@@ -20,9 +20,10 @@ export default function AddStep() {
     const onSubmit = async (data) => {
         try {
             await materialContext.registerStep(data, id);
+            toast.success("Passo adicionado com sucesso!");
             navigate(`../materials/get-material/${id}`, { replace: false });
         } catch (error) {
-            toast.error(error.message || "Erro ao criar passo" + error);
+            toast.error(error.message);
             navigate(`../materials/get-material/${id}`, { replace: false });
         }
     };
@@ -88,7 +89,6 @@ export default function AddStep() {
                             </div>
                         </div>
 
-                        {/* Adicione o campo de nota */}
                         <label htmlFor="note" className="sr-only">
                             Nota
                         </label>

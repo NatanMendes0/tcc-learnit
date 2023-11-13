@@ -155,30 +155,29 @@ const addStep = asyncHandler(async (req, res) => {
                 if (err) throw err;
             });
 
-            const materialId = req.params.id;
-            const material = await Material.findById(materialId);
-
+            
             var title = fields.title[0];
             var text = fields.text[0];
             var note = fields.note[0];
-
-            const newStepData = {
-                stepContent: {
-                    title: title,
-                    text: text,
-                    file: nomeimg ? nomeimg : null,
-                    filePath: nomeimg ? `/Images/${nomeimg}` : null,
-                    note: note ? note : null,
-                }
-            };
-
-            material.content.push(newStepData);
-
+            
             try {
+                const materialId = req.params.id;
+                const material = await Material.findById(materialId);
+                const newStepData = {
+                    stepContent: {
+                        title: title,
+                        text: text,
+                        file: nomeimg ? nomeimg : null,
+                        filePath: nomeimg ? `/Images/${nomeimg}` : null,
+                        note: note ? note : null,
+                    }
+                };
+    
+                material.content.push(newStepData);
                 await material.save();
-                res.json({ message: 'Passo criado com sucesso!', material: newStepData });
+                return res.sendStatus(200);
             } catch (error) {
-                res.status(500).json({ message: 'Erro ao criar o material', error });
+                res.status(500).json({ message: "Erro ao criar o post", error });
             }
         } else {
             // No files were uploaded
@@ -195,7 +194,7 @@ const addStep = asyncHandler(async (req, res) => {
                     text: text,
                     file: nomeimg ? nomeimg : null,
                     filePath: nomeimg ? `/Images/${nomeimg}` : null,
-                    note: note ? note : null,
+                    note: note,
                 }
             };
 
@@ -203,9 +202,9 @@ const addStep = asyncHandler(async (req, res) => {
 
             try {
                 await material.save();
-                res.json({ message: 'Passo criado com sucesso!', material: newStepData });
+                return res.sendStatus(200);
             } catch (error) {
-                res.status(500).json({ message: 'Erro ao criar o material', error });
+                res.status(500).json({ message: "Erro ao criar o post", error });
             }
         }
     });
@@ -230,7 +229,12 @@ const editStep = asyncHandler(async (req, res) => {
 
             var title = fields.title[0];
             var text = fields.text[0];
-            var note = fields.note[0];
+            if (fields.note == undefined) {
+            var note = fields.note;
+            }
+            else {
+                var note = fields.note[0];
+            }
             var user = req.user;
 
             try {
@@ -238,13 +242,13 @@ const editStep = asyncHandler(async (req, res) => {
                 const step = material.content.id(req.params.stepId);
                 step.stepContent.title = title;
                 step.stepContent.text = text;
-                step.stepContent.note = note;
+                step.stepContent.note = note ? note : null;
                 step.stepContent.file = nomeimg ? nomeimg : null;
                 step.stepContent.filePath = nomeimg ? `/Images/${nomeimg}` : null;
                 const newStep = await material.save();
                 res.json({ message: "Passo criado com sucesso!", material: newStep });
             } catch (error) {
-                res.status(500).json({ message: "Erro ao criar o post", error });
+                res.status(500).json({ message: "Erro ao criar passo", error });
             }
         }
         else {
@@ -265,7 +269,7 @@ const editStep = asyncHandler(async (req, res) => {
                 const newStep = await material.save();
                 res.json({ message: "Passo criado com sucesso!", material: newStep });
             } catch (error) {
-                res.status(500).json({ message: "Erro ao criar o post", error });
+                res.status(500).json({ message: "Erro ao criar passo", error });
             }
         }
     });
@@ -274,11 +278,10 @@ const editStep = asyncHandler(async (req, res) => {
 const deleteStep = asyncHandler(async (req, res) => {
     const materialId = req.params.id;
     const stepId = req.params.stepId;
-
     try {
         const material = await Material.findById(materialId);
         if (!material) {
-            return res.status(404).json({ message: "Material n�o encontrado" });
+            return res.status(404).json({ message: "Material não encontrado" });
         }
 
         // Find the index of the step to be deleted
@@ -299,10 +302,11 @@ const deleteStep = asyncHandler(async (req, res) => {
         } else {
             // If there are steps left, save the updated material
             await material.save();
-            res.json({ message: "Passo deletado com sucesso" });
+            res.status(200).json({ message: "Passo deletado!" });
+             
         }
     } catch (error) {
-        res.status(500).json({ message: "Erro ao deletar postagem", error: error.message });
+        res.status(500).json({ message: "Erro ao deletar material", error: error.message });
     }
 });
 
@@ -328,7 +332,7 @@ const rating = asyncHandler(async (req, res) => {
         await material.save();
 
         return res.sendStatus(200)
-    } catch (error) {        
+    } catch (error) {
         res.status(500).json(errorResponse);
     }
 });

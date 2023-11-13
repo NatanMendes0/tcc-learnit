@@ -26,7 +26,7 @@ export default function Edit() {
         setValue("description", post.description);
         setValue("file", post.file);
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error.message || "Erro ao carregar postagem");
         navigate("../forum", { replace: false });
       }
     }
@@ -37,9 +37,10 @@ export default function Edit() {
   const onSubmit = async (data) => {
     try {
       await postContext.updatePost(id, data);
-      navigate("../forum", { replace: false });
+      navigate(`../forum/get-post/${id}`, { replace: false });
     } catch (error) {
       toast.error(error.message);
+      navigate(`../forum/get-post/${id}`, { replace: false });
     }
   };
 

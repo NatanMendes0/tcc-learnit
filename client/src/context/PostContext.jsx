@@ -47,18 +47,12 @@ const PostProvider = ({ children }) => {
 
   const rating = async (id, data) => {
     try {
-      const response = await api.put(`/forum/rating/${id}`, data, {
+       await api.put(`/forum/rating/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
         comment: data.comment
       });
-
-      const updatedPost = response.data;
-      const updatedPosts = posts.map((post) =>
-        post._id === id ? updatedPost : post
-      );
-      setPosts(updatedPosts);
 
       toast.success("Comentário adicionado com sucesso!");
     } catch {
@@ -80,22 +74,19 @@ const PostProvider = ({ children }) => {
   };
 
   const updatePost = async (id, data) => {
-    const response = await api.put(`/forum/edit-post/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    if (response.status === 200) {
-      const updatedPost = response.data;
-      const updatedPosts = posts.map((post) =>
-        post._id === id ? updatedPost : post
-      );
-      setPosts(updatedPosts);
+    try {
+       await api.put(`/forum/edit-post/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success("Postagem atualizada com sucesso!");
-    } else {
-      toast.error("Erro ao atualizar a postagem");
+    }
+    catch (error) {
+      toast.error(
+        error.response?.data?.message || "Erro ao atualizar a postagem"
+      );
     }
   };
 

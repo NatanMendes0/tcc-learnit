@@ -107,6 +107,7 @@ const editPost = asyncHandler(async (req, res) => {
       var title = fields.title[0];
       var description = fields.description[0];
       var user = req.user;
+      
       const newPostData = {
         user: user._id,
         title,
@@ -124,7 +125,7 @@ const editPost = asyncHandler(async (req, res) => {
         const newPost = post.save();
         return res.sendStatus(200);        
       } catch (error) {
-        res.status(500).json({ message: "Erro ao criar o post", error });
+        res.status(500).json({ error });
       }
     }
     else {
@@ -149,7 +150,7 @@ const editPost = asyncHandler(async (req, res) => {
         const newPost = post.save();
         return res.sendStatus(200);        
       } catch (error) {
-        res.status(500).json({ message: "Erro ao criar o post", error });
+        res.status(500).json({error });
       }
     }
   });
@@ -163,7 +164,6 @@ const deletePost = asyncHandler(async (req, res) => {
     if (!deletedPost) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
-
     res.json({ message: "Post deletado com sucesso!" });
   } catch (error) {
     res.status(500).json({ message: "Erro ao deletar o post", error });
