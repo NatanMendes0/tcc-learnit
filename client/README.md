@@ -1,10 +1,10 @@
-# Getting Started with Create React App
+# Bem-vindo ao repositório do meu TCC!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esse projeto foi feito utilizando o [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Scripts
 
-In the project directory, you can run:
+Nesse projeto, você pode utilizar:
 
 ### `npm start`
 
