@@ -85,7 +85,7 @@ export default function Homepage() {
           className="mx-auto max-w-7xl px-6 py-24 sm:py-24 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-24"
           id="quem-somos"
         >
-          <div className="mx-auto bg-red-500 max-w-3xl lg:mx-0 lg:flex-auto">
+          <div className="mx-auto max-w-3xl lg:mx-0 lg:flex-auto">
             <div className="flex items-center">
               <div className="relative flex items-center gap-x-4 rounded-full px-4 py-1 text-sm leading-6 text-gray-600 ring-1 ring-primary hover:ring-gray-900/20">
                 <span className="font-semibold text-secondary">
