@@ -1,9 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
 import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
@@ -14,16 +12,19 @@ function classNames(...classes) {
 export default function Navbar() {
   const [current, setCurrent] = useState("/");
   const navigate = useNavigate();
-  const { isLoggedIn, user, logout } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
+  const auth = useAuth();
   const location = useLocation();
+
+  console.log(current);
 
   const navigation = [
     { name: "Página Inicial", href: "/", current: location.pathname === "/" },
     { name: "Fórum", href: "/forum", current: location.pathname.startsWith("/forum") },
     {
       name: "Materiais",
-      href: "/materiais",
-      current: location.pathname.startsWith("/materiais"),
+      href: "/materials",
+      current: location.pathname.startsWith("/materials"),
     },
   ];
 
@@ -35,24 +36,26 @@ export default function Navbar() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-gray-100 shadow">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
             <div className="flex h-16 justify-between">
               <div className="flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-10 w-auto"
-                    src="../../images/logo.png"
-                    alt="LearnIT logo"
-                  />
+                  <Link to="/">
+                    <img
+                      className="h-10 w-auto"
+                      src="../../images/logo.png"
+                      alt="LearnIT logo"
+                    />
+                  </Link>
                 </div>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
                   {navigation.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       onClick={onClick}
                       className={classNames(
                         item.current
@@ -63,31 +66,8 @@ export default function Navbar() {
                       aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
-                </div>
-              </div>
-
-              <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-                <div className="w-full max-w-lg lg:max-w-xs">
-                  <label htmlFor="search" className="sr-only">
-                    Pesquisar
-                  </label>
-                  <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                      <MagnifyingGlassIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <input
-                      id="search"
-                      name="search"
-                      className="block w-full rounded-md border-0 bg-gray-200 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
-                      placeholder="Pesquisar"
-                      type="search"
-                    />
-                  </div>
                 </div>
               </div>
 
@@ -105,10 +85,13 @@ export default function Navbar() {
               </div>
 
               <div className="hidden lg:ml-4 lg:flex lg:items-center">
+                <h1 className="mr-3">
+                  Olá, {isLoggedIn && isLoggedIn ? auth.user.name : "visitante"}
+                </h1>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-1 flex-shrink-0">
                   <div>
-                    <Menu.Button className="relative rounded-sm flex bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                    <Menu.Button className="relative rounded-sm flex bg-white text-sm focus:outline-none">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       {open ? (
@@ -126,32 +109,31 @@ export default function Navbar() {
                   </div>
                   <Transition
                     as={Fragment}
-                    enter="transition ease-out duration-100"
+                    enter="transition ease-out duration-1500"
                     enterFrom="transform opacity-0 scale-95"
                     enterTo="transform opacity-100 scale-100"
                     leave="transition ease-in duration-75"
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute items-center right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute items-center right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg focus:outline-none">
                       {isLoggedIn ? (
                         <>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link to={`/account/${auth.user._id}`}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Conta
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
+                              <Link
                                 onClick={logout}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
@@ -159,7 +141,7 @@ export default function Navbar() {
                                 )}
                               >
                                 Sair
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </>
@@ -167,28 +149,28 @@ export default function Navbar() {
                         <>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="/login"
+                              <Link
+                                to="/login"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Login
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="/register"
+                              <Link
+                                to="/register"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Cadastro
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </>
@@ -200,87 +182,31 @@ export default function Navbar() {
             </div>
           </div>
 
+          {/* mobile menu items */}
           <Disclosure.Panel className="lg:hidden">
             <div className="space-y-1 pb-3 pt-2">
               {/* Current: "bg-sky-50 border-sky-500 text-sky-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
               <Disclosure.Button
                 as="a"
-                href="#"
-                className="block border-l-4 border-sky-500 bg-sky-50 py-2 pl-3 pr-4 text-xl font-medium text-sky-700"
+                href="/"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 flex-grow"
               >
-                Dashboard
+                Início
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-7xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                href="/forum"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 flex-grow"
               >
-                Team
+                Forum
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-7xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+                href="/materials"
+                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 flex-grow"
               >
-                Projects
+                Materiais
               </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-7xl font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-              >
-                Calendar
-              </Disclosure.Button>
-            </div>
-            <div className="border-t border-gray-200 pb-3 pt-4">
-              <div className="flex items-center px-4">
-                <div className="flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">
-                    Tom Cook
-                  </div>
-                  <div className="text-sm font-medium text-gray-500">
-                    tom@example.com
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  className="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
-              <div className="mt-3 space-y-1">
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                >
-                  Your Profile
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                >
-                  Settings
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                >
-                  Sign out
-                </Disclosure.Button>
-              </div>
             </div>
           </Disclosure.Panel>
         </>

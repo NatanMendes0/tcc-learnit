@@ -2,6 +2,7 @@ require("dotenv").config();
 <<<<<<< HEAD
 const port = process.env.PORT || 5000;
 
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -12,12 +13,13 @@ const cors = require("cors");
 dbConnect();
 
 // ROUTES
-
 const authRouter = require("./routes/authRouter");
 const forumRouter = require("./routes/forumRouter");
+const materialRouter = require("./routes/materialRouter");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
+<<<<<<< HEAD
 const app = express();
 =======
 const express = require("express");
@@ -53,15 +55,25 @@ const corsOptions = {
 <<<<<<< HEAD
 app.use(cors(corsOptions));
 =======
+=======
+const app = express(); 
+
+// ORIGIN ACCEPT
+>>>>>>> diferentUsers
 app.use(
   cors({
-    origin: "http://localhost:3000", // Origem permitida
+    origin: "http://localhost:3000",
     credentials: true, // Permite credenciais (cookies, autenticação etc.)
   })
 );
+<<<<<<< HEAD
 app.use(cookieParser());
 >>>>>>> create-post
+=======
+>>>>>>> diferentUsers
 
+app.use(cookieParser());
+app.use('/Public', express.static(path.join(__dirname, 'Public')));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -70,6 +82,7 @@ app.use(helmet());
 
 app.use("/api/user", authRouter);
 app.use("/api/forum", forumRouter);
+app.use("/api/materials", materialRouter);
 
 app.use(notFound);
 app.use(errorHandler);

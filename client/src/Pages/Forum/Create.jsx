@@ -26,20 +26,27 @@ export default function Create() {
 
     try {
       await postContext.register(data);
+      navigate("../forum", { replace: false });
       toast.success("Tópico criado com sucesso!");
-      navigate("../forum", { replace: true });
     } catch (error) {
       toast.error(error.message);
-      console.log(error);
     }
   };
 
   return (
     <>
+<<<<<<< HEAD
       <div classtitle="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
         <form classtitle="shadow-lg relative" onSubmit={handleSubmit}>
           <div classtitle="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
             <label htmlFor="title" classtitle="sr-only">
+=======
+      <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
+        <h1 className="subtitle text-3xl my-5">Adicione um comentário!</h1>
+        <form className="shadow-lg relative" onSubmit={handleSubmit(onSubmit)}>
+          <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
+            <label htmlFor="title" className="sr-only">
+>>>>>>> diferentUsers
               Título
             </label>
             <input

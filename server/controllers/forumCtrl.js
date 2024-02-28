@@ -1,128 +1,67 @@
-const User = require("../models/userModel");
 const Post = require("../models/postModel");
 
 const asyncHandler = require("express-async-handler");
-const slugify = require("slugify");
-const multer = require("multer");
-const mongoose = require("mongoose");
 const path = require("path");
-const validateMongodbId = require("../utils/validateMongodbId");
-
-// const createPost = asyncHandler(async (req, res, next) => {
-//   console.log("req.body", req.body);
-//   const { title, description } = req.body;
-//   const { email } = req.user;
-
-//   const checkPost = await Post.findOne({ title });
-
-//   if (checkPost) {
-//     return res
-//       .status(400)
-//       .json({ message: "Já existe um post com esse título" });
-//   }
-
-//   const user = await User.findOne({ email });
-
-//   if (!user) {
-//     return res.status(404).json({ message: "Usuário não encontrado" });
-//   }
-
-//   const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//       cb(null, "Public/Images");
-//     },
-//     filename: (req, file, cb) => {
-//       const fileName =
-//         file.fieldname + "_" + Date.now() + path.extname(file.originalname);
-//       cb(null, fileName);
-//     },
-//   });
-
-//   const upload = multer({ storage: storage }).single("file");
-
-//   upload(req, res, async (err) => {
-//     if (err) {
-//       return res
-//         .status(500)
-//         .json({ message: "Erro ao fazer o upload da imagem" });
-//     }
-
-//     const newPostData = {
-//       user: user._id,
-//       title,
-//       description,
-//       file: req.file ? req.file.filename : null,
-//     };
-
-//     try {
-//       const newPost = await Post.create(newPostData);
-//       res.json({ message: "Post criado com sucesso!", post: newPost });
-//     } catch (error) {
-//       res.status(500).json({ message: "Erro ao criar o post", error });
-//     }
-//   });
-// });
+const crypto = require("crypto");
+const formidable = require("formidable");
+const fs = require("fs");
 
 const createPost = asyncHandler(async (req, res, next) => {
-  //TODO - arrumar inserção de imagem - não está sendo enviada a imagem pelo formulario
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
+    if (err) throw err;
 
-  console.log("req.body", req.body);
-  const { title, description } = req.body;
-  const { email } = req.user;
+    if (files['file[]'] && Array.isArray(files['file[]']) && files['file[]'].length > 0) {
+      // One file was uploaded
+      var oldpath = files['file[]'][0].filepath;
+      var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+      var ext = path.extname(files['file[]'][0].originalFilename);
+      var nomeimg = hash + ext;
+      var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
 
-  const checkPost = await Post.findOne({ title });
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+      });
 
-  if (checkPost) {
-    return res
-      .status(400)
-      .json({ message: "Já existe um post com esse título" });
-  }
-
-  try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ message: "Usuário não encontrado" });
-    }
-
-    const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, "Public/Images");
-      },
-      filename: (req, file, cb) => {
-        const fileName =
-          file.fieldname + "_" + Date.now() + path.extname(file.originalname);
-        cb(null, fileName);
-      },
-    });
-
-    const upload = multer({ storage: storage }).single("file");
-
-    upload(req, res, async (err) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Erro ao fazer o upload da imagem" });
-      }
-
+      var title = fields.title[0];
+      var description = fields.description[0];
+      var user = req.user;
       const newPostData = {
         user: user._id,
         title,
         description,
-        file: req.file ? req.file.filename : null,
-        filePath: req.file ? `/Images/${req.file.filename}` : null,
+        file: nomeimg ? nomeimg : null,
+        filePath: nomeimg ? `/Images/${nomeimg}` : null,
       };
 
       try {
-        const newPost = await Post.create(newPostData);
+        const newPost = Post.create(newPostData);
         res.json({ message: "Post criado com sucesso!", post: newPost });
       } catch (error) {
         res.status(500).json({ message: "Erro ao criar o post", error });
       }
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Erro ao criar o post", error });
-  }
+    }
+    else {
+      // No files were uploaded
+      var title = fields.title[0];
+      var description = fields.description[0];
+      var user = req.user;
+      const newPostData = {
+        user: user._id,
+        title,
+        description,
+        file: nomeimg ? nomeimg : null,
+        filePath: nomeimg ? `/Images/${nomeimg}` : null,
+      };
+
+      try {
+        const newPost = Post.create(newPostData);
+        res.json({ message: "Post criado com sucesso!", post: newPost });
+      } catch (error) {
+        res.status(500).json({ message: "Erro ao criar o post", error });
+      }
+    }
+  });
 });
 
 const getPosts = asyncHandler(async (req, res) => {
@@ -136,9 +75,8 @@ const getPosts = asyncHandler(async (req, res) => {
 
 const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
-
   try {
-    const post = await Post.findById(postId).populate("user");
+    const post = await Post.findById(postId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname role" }] }).populate("user", "name nickname role");
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
@@ -149,25 +87,75 @@ const getPost = asyncHandler(async (req, res) => {
 });
 
 const editPost = asyncHandler(async (req, res) => {
-  const postId = req.params.id;
-  const { title, description } = req.body;
+  var id = req.params.id;
+  var form = new formidable.IncomingForm();
+  form.parse(req, async function (err, fields, files) {
+    if (err) throw err;
 
-  try {
-    const updatedPost = await Post.findOneAndUpdate(
-      { _id: postId },
-      { $set: { title, description } },
-      { new: true }
-    );
+    if (files['file[]'] && Array.isArray(files['file[]']) && files['file[]'].length > 0) {
+      // One file was uploaded
+      var oldpath = files['file[]'][0].filepath;
+      var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
+      var ext = path.extname(files['file[]'][0].originalFilename);
+      var nomeimg = hash + ext;
+      var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
 
-    if (!updatedPost) {
-      return res.status(404).json({ message: "Post não encontrado" });
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+      });
+
+      var title = fields.title[0];
+      var description = fields.description[0];
+      var user = req.user;
+      
+      const newPostData = {
+        user: user._id,
+        title,
+        description,
+        file: nomeimg ? nomeimg : null,
+        filePath: nomeimg ? `/Images/${nomeimg}` : null,
+      };
+
+      try {
+        const post = await Post.findById(req.params.id);
+        post.title = title;
+        post.description = description;
+        post.file = nomeimg ? nomeimg : null;
+        post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
+        const newPost = post.save();
+        return res.sendStatus(200);        
+      } catch (error) {
+        res.status(500).json({ error });
+      }
     }
+    else {
+      // No files were uploaded
+      var title = fields.title[0];
+      var description = fields.description[0];
+      var user = req.user;
+      const newPostData = {
+        user: user._id,
+        title,
+        description,
+        file: nomeimg ? nomeimg : null,
+        filePath: nomeimg ? `/Images/${nomeimg}` : null,
+      };
 
-    res.json({ message: "Post atualizado com sucesso!", post: updatedPost });
-  } catch (error) {
-    res.status(500).json({ message: "Erro ao atualizar o post", error });
-  }
+      try {
+        const post = await Post.findById(req.params.id);
+        post.title = title;
+        post.description = description;
+        post.file = nomeimg ? nomeimg : null;
+        post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
+        const newPost = post.save();
+        return res.sendStatus(200);        
+      } catch (error) {
+        res.status(500).json({error });
+      }
+    }
+  });
 });
+
 
 const deletePost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
@@ -176,7 +164,6 @@ const deletePost = asyncHandler(async (req, res) => {
     if (!deletedPost) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
-
     res.json({ message: "Post deletado com sucesso!" });
   } catch (error) {
     res.status(500).json({ message: "Erro ao deletar o post", error });
@@ -184,47 +171,29 @@ const deletePost = asyncHandler(async (req, res) => {
 });
 
 const rating = asyncHandler(async (req, res) => {
+  if (!req.cookies.refreshToken) {
+    return res.status(401).json({ message: "Você não realizou seu login" });
+  }
+
   const { _id } = req.user;
-  const prodId = req.params.id;
-  const { liked, comment } = req.body;
+  const postID = req.params.id;
+  const { comment } = req.body;
   try {
-    const post = await Post.findById(prodId);
+    const post = await Post.findById(postID);
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
 
-    let alreadyRated = post.ratings.find(
-      (rating) => rating.postedby.toString() === _id.toString()
-    );
-
-    if (alreadyRated) {
-      alreadyRated.liked = liked;
-      alreadyRated.comment = comment;
-    } else {
-      post.ratings.push({
-        liked,
-        comment,
-        postedby: _id,
-      });
-    }
+    post.ratings.push({
+      comment,
+      postedby: _id,
+    });
 
     await post.save();
 
-    const totalLikes = post.ratings.filter(
-      (rating) => rating.liked === true
-    ).length;
-    const totalDislikes = post.ratings.filter(
-      (rating) => rating.liked === false
-    ).length;
-
-    post.totalLikes = totalLikes;
-    post.totalDislikes = totalDislikes;
-
-    res.json(post);
+    return res.sendStatus(200)
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Erro ao avaliar o post", error: error.message });
+    res.status(500).json(errorResponse);
   }
 });
 

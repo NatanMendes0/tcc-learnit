@@ -33,7 +33,7 @@ const navigation = [
     href: "#sobre-plataforma",
   },
   {
-    name: "Contato?",
+    name: "Contato",
     href: "#contato",
   },
 ];
@@ -43,7 +43,7 @@ export default function Homepage() {
     <>
       <div className="relative isolate">
         <svg
-          className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+          className="absolute -z-50 inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
           aria-hidden="true"
         >
           <defs>
@@ -58,12 +58,6 @@ export default function Homepage() {
               <path d="M100 200V.5M.5 .5H200" fill="none" />
             </pattern>
           </defs>
-          <svg x="50%" y={-1} className="overflow-visible fill-gray-50">
-            <path
-              d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
-              strokeWidth={0}
-            />
-          </svg>
           <rect
             width="100%"
             height="100%"
@@ -73,17 +67,18 @@ export default function Homepage() {
         </svg>
 
         {/* Navigation */}
-        <div className="text-center flex justify-around mt-7 mx-[500px]">
+        <div className="text-center xs:gap-x-2 flex justify-around mt-auto pt-5 md:mx-auto max-w-7xl">
           {navigation.map((nav) => (
             <a
               key={nav.name}
               href={nav.href}
-              className="text-lg font-semibold text-font_secondary hover:text-secondary"
+              className="text-lg font-semibold text-font_secondary hover:text-secondary sm:block md:mr-4 md:last:mr-0 md:mb-2"
             >
               {nav.name}
             </a>
           ))}
         </div>
+
 
         {/* Hero section */}
         <div
@@ -107,14 +102,14 @@ export default function Homepage() {
                 </Link>
               </div>
             </div>
-            <h1 className="mt-10 max-w-lg text-7xl font-bold tracking-tight text-primary sm:text-7xl">
+            <h1 className="mt-10 max-w-lg text-8xl font-bold tracking-tight text-primary sm:text-7xl">
               LearnIT
             </h1>
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-font_secondary">
               Aprenda manutenção de computadores
             </h1>
 
-            <p className="mt-6 mr-24 text-md leading-8 text-gray-700 text-justify font-semibold">
+            <p className="mt-6 xl:mr-24 text-md leading-8 text-gray-700 text-justify font-semibold">
               LearnIT é uma plataforma gratuita que contribui com o aprendizado
               da manutenções de computadores e seus periféricos. A plataforma
               oferece guias de ajuda e demonstrações passo a passo para auxiliar
@@ -136,54 +131,54 @@ export default function Homepage() {
               </Link>
             </div>
           </div>
-          <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
-            <img src="./images/computer.png" alt="" />
+          <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow mx-auto">
+            <img className="sm:mx-auto" src="./images/computer.png" />
           </div>
         </div>
 
         {/* Feature section with grid */}
-        <div className="mx-auto max-w-7xl" id="sobre-plataforma">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold  text-primary">
-              Como é a plataforma?
-            </h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              Entenda nossos objetivos
-            </p>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Esta plataforma foi desenvolvida com o foco em introduzir o mundo
-              da computação para quem quiser ingressar na área, assim como
-              ajudar quem esteja enfrentando algum problema com sua máquina e
-              busque por uma solução rápida e prática.
-            </p>
-          </div>
-
-          <div className="mx-auto mt-16 max-w-7xl sm:mt-20 lg:mt-24 lg:max-w-5xl">
-            <dl className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-              {/* todo: adicionar função que faz o border-b da navbar mudar */}
-              {features.map((feature) => (
-                <div key={feature.name} className="flex flex-col">
-                  <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                    <feature.icon
-                      className="h-5 w-5 flex-none text-primary"
-                      aria-hidden="true"
-                    />
-                    {feature.name}
-                  </dt>
-                  <dd className="mt-4 flex flex-auto flex-col text-base text-justify leading-7 text-gray-600">
-                    <p className="flex-auto">{feature.description}</p>
-                    <p className="mt-6">
-                      <Link
-                        to={feature.href}
-                        className="text-sm font-semibold leading-6 text-primary hover:text-secondary"
-                      >
-                        Acesse agora <span aria-hidden="true">→</span>
-                      </Link>
-                    </p>
-                  </dd>
-                </div>
-              ))}
-            </dl>
+        <div id="sobre-plataforma">
+          <div className="mx-auto max-w-7xl px-6 py-24 sm:py-24 lg:mt-14">
+            <div className="mx-auto max-w-3xl lg:text-center">
+              <h2 className="text-base font-semibold  text-primary">
+                Como é a plataforma?
+              </h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                Entenda nossos objetivos
+              </p>
+              <p className="mt-6 text-lg leading-8 text-gray-600">
+                Esta plataforma foi desenvolvida com o foco em introduzir o mundo
+                da computação para quem quiser ingressar na área, assim como
+                ajudar quem esteja enfrentando algum problema com sua máquina e
+                busque por uma solução rápida e prática.
+              </p>
+            </div>
+            <div className="mx-auto mt-16 max-w-7xl sm:max-w-3xl sm:mt-20 lg:mt-24 lg:max-w-5xl">
+              <dl className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+                {features.map((feature) => (
+                  <div key={feature.name} className="flex flex-col">
+                    <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                      <feature.icon
+                        className="h-5 w-5 flex-none text-primary"
+                        aria-hidden="true"
+                      />
+                      {feature.name}
+                    </dt>
+                    <dd className="mt-4 flex flex-auto flex-col text-base text-justify leading-7 text-gray-600">
+                      <p className="flex-auto">{feature.description}</p>
+                      <p className="mt-6">
+                        <Link
+                          to={feature.href}
+                          className="text-sm font-semibold leading-6 text-primary hover:text-secondary"
+                        >
+                          Acesse agora <span aria-hidden="true">→</span>
+                        </Link>
+                      </p>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
         </div>
 
@@ -198,15 +193,15 @@ export default function Homepage() {
           <div className="pb-20 sm:pb-24 xl:pb-0">
             <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch">
               <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
-                <div className="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+                <div className="relative sm:aspect-[3/4] lg:aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                   <img
                     className="absolute inset-0 h-full sm:w-full lg:w-[470px] rounded-3xl object-cover shadow-2xl"
-                    src="./images/autor.png"
+                    src="./images/autor.jpg"
                     alt=""
                   />
                 </div>
               </div>
-              <div className="w-full pl-28 max-w-3xl xl:max-w-7xl xl:flex-auto xl:py-24">
+              <div className="w-full lg:pl-28 max-w-3xl xl:max-w-7xl xl:flex-auto xl:py-24">
                 <figure className="relative isolate">
                   <blockquote className="text-xl text-justify leading-8 text-font_secondary sm:text-2xl sm:leading-9">
                     <h1 className="text-2xl font-semibold leading-8 sm:text-xl sm:leading-9">
@@ -230,6 +225,29 @@ export default function Homepage() {
                       computação, além de promover boas práticas nessa área.
                     </p>
                   </blockquote>
+                  <figure className="mt-6 relative isolate">
+                    <blockquote className="text-xl text-justify leading-8 text-font_secondary sm:text-2xl sm:leading-9">
+                      <h1 className="text-2xl font-semibold leading-8 sm:text-xl sm:leading-9">
+                        Orientadores do projeto
+                      </h1>
+                      <div className="flex gap-x-2">
+                        <h2 className="text-xl leading-8 text-font_secondary sm:text-lg sm:leading-9">
+                          Orientadora:
+                        </h2>
+                        <h2 className="text-xl leading-8 sm:text-lg sm:leading-9">
+                          Profa. Ma. Patrícia Cristine Hoff
+                        </h2>
+                      </div>
+                      <div className="flex gap-x-2">
+                        <h2 className="text-xl leading-8 text-font_secondary sm:text-lg sm:leading-9">
+                          Coorientador:
+                        </h2>
+                        <h2 className="text-xl leading-8 sm:text-lg sm:leading-9">
+                          Prof. Me. Fábio de Oliveira Dias
+                        </h2>
+                      </div>
+                    </blockquote>
+                  </figure>
                   <figcaption className="mt-8 text-base">
                     <h1 className="font-semibold text-font_secondary">
                       Redes sociais para contato
@@ -267,29 +285,6 @@ export default function Homepage() {
                         >
                           <path
                             d="M44.45 0H3.55A3.5 3.5 0 0 0 0 3.46v41.07A3.5 3.5 0 0 0 3.54 48h40.9A3.51 3.51 0 0 0 48 44.54V3.46A3.5 3.5 0 0 0 44.45 0Zm-30.2 40.9H7.11V18h7.12v22.9Zm-3.57-26.03a4.13 4.13 0 1 1-.02-8.26 4.13 4.13 0 0 1 .02 8.26ZM40.9 40.9H33.8V29.77c0-2.66-.05-6.08-3.7-6.08-3.7 0-4.27 2.9-4.27 5.89V40.9h-7.1V18h6.82v3.12h.1c.94-1.8 3.26-3.7 6.72-3.7 7.21 0 8.54 4.74 8.54 10.91V40.9Z"
-                            fill="currentColor"
-                          ></path>
-                        </svg>
-                      </a>
-
-                      <a
-                        href="https://www.instagram.com/xnatx___/"
-                        className="hover:text-font_tertiary text-font_secondary"
-                        aria-label="Find us on Instagram"
-                        rel="noopener"
-                      >
-                        <svg
-                          className="w-10"
-                          viewBox="0 0 48 48"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M24 4.32c6.41 0 7.17.03 9.7.14 2.34.1 3.6.5 4.45.83 1.11.43 1.92.95 2.75 1.79a7.38 7.38 0 0 1 1.8 2.75c.32.85.72 2.12.82 4.46.11 2.53.14 3.29.14 9.7 0 6.4-.03 7.16-.14 9.68-.1 2.35-.5 3.61-.83 4.46a7.42 7.42 0 0 1-1.79 2.75 7.38 7.38 0 0 1-2.75 1.8c-.85.32-2.12.72-4.46.82-2.53.11-3.29.14-9.69.14-6.41 0-7.17-.03-9.7-.14-2.34-.1-3.6-.5-4.45-.83a7.42 7.42 0 0 1-2.75-1.79 7.38 7.38 0 0 1-1.8-2.75 13.2 13.2 0 0 1-.82-4.46c-.11-2.53-.14-3.29-.14-9.69 0-6.41.03-7.17.14-9.7.1-2.34.5-3.6.83-4.45A7.42 7.42 0 0 1 7.1 7.08a7.38 7.38 0 0 1 2.75-1.8 13.2 13.2 0 0 1 4.46-.82c2.52-.11 3.28-.14 9.69-.14ZM24 0c-6.52 0-7.33.03-9.9.14-2.54.11-4.3.53-5.81 1.12a11.71 11.71 0 0 0-4.26 2.77 11.76 11.76 0 0 0-2.77 4.25C.66 9.8.26 11.55.14 14.1A176.6 176.6 0 0 0 0 24c0 6.52.03 7.33.14 9.9.11 2.54.53 4.3 1.12 5.81a11.71 11.71 0 0 0 2.77 4.26 11.73 11.73 0 0 0 4.25 2.76c1.53.6 3.27 1 5.82 1.12 2.56.11 3.38.14 9.9.14 6.5 0 7.32-.03 9.88-.14 2.55-.11 4.3-.52 5.82-1.12 1.58-.6 2.92-1.43 4.25-2.76a11.73 11.73 0 0 0 2.77-4.25c.59-1.53 1-3.27 1.11-5.82.11-2.56.14-3.38.14-9.9 0-6.5-.03-7.32-.14-9.88-.11-2.55-.52-4.3-1.11-5.82-.6-1.6-1.41-2.94-2.75-4.27a11.73 11.73 0 0 0-4.25-2.76C38.2.67 36.45.27 33.9.15 31.33.03 30.52 0 24 0Z"
-                            fill="currentColor"
-                          ></path>
-                          <path
-                            d="M24 11.67a12.33 12.33 0 1 0 0 24.66 12.33 12.33 0 0 0 0-24.66ZM24 32a8 8 0 1 1 0-16 8 8 0 0 1 0 16ZM39.7 11.18a2.88 2.88 0 1 1-5.76 0 2.88 2.88 0 0 1 5.75 0Z"
                             fill="currentColor"
                           ></path>
                         </svg>

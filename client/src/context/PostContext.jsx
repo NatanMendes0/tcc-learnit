@@ -1,40 +1,48 @@
 import React, { createContext, useEffect, useState } from "react";
-
 import api from "../api/index";
-
 import { useAuth } from "./AuthContext";
-
-/* Toast */
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
+<<<<<<< HEAD
 
   const auth = useAuth();
 
   /* Estado local para armazenar o token */
   const [token, setToken] = useState("");
+=======
+  const auth = useAuth();
+  const [token, setToken] = useState("");
+  const [posts, setPosts] = useState([]);
+>>>>>>> diferentUsers
 
-  /* Atualizar o token local sempre que o token do usuário for atualizado */
   useEffect(() => {
     if (auth.user.token) {
       setToken(auth.user.token);
     }
   }, [auth.user.token]);
+<<<<<<< HEAD
 
 
   const [posts, setPosts] = useState([]);
+=======
+>>>>>>> diferentUsers
 
   const register = async (data) => {
     try {
       const response = await api.post("/forum/", data, {
         headers: {
           Authorization: `Bearer ${token}`,
+<<<<<<< HEAD
 
           /* O header abaixo é necessário para o multer funcionar */
           "Content-Type": "multipart/form-data",
+=======
+          "Content-Type": "multipart/form-data"
+>>>>>>> diferentUsers
         },
       });
       setPosts(response.data);
@@ -48,49 +56,55 @@ const PostProvider = ({ children }) => {
 
   const list = async () => {
     try {
-      const response = await api.get("/posts", {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-      });
-
+      const response = await api.get("/forum/get-posts");
       setPosts(response.data);
     } catch (error) {
       toast.error(error.response.data.message);
     }
   };
 
-  const get = async (id) => {
+  const rating = async (id, data) => {
     try {
-      const response = await api.get(`/posts/${id}`, {
+       await api.put(`/forum/rating/${id}`, data, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
+        comment: data.comment
       });
 
+      toast.success("Comentário adicionado com sucesso!");
+    } catch {
+      toast.error("Erro ao adicionar comentário");
+    }
+  };
+
+  const get = async (id) => {
+    try {
+      const response = await api.get(`forum/get-post/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     } catch (error) {
       toast.error(error.response.data.message);
     }
   };
 
-  const update = async (id, data, callback) => {
+  const updatePost = async (id, data) => {
     try {
-      const response = await api.put(`/posts/${id}`, data, {
+       await api.put(`/forum/edit-post/${id}`, data, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
-
-      const index = posts.findIndex((post) => post.id === id);
-      const newPosts = [...posts];
-      newPosts[index] = response.data;
-      setPosts(newPosts);
-
-      toast.success("Tópico atualizado com sucesso!");
-      callback();
-    } catch (error) {
-      toast.error(error.response.data.message);
+      toast.success("Postagem atualizada com sucesso!");
+    }
+    catch (error) {
+      toast.error(
+        error.response?.data?.message || "Erro ao atualizar a postagem"
+      );
     }
   };
 
@@ -98,7 +112,7 @@ const PostProvider = ({ children }) => {
     try {
       await api.delete(`/posts/${id}`, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -115,11 +129,12 @@ const PostProvider = ({ children }) => {
     <PostContext.Provider
       value={{
         posts,
+        rating,
         register,
         list,
         get,
-        update,
         remove,
+        updatePost,
       }}
     >
       {children}
