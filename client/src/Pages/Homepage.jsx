@@ -85,7 +85,7 @@ export default function Homepage() {
           className="mx-auto max-w-7xl px-6 py-24 sm:py-24 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-24"
           id="quem-somos"
         >
-          <div className="mx-auto max-w-3xl lg:mx-0 lg:flex-auto">
+          <div className="mx-auto bg-red-500 max-w-3xl lg:mx-0 lg:flex-auto">
             <div className="flex items-center">
               <div className="relative flex items-center gap-x-4 rounded-full px-4 py-1 text-sm leading-6 text-gray-600 ring-1 ring-primary hover:ring-gray-900/20">
                 <span className="font-semibold text-secondary">
@@ -102,14 +102,14 @@ export default function Homepage() {
                 </Link>
               </div>
             </div>
-            <h1 className="mt-10 max-w-lg text-7xl font-bold tracking-tight text-primary sm:text-7xl">
+            <h1 className="mt-10 max-w-lg text-8xl font-bold tracking-tight text-primary sm:text-7xl">
               LearnIT
             </h1>
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-font_secondary">
               Aprenda manutenção de computadores
             </h1>
 
-            <p className="mt-6 mr-24 text-md leading-8 text-gray-700 text-justify font-semibold">
+            <p className="mt-6 xl:mr-24 text-md leading-8 text-gray-700 text-justify font-semibold">
               LearnIT é uma plataforma gratuita que contribui com o aprendizado
               da manutenções de computadores e seus periféricos. A plataforma
               oferece guias de ajuda e demonstrações passo a passo para auxiliar
@@ -131,15 +131,15 @@ export default function Homepage() {
               </Link>
             </div>
           </div>
-          <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
-            <img src="./images/computer.png" alt="" />
+          <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow mx-auto">
+            <img className="sm:mx-auto" src="./images/computer.png" />
           </div>
         </div>
 
         {/* Feature section with grid */}
         <div id="sobre-plataforma">
-          <div className="mx-auto max-w-7xl mt-14">
-            <div className="mx-auto max-w-2xl lg:text-center">
+          <div className="mx-auto max-w-7xl px-6 py-24 sm:py-24 lg:mt-14">
+            <div className="mx-auto max-w-3xl lg:text-center">
               <h2 className="text-base font-semibold  text-primary">
                 Como é a plataforma?
               </h2>
@@ -153,8 +153,7 @@ export default function Homepage() {
                 busque por uma solução rápida e prática.
               </p>
             </div>
-
-            <div className="mx-auto mt-16 max-w-7xl sm:mt-20 lg:mt-24 lg:max-w-5xl">
+            <div className="mx-auto mt-16 max-w-7xl sm:max-w-3xl sm:mt-20 lg:mt-24 lg:max-w-5xl">
               <dl className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
                 {features.map((feature) => (
                   <div key={feature.name} className="flex flex-col">
@@ -202,7 +201,7 @@ export default function Homepage() {
                   />
                 </div>
               </div>
-              <div className="w-full pl-28 max-w-3xl xl:max-w-7xl xl:flex-auto xl:py-24">
+              <div className="w-full lg:pl-28 max-w-3xl xl:max-w-7xl xl:flex-auto xl:py-24">
                 <figure className="relative isolate">
                   <blockquote className="text-xl text-justify leading-8 text-font_secondary sm:text-2xl sm:leading-9">
                     <h1 className="text-2xl font-semibold leading-8 sm:text-xl sm:leading-9">

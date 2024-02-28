@@ -131,7 +131,8 @@ export default function Homepage() {
                                             <div className="shadow-md relative w-full aspect-[16/9]">
                                                 {material.content[0].stepContent.file && (
                                                     <img
-                                                        src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${material.content[0].stepContent.file}`}
+                                                        // src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${material.content[0].stepContent.file}`}
+                                                        src={`http://localhost:5000/Public/Images/${material.content[0].stepContent.file}`}
                                                         alt="imagem do material"
                                                         className="w-full h-full object-cover rounded-t-lg"
                                                     />
