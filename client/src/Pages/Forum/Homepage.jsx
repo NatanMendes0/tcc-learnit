@@ -133,7 +133,8 @@ export default function Homepage() {
                       <div className="shadow-md relative w-full aspect-[16/9]">
                         {post.file && (
                           <img
-                            src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`}
+                            // src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`}
+                            src={`http://localhost:5000/Public/Images/${post.file}`}
                             alt="imagem do post"
                             className="w-full h-full object-cover rounded-t-lg"
                           />
