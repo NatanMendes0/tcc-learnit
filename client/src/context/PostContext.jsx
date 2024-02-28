@@ -7,42 +7,29 @@ import "react-toastify/dist/ReactToastify.css";
 const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
-<<<<<<< HEAD
 
   const auth = useAuth();
 
   /* Estado local para armazenar o token */
   const [token, setToken] = useState("");
-=======
-  const auth = useAuth();
-  const [token, setToken] = useState("");
-  const [posts, setPosts] = useState([]);
->>>>>>> diferentUsers
 
   useEffect(() => {
     if (auth.user.token) {
       setToken(auth.user.token);
     }
   }, [auth.user.token]);
-<<<<<<< HEAD
 
 
   const [posts, setPosts] = useState([]);
-=======
->>>>>>> diferentUsers
 
   const register = async (data) => {
     try {
       const response = await api.post("/forum/", data, {
         headers: {
           Authorization: `Bearer ${token}`,
-<<<<<<< HEAD
 
           /* O header abaixo é necessário para o multer funcionar */
           "Content-Type": "multipart/form-data",
-=======
-          "Content-Type": "multipart/form-data"
->>>>>>> diferentUsers
         },
       });
       setPosts(response.data);

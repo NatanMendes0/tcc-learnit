@@ -1,5 +1,4 @@
 require("dotenv").config();
-<<<<<<< HEAD
 const port = process.env.PORT || 5000;
 
 const path = require("path");
@@ -19,17 +18,7 @@ const materialRouter = require("./routes/materialRouter");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 
-<<<<<<< HEAD
 const app = express();
-=======
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const connection = require("./db");
-const userRoutes = require("./routes/user");
-const authRoutes = require("./routes/auth");
-const forumRoutes = require("./routes/forum");
->>>>>>> forum
 
 /* CORS */
 /*
@@ -51,27 +40,12 @@ const corsOptions = {
 };
 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-app.use(cors(corsOptions));
-=======
-=======
-const app = express(); 
-
-// ORIGIN ACCEPT
->>>>>>> diferentUsers
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3000", // Origem permitida
     credentials: true, // Permite credenciais (cookies, autenticação etc.)
   })
 );
-<<<<<<< HEAD
-app.use(cookieParser());
->>>>>>> create-post
-=======
->>>>>>> diferentUsers
-
 app.use(cookieParser());
 app.use('/Public', express.static(path.join(__dirname, 'Public')));
 app.use(morgan("dev"));
@@ -86,13 +60,5 @@ app.use("/api/materials", materialRouter);
 
 app.use(notFound);
 app.use(errorHandler);
-=======
-// Routes
-// app.use("/api/users", userRoutes);
-// app.use("/api/auth", authRoutes);
-app.use("/forum", forumRoutes);
-
-const port = process.env.PORT || 8080;
->>>>>>> forum
 
 app.listen(port, () => console.log(`Servidor escutando na porta ${port}!`));

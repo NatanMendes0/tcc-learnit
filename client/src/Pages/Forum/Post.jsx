@@ -42,6 +42,8 @@ function Post() {
         }
     };
 
+    console.log(post);
+
     useEffect(() => {
         async function fetchPost() {
             const postData = await getPost();
@@ -169,7 +171,8 @@ function Post() {
                                 <div
                                     className="relative cursor-pointer flex justify-center items-center"
                                     onClick={() =>
-                                        openModal(`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`)
+                                        // openModal(`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`)
+                                        openModal(`http://localhost:5000/Public/Images/${post.file}`)
                                     }
                                 >
                                     <div className='text-center text-gray-400 text-md'>
@@ -180,7 +183,8 @@ function Post() {
                                     </svg>
 
                                     <img
-                                        src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`}
+                                        // src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`}
+                                        src={`http://localhost:5000/Public/Images/${post.file}`}
                                         alt="imagem do post"
                                         className="w-[40%] rounded-2xl aspect-[16/9] sm:aspect-[2/1] lg:aspect-[16/9] object-contain"
                                     />
@@ -269,7 +273,8 @@ function Post() {
                                                                     {rating.postedby.name}
                                                                 </p>
                                                                 <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
-                                                                <p className="text-primary font-bold text-lg">| {rating.postedby.role}</p>
+                                                                <p className="text-primary font-bold text-lg">|</p>
+                                                                <p className="text-primary font-bold text-lg">{rating.postedby.role}</p>
                                                             </div>
                                                     </div>
                                                 </div>

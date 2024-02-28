@@ -10,14 +10,16 @@ const createPost = asyncHandler(async (req, res, next) => {
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
     if (err) throw err;
-
+    
     if (files['file[]'] && Array.isArray(files['file[]']) && files['file[]'].length > 0) {
       // One file was uploaded
       var oldpath = files['file[]'][0].filepath;
       var hash = crypto.createHash('md5').update(Date.now().toString()).digest('hex');
       var ext = path.extname(files['file[]'][0].originalFilename);
       var nomeimg = hash + ext;
+      console.log(nomeimg);
       var newpath = path.join(__dirname, '../Public/Images/', nomeimg);
+      
 
       fs.rename(oldpath, newpath, function (err) {
         if (err) throw err;
@@ -76,7 +78,7 @@ const getPosts = asyncHandler(async (req, res) => {
 const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
   try {
-    const post = await Post.findById(postId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname role" }] }).populate("user", "name nickname role");
+    const post = await Post.findById(postId).populate({ path: "ratings", populate: [{ path: "postedby", select: "name nickname role" }] }).populate("user", "name nickname");
     if (!post) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
@@ -107,7 +109,6 @@ const editPost = asyncHandler(async (req, res) => {
       var title = fields.title[0];
       var description = fields.description[0];
       var user = req.user;
-      
       const newPostData = {
         user: user._id,
         title,
@@ -123,9 +124,9 @@ const editPost = asyncHandler(async (req, res) => {
         post.file = nomeimg ? nomeimg : null;
         post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
         const newPost = post.save();
-        return res.sendStatus(200);        
+        res.json({ message: "Post criado com sucesso!", post: newPost });
       } catch (error) {
-        res.status(500).json({ error });
+        res.status(500).json({ message: "Erro ao criar o post", error });
       }
     }
     else {
@@ -148,9 +149,10 @@ const editPost = asyncHandler(async (req, res) => {
         post.file = nomeimg ? nomeimg : null;
         post.filePath = nomeimg ? `/Images/${nomeimg}` : null;
         const newPost = post.save();
-        return res.sendStatus(200);        
+        res.json({ message: "Post criado com sucesso!", post: newPost });
       } catch (error) {
-        res.status(500).json({error });
+        res.status(500).json({ message: "Erro ao criar o post", error });
+        throw error;
       }
     }
   });
@@ -164,6 +166,7 @@ const deletePost = asyncHandler(async (req, res) => {
     if (!deletedPost) {
       return res.status(404).json({ message: "Post não encontrado" });
     }
+
     res.json({ message: "Post deletado com sucesso!" });
   } catch (error) {
     res.status(500).json({ message: "Erro ao deletar o post", error });
@@ -191,9 +194,11 @@ const rating = asyncHandler(async (req, res) => {
 
     await post.save();
 
-    return res.sendStatus(200)
+    res.json({ message: "Comentário adicionado!", post: post });
   } catch (error) {
-    res.status(500).json(errorResponse);
+    res
+      .status(500)
+      .json({ message: "Erro ao avaliar o post", error: error.message });
   }
 });
 
