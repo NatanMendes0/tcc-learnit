@@ -5,6 +5,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
+import Toggle from "../Components/Toggle/Index";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -20,12 +22,12 @@ export default function Navbar() {
 
   const navigation = [
     { name: "Página Inicial", href: "/", current: location.pathname === "/" },
-    { name: "Fórum", href: "/forum", current: location.pathname.startsWith("/forum") },
     {
       name: "Materiais",
       href: "/materials",
       current: location.pathname.startsWith("/materials"),
     },
+    { name: "Fórum", href: "/forum", current: location.pathname.startsWith("/forum") },
   ];
 
   const onClick = (e) => {
@@ -36,11 +38,11 @@ export default function Navbar() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-gray-100 shadow">
+    <Disclosure as="nav" className="bg-quaternary backdrop-blur-sm shadow fixed-navbar">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-            <div className="flex h-16 justify-between">
+          <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8" id="nav">
+            <div className="flex h-12 justify-between items-center"> {/* Added 'items-center' class */}
               <div className="flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
                   <Link to="/">
@@ -59,9 +61,9 @@ export default function Navbar() {
                       onClick={onClick}
                       className={classNames(
                         item.current
-                          ? "border-sky-500 text-gray-900 border-b-2"
-                          : "border-transparent text-gray-500 hover:border-b-2 hover:border-gray-300 hover:text-gray-700",
-                        "inline-flex items-center px-1 pt-1 text-sm font-medium"
+                          ? "border-sky-500 text-primary border-b-2"
+                          : "border-transparent text-tertiary hover:border-b-2 hover:border-gray-300 hover:text-secondary",
+                        "inline-flex items-center transition duration-1000 ease-in-out px-1 pt-1 text-sm font-medium"
                       )}
                       aria-current={item.current ? "page" : undefined}
                     >
@@ -71,8 +73,8 @@ export default function Navbar() {
                 </div>
               </div>
 
+              {/* Mobile menu button */}
               <div className="flex items-center lg:hidden">
-                {/* Mobile menu button */}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
@@ -84,14 +86,16 @@ export default function Navbar() {
                 </Disclosure.Button>
               </div>
 
+              <p className="items-center"><Toggle /></p>
+
               <div className="hidden lg:ml-4 lg:flex lg:items-center">
-                <h1 className="mr-3">
+                <h1 className="mr-3 text-primary">
                   Olá, {isLoggedIn && isLoggedIn ? auth.user.name : "visitante"}
                 </h1>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-1 flex-shrink-0">
                   <div>
-                    <Menu.Button className="relative rounded-sm flex bg-white text-sm focus:outline-none">
+                    <Menu.Button className="relative rounded-sm flex  text-sm focus:outline-none">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       {open ? (

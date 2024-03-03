@@ -46,30 +46,7 @@ export default function Homepage() {
 
     return (
         <>
-            <div className="relative isolate py-20 sm:py-38 lg:pb-40">
-                <svg
-                    className="absolute -z-50 inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
-                    aria-hidden="true"
-                >
-                    <defs>
-                        <pattern
-                            id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
-                            width={200}
-                            height={200}
-                            x="50%"
-                            y={-1}
-                            patternUnits="userSpaceOnUse"
-                        >
-                            <path d="M100 200V.5M.5 .5H200" fill="none" />
-                        </pattern>
-                    </defs>
-                    <rect
-                        width="100%"
-                        height="100%"
-                        strokeWidth={0}
-                        fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
-                    />
-                </svg>
+            <div className="relative isolate mt-14 py-20 sm:py-38 lg:pb-40">
 
                 {/* Hero section */}
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -77,10 +54,10 @@ export default function Homepage() {
                         <h1 className="text-3xl font-bold tracking-tight text-primary sm:text-5xl">
                             Materiais
                         </h1>
-                        <h1 className="text-2xl border-b-2 border-font_secondary pb-2 mt-7 font-bold tracking-tight text-font_secondary sm:text-4xl">
+                        <h1 className="text-2xl border-b-2 border-font_secondary pb-2 mt-7 font-bold tracking-tight text-secondary sm:text-4xl">
                             Veja todos os materiais da plataforma!
                         </h1>
-                        <p className="mt-6 text-lg font-semibold leading-8 text-font_secondary">
+                        <p className="mt-6 text-lg leading-8 text-secondary">
                             Houve algum problema e sua máquina parou de funcionar? Quer aprender a montar um computador do zero?
                             Acesse esses e outros materiais disponíveis na nossa plataforma e veja se solucionamos sua necessidade!<br />
                             Caso o seu problema não estiver disponível, insira-o no fórum para que nossa equipe e comunidade possam lhe ajudar.
@@ -88,13 +65,13 @@ export default function Homepage() {
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <a
                                 href="#materials"
-                                className="btn"
+                                className="rounded-md transition duration-700 ease-in-out bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                             >
                                 Veja os materiais
                             </a>
                             <Link
                                 to="/forum"
-                                className="text-sm font-semibold leading-6 text-font_secondary hover:text-secondary"
+                                className="text-md font-semibold leading-6 text-primary hover:text-tertiary text-sm border-transparent hover:border-b-2 hover:border-gray-300 transition duration-700 ease-in-out"
                             >
                                 Acesse o fórum <span aria-hidden="true">→</span>
                             </Link>
@@ -108,26 +85,26 @@ export default function Homepage() {
                         <h1 className="text-3xl border-b-2 pb-2 border-font_secondary font-bold tracking-tight text-primary sm:text-5xl">
                             Veja os materiais disponíveis
                         </h1>
-                        <p className="mt-3 text-lg font-semibold leading-8 text-font_secondary">
+                        <p className="mt-3 text-lg font-semibold leading-8 text-secondary">
                             Visualize os nossos materiais disponíveis. <br />
                             Novos materiais são adicionados pelos nossos educadores regularmente!
                         </p>
                         {user && (user.role === "Administrador" || user.role === "Educador") && (
                             <button
                                 onClick={() => navigate("/materials/create")}
-                                className="btn mt-10">
+                                className="rounded-md transition duration-700 ease-in-out bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-10">
                                 Adicionar novo material
                             </button>
                         )}
                     </div>
 
                     {/* Materials section */}
-                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                    <div className="mx-auto mt-16 grid max-w-2xlgrid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                         {Materials.map((material) => (
                             <div key={material._id}>
                                 {material.content[0].stepContent.file ? (
                                     <>
-                                        <Link to={`/materials/get-material/${material._id}`}>
+                                        <Link className="bg-primar" to={`/materials/get-material/${material._id}`}>
                                             <div className="shadow-md relative w-full aspect-[16/9]">
                                                 {material.content[0].stepContent.file && (
                                                     <img
@@ -138,20 +115,20 @@ export default function Homepage() {
                                                     />
                                                 )}
                                                 <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
-                                                <div className="p-4">
+                                                <div className="p-4 bg-card">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
-                                                        <time dateTime={material.updatedAt} className="text-gray-500">
+                                                        <time dateTime={material.updatedAt} className="text-quaternary">
                                                             {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
                                                                 locale: ptBR,
                                                             })}
                                                         </time>
                                                     </div>
                                                     <div className="group relative">
-                                                        <h3 className="mt-3 text-lg font-semibold leading-5 text-gray-900 group-hover:text-gray-600">
+                                                        <h3 className="mt-3 text-lg font-semibold leading-5 text-gray-900">
                                                             <span className="absolute inset-0" />
                                                             {material.content[0].stepContent.title}
                                                         </h3>
-                                                        <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
+                                                        <p className="mt-5 text-sm leading-6 text-quaternary text-justify line-clamp-3 overflow-ellipsis">
                                                             {material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
@@ -168,7 +145,7 @@ export default function Homepage() {
                                                             {material.user.name}
                                                         </p>
                                                         <p className="text-secondary">@{material.user.nickname}</p>
-                                                        <p className="text-primary font-bold">{material.user.role}</p>
+                                                        <p className="text-bg_primary font-bold">{material.user.role}</p>
                                                     </div>
                                                 </div>
                                                 <div className="ml-auto flex items-center gap-x-2">
@@ -176,7 +153,7 @@ export default function Homepage() {
                                                     {user && user.role && material.user && material.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === material.user._id)) && (
                                                         <button
                                                             onClick={() => handleDelete(material._id)}
-                                                            className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
+                                                            className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 transition duration-700 ease-in-out rounded-lg"
                                                         >
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +170,7 @@ export default function Homepage() {
                                                                 />
                                                             </svg>
                                                         </button>
-                                                    )}                                                    
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -203,9 +180,9 @@ export default function Homepage() {
                                         <Link to={`/materials/get-material/${material._id}`}>
                                             <div className="relative bg-white shadow-md full">
                                                 <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
-                                                <div className="p-4">
+                                                <div className="p-4 bg-card">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
-                                                        <time dateTime={material.updatedAt} className="text-gray-500">
+                                                        <time dateTime={material.updatedAt} className="text-quaternary">
                                                             {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
                                                                 locale: ptBR,
                                                             })}
@@ -216,7 +193,7 @@ export default function Homepage() {
                                                             <span className="absolute inset-0" />
                                                             {material.content[0].stepContent.title}
                                                         </h3>
-                                                        <p className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 overflow-ellipsis">
+                                                        <p className="mt-5 text-sm leading-6 text-quaternary text-justify line-clamp-3 overflow-ellipsis">
                                                             {material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
@@ -241,7 +218,7 @@ export default function Homepage() {
                                                     {user && user.role && material.user && material.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === material.user._id)) && (
                                                         <button
                                                             onClick={() => handleDelete(material._id)}
-                                                            className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
+                                                            className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 transition duration-700 ease-in-out rounded-lg"
                                                         >
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"

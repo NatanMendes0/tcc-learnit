@@ -96,10 +96,10 @@ function Material() {
 
     return (
         <>
-            <div className='mt-auto isolate py-2 mb-12'>
+            <div className='isolate py-2 mb-12'>
                 {/* header */}
                 {material && material.content[0] ? (
-                    <div className='bg-secondary py-14 text-center text-4xl gap-y-3 text-white flex flex-col items-center justify-center'>
+                    <div className='bg-secondary mt-10 shadow-xl py-14 text-center text-4xl gap-y-3 text-white flex flex-col items-center justify-center'>
                         <h2>{material.content[0].stepContent.title}</h2>
                         <div className="text-center relative flex items-center gap-x-2">
                             <UserCircleIcon className="h-12 text-white" />
@@ -127,13 +127,13 @@ function Material() {
                     <div className="mx-auto p-4 max-w-6xl bg-tertiary rounded-lg shadow-2xl mt-12">
                         <div key={materialItem._id}>
                             <div className='flex justify-between'>
-                                <h1 className='title px-2 mt-3 text-4xl text-font_primary text-left'>{materialItem.stepContent.title}</h1>
+                                <h1 className='title px-2 mt-3 text-4xl text-primary text-left'>{materialItem.stepContent.title}</h1>
                                 <div className="flex items-center gap-x-1">
                                     {user && user._id === material.user._id && (
                                         <>
                                             {/* edit btn */}
                                             <Link to={`/materials/edit-step/${material._id}/${materialItem._id}`}>
-                                                <button className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg">
+                                                <button className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary transition duration-700 ease-in-out rounded-lg">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
@@ -159,7 +159,7 @@ function Material() {
                                             {material.content.length > 1 ? (
                                                 <button
                                                     onClick={() => handleDelete(material._id, materialItem._id)}
-                                                    className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"
+                                                    className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 transition duration-700 ease-in-out rounded-lg"
                                                 >
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +179,7 @@ function Material() {
                                             ) : (
                                                 <button
                                                     onClick={() => handleDeleteMaterial(material._id)}
-                                                    className="text-white cursor-pointer bg-red-800 p-2 hover:bg-red-700 rounded-lg ml-2"
+                                                    className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 transition duration-700 ease-in-out rounded-lg"
                                                 >
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -201,12 +201,12 @@ function Material() {
                                     )}
                                 </div>
                             </div>
-                            <p className='text-xl text-justify px-2 mt-3' style={{ whiteSpace: 'pre-line' }}>
+                            <p className='text-xl text-secondary text-justify px-2 mt-3' style={{ whiteSpace: 'pre-line' }}>
                                 {materialItem.stepContent.text}
                             </p>
                             {materialItem.stepContent.note ? (
                                 <div className="max-w-2xl">
-                                    <p className='subtitle text-base mt-3 px-2 text-left'>Nota: {materialItem.stepContent.note}</p>
+                                    <p className='subtitle text-base text-secondary mt-3 px-2 text-left'>Nota: {materialItem.stepContent.note}</p>
                                 </div>
                             ) : (
                                 ''
@@ -260,13 +260,12 @@ function Material() {
                     </div>
                 ))}
 
-
-                {/* add new step (Administrador and Educador only) */}
+                {/* add new step */}
                 {user && (user.role === "Administrador" || user.role === "Educador") && (
                     <div className="mx-auto mt-8 text-center">
                         <Link to={`/materials/add-step/${material._id}`}>
                             <div className='flex justify-center items-center'>
-                                <button className='text-white flex items-center gap-x-2 cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg'>
+                                <button className='text-white transition duration-700 ease-in-out bg-secondary flex items-center gap-x-2 cursor-pointer p-2 hover:bg-tertiary rounded-lg'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
@@ -280,7 +279,7 @@ function Material() {
                 <div className="mx-auto mt-8 text-center">
                     <Link to={`/materials/`}>
                         <div className='flex justify-center items-center'>
-                            <button className='text-white flex items-center gap-x-2 cursor-pointer bg-primary py-2 px-5  hover:bg-secondary rounded-lg'>
+                            <button className="text-md font-semibold leading-6 text-primary hover:text-tertiary border-transparent hover:border-b-2 hover:border-gray-300 transition duration-1000 ease-in-out">
                                 Voltar aos materiais
                             </button>
                         </div>
@@ -318,7 +317,7 @@ function Material() {
                         <div>
                             <button
                                 type='submit'
-                                className='text-white p-4 flex w-full items-center shadow-xl justify-center rounded-md border border-transparent bg-primary py-2 text-md font-medium  hover:bg-secondary'
+                                className='text-white transition duration-1000 ease-in-out p-4 flex w-full items-center shadow-xl justify-center rounded-md border border-transparent bg-secondary py-2 text-md font-medium  hover:bg-primary'
                             >
                                 Comentar
                             </button>
@@ -328,25 +327,26 @@ function Material() {
 
                 {/* comment section */}
                 <div className='p-5 mt-5 mx-auto max-w-6xl'>
-                    <h1 className="subtitle text-2xl">Comentários</h1>
+                    <h1 className="text-primary text-2xl">Comentários</h1>
                     {material.ratings && material.ratings.length > 0 ? (
                         <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
                             <ul>
+                                {/* todo - criar uma rota para apagar o comentário */}
                                 {material.ratings
                                     .map((rating, index) => (
                                         <li key={index}>
                                             <div className="p-4">
                                                 <div className="flex items-center gap-x-2">
                                                     <div className="relative flex items-center gap-x-2 w-full">
-                                                        <div className="flex items-center justify-center text-primary">
+                                                        <div className="flex items-center justify-center text-bg_primary">
                                                             <UserCircleIcon className="h-14 w-14 min-h-14 min-w-14" />
                                                         </div>
                                                         <div className="flex gap-x-2">
-                                                            <p className="font-semibold text-xl text-secondary">
+                                                            <p className="font-semibold text-xl text-bg_primary">
                                                                 {rating.postedby.name}
                                                             </p>
-                                                            <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
-                                                            <p className="text-primary font-bold text-lg">| {rating.postedby.role}</p>
+                                                            <p className="text-bg_primary font-semibold text-lg">@{rating.postedby.nickname}</p>
+                                                            <p className="text-black font-bold text-lg">| {rating.postedby.role}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -360,7 +360,7 @@ function Material() {
 
                         </div>
                     ) : (
-                        <div className="block w-full rounded-md border-0 p-5 shadow-xl text-font_secondary">
+                        <div className="block w-full rounded-md border-0 p-5 shadow-xl text-font_secondary bg-gray-100 mt-5">
                             <p className='text-black'>Nenhum comentário adicionado ainda!</p>
                         </div>
                     )}

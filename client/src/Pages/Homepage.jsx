@@ -41,30 +41,7 @@ const navigation = [
 export default function Homepage() {
   return (
     <>
-      <div className="relative isolate">
-        <svg
-          className="absolute -z-50 inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
-          aria-hidden="true"
-        >
-          <defs>
-            <pattern
-              id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
-              width={200}
-              height={200}
-              x="50%"
-              y={-1}
-              patternUnits="userSpaceOnUse"
-            >
-              <path d="M100 200V.5M.5 .5H200" fill="none" />
-            </pattern>
-          </defs>
-          <rect
-            width="100%"
-            height="100%"
-            strokeWidth={0}
-            fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
-          />
-        </svg>
+      <div className="relative isolate mt-14">
 
         {/* Navigation */}
         <div className="text-center xs:gap-x-2 flex justify-around mt-auto pt-5 md:mx-auto max-w-7xl">
@@ -72,13 +49,12 @@ export default function Homepage() {
             <a
               key={nav.name}
               href={nav.href}
-              className="text-lg font-semibold text-font_secondary hover:text-secondary sm:block md:mr-4 md:last:mr-0 md:mb-2"
+              className="text-lg font-semibold text-primary hover:text-secondary sm:block md:mr-4 md:last:mr-0 md:mb-2"
             >
               {nav.name}
             </a>
           ))}
         </div>
-
 
         {/* Hero section */}
         <div
@@ -86,13 +62,13 @@ export default function Homepage() {
           id="quem-somos"
         >
           <div className="mx-auto max-w-3xl lg:mx-0 lg:flex-auto">
-            <div className="flex items-center">
-              <div className="relative flex items-center gap-x-4 rounded-full px-4 py-1 text-sm leading-6 text-gray-600 ring-1 ring-primary hover:ring-gray-900/20">
-                <span className="font-semibold text-secondary">
+            <div className="flex items-center border-transparent">
+              <div className="relative flex items-center gap-x-4 transition duration-1000 ease-in-out rounded-full px-4 py-1 text-sm text-gray-600 ring-1 ring-primary hover:ring-sky-500">
+                <span className="font-semibold text-primary">
                   Quem somos?
                 </span>
-                <span className="h-4 w-px bg-gray-900/10" aria-hidden="true" />
-                <Link to="/register" className="flex items-center gap-x-1">
+                <span className="h-4 w-px bg-secondary" aria-hidden="true" />
+                <Link to="/register" className="flex text-tertiary items-center gap-x-1">
                   <span className="absolute inset-0" aria-hidden="true" />
                   Faça seu cadastro!
                   <ChevronRightIcon
@@ -105,11 +81,10 @@ export default function Homepage() {
             <h1 className="mt-10 max-w-lg text-8xl font-bold tracking-tight text-primary sm:text-7xl">
               LearnIT
             </h1>
-            <h1 className="mt-6 text-4xl font-bold tracking-tight text-font_secondary">
+            <h1 className="mt-6 text-4xl font-bold tracking-tight text-secondary">
               Aprenda manutenção de computadores
             </h1>
-
-            <p className="mt-6 xl:mr-24 text-md leading-8 text-gray-700 text-justify font-semibold">
+            <p className="mt-6 xl:mr-24 text-md leading-8 text-secondary text-justify font-semibold">
               LearnIT é uma plataforma gratuita que contribui com o aprendizado
               da manutenções de computadores e seus periféricos. A plataforma
               oferece guias de ajuda e demonstrações passo a passo para auxiliar
@@ -119,13 +94,13 @@ export default function Homepage() {
             <div className="mt-10 flex items-center gap-x-6">
               <Link
                 to="/materials"
-                className="rounded-md bg-primary px-4 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="rounded-md transition duration-700 ease-in-out bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Acesse agora!
               </Link>
               <Link
                 to="/register"
-                className="text-md font-semibold leading-6 text-font_secondary hover:text-primary"
+                className="text-md font-semibold leading-6 text-primary hover:text-tertiary text-sm border-transparent hover:border-b-2 hover:border-gray-300 transition duration-700 ease-in-out"
               >
                 Faça seu cadastro! <span aria-hidden="true">→</span>
               </Link>
@@ -140,13 +115,13 @@ export default function Homepage() {
         <div id="sobre-plataforma">
           <div className="mx-auto max-w-7xl px-6 py-24 sm:py-24 lg:mt-14">
             <div className="mx-auto max-w-3xl lg:text-center">
-              <h2 className="text-base font-semibold  text-primary">
+              <h2 className="text-base font-semibold text-bg_primary">
                 Como é a plataforma?
               </h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-5xl">
                 Entenda nossos objetivos
               </p>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
+              <p className="mt-6 text-lg leading-8 text-secondary">
                 Esta plataforma foi desenvolvida com o foco em introduzir o mundo
                 da computação para quem quiser ingressar na área, assim como
                 ajudar quem esteja enfrentando algum problema com sua máquina e
@@ -157,19 +132,19 @@ export default function Homepage() {
               <dl className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
                 {features.map((feature) => (
                   <div key={feature.name} className="flex flex-col">
-                    <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                    <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-primary">
                       <feature.icon
-                        className="h-5 w-5 flex-none text-primary"
+                        className="h-5 w-5 flex-none text-bg_primary"
                         aria-hidden="true"
                       />
                       {feature.name}
                     </dt>
-                    <dd className="mt-4 flex flex-auto flex-col text-base text-justify leading-7 text-gray-600">
+                    <dd className="mt-4 flex flex-auto flex-col text-base text-justify leading-7 text-secondary">
                       <p className="flex-auto">{feature.description}</p>
                       <p className="mt-6">
                         <Link
                           to={feature.href}
-                          className="text-sm font-semibold leading-6 text-primary hover:text-secondary"
+                          className="text-sm border-transparent hover:border-b-2 hover:border-gray-300 transition duration-700 ease-in-out font-semibold leading-6 text-primary hover:text-secondary"
                         >
                           Acesse agora <span aria-hidden="true">→</span>
                         </Link>
@@ -184,15 +159,15 @@ export default function Homepage() {
 
         {/* CTA section */}
         <div className="mx-auto mt-20 max-w-7xl sm:mt-20 lg:mt-48 pb-16 pt-24 sm:pb-24 sm:pt-32 xl:pb-32" id="contato">
-          <div className="mx-auto mb-24 max-w-3xl lg:text-center">
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          <div className="mx-auto mb-20 max-w-3xl lg:text-center">
+            <p className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-5xl">
               Conheça o responsável pelo projeto
             </p>
             <div className="border-b-2 border-gray-600 h-2 mt-2" />
           </div>
           <div className="pb-20 sm:pb-24 xl:pb-0">
             <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch">
-              <div className="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
+              <div className="-mt-9 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
                 <div className="relative sm:aspect-[3/4] lg:aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
                   <img
                     className="absolute inset-0 h-full sm:w-full lg:w-[470px] rounded-3xl object-cover shadow-2xl"
@@ -203,7 +178,7 @@ export default function Homepage() {
               </div>
               <div className="w-full lg:pl-28 max-w-3xl xl:max-w-7xl xl:flex-auto xl:py-24">
                 <figure className="relative isolate">
-                  <blockquote className="text-xl text-justify leading-8 text-font_secondary sm:text-2xl sm:leading-9">
+                  <blockquote className="text-xl text-justify leading-8 text-primary sm:text-2xl sm:leading-9">
                     <h1 className="text-2xl font-semibold leading-8 sm:text-xl sm:leading-9">
                       Natan Mendes
                     </h1>
@@ -215,7 +190,7 @@ export default function Homepage() {
                 </figure>
 
                 <figure className="relative isolate pt-2 sm:pt-5">
-                  <blockquote className="text-xl text-justify leading-8 text-font_secondary sm:text-lg sm:leading-9">
+                  <blockquote className="text-xl text-justify leading-8 text-tertiary sm:text-lg sm:leading-9">
                     <p>
                       Olá! Sou Natan, um estudante de programação do câmpus
                       IFSUL de Gravataí. Este projeto faz parte do meu Trabalho
@@ -226,36 +201,36 @@ export default function Homepage() {
                     </p>
                   </blockquote>
                   <figure className="mt-6 relative isolate">
-                    <blockquote className="text-xl text-justify leading-8 text-font_secondary sm:text-2xl sm:leading-9">
-                      <h1 className="text-2xl font-semibold leading-8 sm:text-xl sm:leading-9">
+                    <blockquote className="text-xl text-justify leading-8 sm:text-2xl sm:leading-9">
+                      <h1 className="text-2xl font-semibold text-primary leading-8 sm:text-xl sm:leading-9">
                         Orientadores do projeto
                       </h1>
                       <div className="flex gap-x-2">
-                        <h2 className="text-xl leading-8 text-font_secondary sm:text-lg sm:leading-9">
+                        <h2 className="text-xl leading-8 text-primary sm:text-lg sm:leading-9">
                           Orientadora:
                         </h2>
-                        <h2 className="text-xl leading-8 sm:text-lg sm:leading-9">
+                        <h2 className="text-xl leading-8 text-tertiary sm:text-lg sm:leading-9">
                           Profa. Ma. Patrícia Cristine Hoff
                         </h2>
                       </div>
                       <div className="flex gap-x-2">
-                        <h2 className="text-xl leading-8 text-font_secondary sm:text-lg sm:leading-9">
+                        <h2 className="text-xl leading-8 text-primary sm:text-lg sm:leading-9">
                           Coorientador:
                         </h2>
-                        <h2 className="text-xl leading-8 sm:text-lg sm:leading-9">
+                        <h2 className="text-xl leading-8 text-tertiary sm:text-lg sm:leading-9">
                           Prof. Me. Fábio de Oliveira Dias
                         </h2>
                       </div>
                     </blockquote>
                   </figure>
                   <figcaption className="mt-8 text-base">
-                    <h1 className="font-semibold text-font_secondary">
+                    <h1 className="font-semibold text-primary">
                       Redes sociais para contato
                     </h1>
-                    <div className="mt-2 flex gap-4 items-center">
+                    <div className="mt-2 flex gap-4 items-center text-primary">
                       <a
                         href="https://github.com/NatanMendes0"
-                        className="hover:text-font_tertiary text-font_secondary"
+                        className="hover:text-tertiary transition duration-700 ease-in-out"
                       >
                         <svg
                           className="w-11"
@@ -273,7 +248,7 @@ export default function Homepage() {
 
                       <a
                         href="https://www.linkedin.com/in/natancruzmendes/"
-                        className="hover:text-font_tertiary text-font_secondary"
+                        className="hover:text-tertiary transition duration-700 ease-in-out"
                         aria-label="Find us on LinkedIn"
                         rel="noopener"
                       >

@@ -42,6 +42,7 @@ import ResetPassword from "./Pages/Auth/ResetPassword";
 import Account from "./Pages/Auth/Account";
 
 import Educator from "./Pages/Educator/Homepage";
+import { ThemeProvider } from "./Hooks/ThemeContext";
 
 const queryClient = new QueryClient();
 
@@ -73,80 +74,83 @@ function App() {
       <PostProvider>
         <MaterialProvider>
           <QueryClientProvider client={queryClient}>
-            <div className="relative flex flex-col min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary">
-              <BrowserRouter>
-                <Navbar />
-                <Routes>
-                  <Route path="/" element={<Homepage />} />
+            {/* <div className="relative flex flex-col min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary"> */}
+            <div className="bg-primary relative flex flex-col min-h-screen w-full overflow-x-hidden">
+              <ThemeProvider>
+                <BrowserRouter>
+                  <Navbar />
+                  <Routes>
+                    <Route path="/" element={<Homepage />} />
 
-                  <Route path="/register" element={<Register />} />
+                    <Route path="/register" element={<Register />} />
 
-                  <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
 
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
 
-                  <Route path="/reset-password/:token" element={<ResetPassword />} />
+                    <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-                  <Route path="/account/:id" element={<Account />} />
+                    <Route path="/account/:id" element={<Account />} />
 
-                  <Route path="/educator" element={<Educator />} />
+                    <Route path="/educator" element={<Educator />} />
 
-                  <Route path="/forum" element={<Forum />} />
+                    <Route path="/forum" element={<Forum />} />
 
-                  <Route path="/forum/get-post/:id" element={<Post />} />
+                    <Route path="/forum/get-post/:id" element={<Post />} />
 
-                  <Route
-                    path="/forum/create"
-                    element={
-                      <PrivateRoute>
-                        <ForumCreate />
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route
+                      path="/forum/create"
+                      element={
+                        <PrivateRoute>
+                          <ForumCreate />
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route
-                    path="/forum/edit-post/:id"
-                    element={
-                      <PrivateRoute>
-                        <PostEdit />
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route
+                      path="/forum/edit-post/:id"
+                      element={
+                        <PrivateRoute>
+                          <PostEdit />
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route path="/materials" element={<Materials />} />
+                    <Route path="/materials" element={<Materials />} />
 
-                  <Route path="/materials/get-material/:id" element={<Material />} />
+                    <Route path="/materials/get-material/:id" element={<Material />} />
 
-                  <Route
-                    path="/materials/create"
-                    element={
-                      <PrivateRoute>
-                        <MaterialsCreate />
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route
+                      path="/materials/create"
+                      element={
+                        <PrivateRoute>
+                          <MaterialsCreate />
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route
-                    path="/materials/add-step/:id"
-                    element={
-                      <PrivateRoute>
-                        <AddStep />
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route
+                      path="/materials/add-step/:id"
+                      element={
+                        <PrivateRoute>
+                          <AddStep />
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route
-                    path="/materials/edit-step/:id/:stepId"
-                    element={
-                      <PrivateRoute>
-                        <EditStep />
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route
+                      path="/materials/edit-step/:id/:stepId"
+                      element={
+                        <PrivateRoute>
+                          <EditStep />
+                        </PrivateRoute>
+                      }
+                    />
 
-                </Routes>
-                <Footer />
-              </BrowserRouter>
+                  </Routes>
+                  <Footer />
+                </BrowserRouter>
+              </ThemeProvider>
             </div>
           </QueryClientProvider>
         </MaterialProvider>
