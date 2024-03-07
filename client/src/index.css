@@ -8,6 +8,8 @@
     --color-font-secondary: #e4e4e4;
     --color-font-tertiary: #c4c4c4;
     --color-font-quaternary: #292929;
+    --color-bg-shadow: #0284C7;
+    --color-bg-btn: #006699;
 
     ::-webkit-scrollbar-track {
         background-color: #313030;
@@ -18,10 +20,14 @@
     --color-bg-primary: #f9f9f9;
     --color-bg-secondary: #0284C7;
     --color-bg-tertiary: #006fa7;
+    --color-bg-quaternary: rgba(255, 255, 255, 0.7);
     --color-font-primary: #0284C7;
-    --color-bg-card: #fafafa;
     --color-font-secondary: #313030;
     --color-font-tertiary: #8d8d8d;
+    --color-font-quaternary: #e4e4e4;
+    --color-bg-card: #fafafa;
+    --color-bg-shadow: #8d8d8d;
+    --color-bg-btn: #4b4b4b;
 }
 
 @tailwind base;

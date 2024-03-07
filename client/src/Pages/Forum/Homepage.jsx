@@ -49,40 +49,17 @@ export default function Homepage() {
   return (
     <>
       <div className="relative isolate py-16 sm:py-38 lg:pb-40">
-        <svg
-          className="absolute -z-50 inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] my-svg"
-          aria-hidden="true"
-        >
-          <defs>
-            <pattern
-              id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
-              width={200}
-              height={200}
-              x="50%"
-              y={-1}
-              patternUnits="userSpaceOnUse"
-            >
-              <path d="M100 200V.5M.5 .5H200" fill="none" />
-            </pattern>
-          </defs>
-          <rect
-            width="100%"
-            height="100%"
-            strokeWidth={0}
-            fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
-          />
-        </svg>
-
+        
         {/* Hero section */}
-        <div className="mx-auto max-w-7xl px-6 mt-2.5 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 mt-10 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-3xl font-bold tracking-tight text-primary sm:text-5xl">
               Fórum
             </h1>
-            <h1 className="text-2xl border-b-2 border-font_secondary pb-2 mt-7 font-bold tracking-tight text-font_secondary sm:text-4xl">
+            <h1 className="text-2xl border-b-2 border-secondary pb-2 mt-7 font-bold tracking-tight text-secondary sm:text-4xl">
               Tenha suas dúvidas respondidas!
             </h1>
-            <p className="mt-6 text-lg font-semibold leading-8 text-font_secondary">
+            <p className="mt-6 text-lg font-semibold leading-8 text-secondary">
               Está com algum problema e não encontrou a solução nos materiais da
               plataforma? Acrescente-o no fórum e logo você terá sua resposta
               pela nossa equipe ou pelos membros da nossa comunidade!
@@ -90,13 +67,13 @@ export default function Homepage() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 to="/forum/create"
-                className="btn"
+                className="rounded-md transition duration-700 ease-in-out bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Comente no Fórum
               </Link>
               <a
                 href="#forum"
-                className="text-sm font-semibold leading-6 text-font_secondary hover:text-secondary"
+                className="text-md font-semibold leading-6 text-primary hover:text-tertiary text-sm border-transparent hover:border-b-2 hover:border-gray-300 transition duration-700 ease-in-out"
               >
                 Acesse o Fórum <span aria-hidden="true">→</span>
               </a>
@@ -110,13 +87,13 @@ export default function Homepage() {
             <h1 className="text-3xl border-b-2 pb-2 border-font_secondary font-bold tracking-tight text-primary sm:text-5xl">
               Veja todas as dúvidas
             </h1>
-            <p className="mt-3 text-lg font-semibold leading-8 text-font_secondary">
+            <p className="mt-3 text-lg font-semibold leading-8 text-secondary">
               Visualize todas as postagens do fórum. Ajude ou seja ajudado!
             </p>
             <div className="mt-10 items-center justify-center gap-x-6">
               <Link
                 to="/forum/create"
-                className="btn"
+                className="rounded-md transition duration-700 ease-in-out bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Insira sua dúvida!
               </Link>
@@ -130,7 +107,7 @@ export default function Homepage() {
                 {post.file ? (
                   <>
                     <Link to={`/forum/get-post/${post._id}`}>
-                      <div className="shadow-md relative w-full aspect-[16/9]">
+                      <div className="shadow-md relative rounded-t-xl w-full aspect-[16/9]">
                         {post.file && (
                           <img
                             // src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${post.file}`}
@@ -139,8 +116,7 @@ export default function Homepage() {
                             className="w-full h-full object-cover rounded-t-lg"
                           />
                         )}
-                        <div className="absolute rounded-lg" />
-                        <div className="p-4">
+                        <div className="p-4 rounded-b-xl bg-card">
                           <div className="mt-2 flex items-center gap-x-4 text-md">
                             <time dateTime={post.updatedAt} className="text-gray-500">
                               {format(new Date(post.updatedAt), "MMMM, dd yyyy", {
@@ -178,7 +154,7 @@ export default function Homepage() {
                           {user && user.role && post.user && post.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === post.user._id)) && (
                             <button
                               onClick={() => handleDelete(post._id)}
-                              className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 rounded-lg"
+                              className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 transition duration-700 ease-in-out rounded-lg"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +176,7 @@ export default function Homepage() {
                           {user && user.name === post.user.name && (
                             <Link to={`/forum/edit-post/${post._id}`}>
                               <button
-                                className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary rounded-lg"
+                                className="text-white cursor-pointer bg-secondary p-2 hover:bg-tertiary transition duration-700 ease-in-out rounded-lg"
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"

@@ -104,18 +104,18 @@ export default function Homepage() {
                             <div key={material._id}>
                                 {material.content[0].stepContent.file ? (
                                     <>
-                                        <Link className="bg-primar" to={`/materials/get-material/${material._id}`}>
-                                            <div className="shadow-md relative w-full aspect-[16/9]">
+                                        <Link to={`/materials/get-material/${material._id}`}>
+                                            <div className="shadow-md rounded-b-xl relative w-full aspect-[16/9]">
                                                 {material.content[0].stepContent.file && (
                                                     <img
                                                         // src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${material.content[0].stepContent.file}`}
                                                         src={`http://localhost:5000/Public/Images/${material.content[0].stepContent.file}`}
                                                         alt="imagem do material"
-                                                        className="w-full h-full object-cover rounded-t-lg"
+                                                        className="w-full h-full object-cover rounded-t-xl"
                                                     />
                                                 )}
                                                 <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
-                                                <div className="p-4 bg-card">
+                                                <div className="p-4 bg-card rounded-b-xl shadow-xl">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
                                                         <time dateTime={material.updatedAt} className="text-quaternary">
                                                             {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
@@ -178,9 +178,8 @@ export default function Homepage() {
                                 ) : (
                                     <>
                                         <Link to={`/materials/get-material/${material._id}`}>
-                                            <div className="relative bg-white shadow-md full">
-                                                <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
-                                                <div className="p-4 bg-card">
+                                            <div className="relative rounded-xl shadow-md full">
+                                                <div className="p-4 rounded-xl bg-card">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
                                                         <time dateTime={material.updatedAt} className="text-quaternary">
                                                             {format(new Date(material.updatedAt), "MMMM, dd yyyy", {

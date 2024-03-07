@@ -122,18 +122,21 @@ function Material() {
                     </div>
                 ) : null}
 
-                {/* steps */}
+                {/* steps*/}
                 {material && material.content.map((materialItem) => (
-                    <div className="mx-auto p-4 max-w-6xl bg-tertiary rounded-lg shadow-2xl mt-12">
-                        <div key={materialItem._id}>
-                            <div className='flex justify-between'>
-                                <h1 className='title px-2 mt-3 text-4xl text-primary text-left'>{materialItem.stepContent.title}</h1>
+                    <div className="mx-auto max-w-6xl bg-quaternary rounded-lg shadow-2xl mt-12">
+                        <div key={materialItem._id} className='transition duration-700 ease-in-out'>
+
+                            {/* header of step */}
+                            <div className='flex bg-secondary p-4 rounded-t-lg justify-between '>
+                                <h1 className='title px-2 mt-3 text-4xl text-gray-100 text-left transition duration-700 ease-in-out'>{materialItem.stepContent.title}</h1>
+                                {/* user btns */}
                                 <div className="flex items-center gap-x-1">
                                     {user && user._id === material.user._id && (
                                         <>
-                                            {/* edit btn */}
+                                            {/* edit btn - only for de main educator*/}
                                             <Link to={`/materials/edit-step/${material._id}/${materialItem._id}`}>
-                                                <button className="text-white cursor-pointer bg-primary p-2 hover:bg-secondary transition duration-700 ease-in-out rounded-lg">
+                                                <button className="text-white cursor-pointer bg-tertiary p-2 hover:bg-btn transition duration-700 ease-in-out rounded-lg">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
@@ -201,61 +204,74 @@ function Material() {
                                     )}
                                 </div>
                             </div>
-                            <p className='text-xl text-secondary text-justify px-2 mt-3' style={{ whiteSpace: 'pre-line' }}>
-                                {materialItem.stepContent.text}
-                            </p>
-                            {materialItem.stepContent.note ? (
-                                <div className="max-w-2xl">
-                                    <p className='subtitle text-base text-secondary mt-3 px-2 text-left'>Nota: {materialItem.stepContent.note}</p>
-                                </div>
-                            ) : (
-                                ''
-                            )}
-                            {materialItem.stepContent.file ? (
-                                <div
-                                    className="relative cursor-pointer mt-10 flex justify-center items-center"
-                                    onClick={() =>
-                                        // openModal(`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${materialItem.stepContent.file}`)
-                                        openModal(`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`)
-                                    }
-                                >
-                                    <div className='text-center text-gray-400 text-md'>
-                                        Clique para <br /> aumentar a imagem
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mx-3 w-6 h-6 text-gray-400">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                                    </svg>
 
-                                    <img
-                                        // src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${materialItem.stepContent.file}`}
-                                        src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`}
-                                        alt="imagem do post"
-                                        className="w-[40%] rounded-3xl sm:aspect-[2/1] lg:aspect-[16/9] object-cover h-full"
-                                    />
-                                </div>
-                            ) : (
-                                ''
-                            )}
-                            {isModalOpen && (
-                                <div className="fixed inset-0 flex items-center rounded-lg justify-center z-50">
-                                    <div className="fixed inset-0 bg-black opacity-75" onClick={closeModal}></div>
-                                    <div className="z-50 relative">
-                                        <button
-                                            className="absolute top-4 right-4 bg-primary p-2 rounded-lg text-white"
-                                            onClick={closeModal}
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </button>
-                                        <img
-                                            src={modalImageUrl}
-                                            alt="Imagem em tamanho completo"
-                                            className="max-h-screen max-w-screen-xl rounded-lg max-w-screen-3xl mx-auto"
-                                        />
+                            {/* content of step */}
+                            <div>
+                                <p className='text-secondary text-justify px-7 py-3 text-2xl' style={{ whiteSpace: 'pre-line' }}>
+                                    {materialItem.stepContent.text}
+                                </p>
+                                {materialItem.stepContent.note ? (
+                                    <div className="max-w-2xl">
+                                        <p className='subtitle text-base text-secondary px-7 py-3 text-left'>Nota: {materialItem.stepContent.note}</p>
                                     </div>
-                                </div>
-                            )}
+                                ) : (
+                                    ''
+                                )}
+                            </div>
+
+                            {/* step file (if exists) */}
+                            <div>
+                                {materialItem.stepContent.file ? (
+                                    <div className='flex mx-64 pb-5 mt-5 items-center'>
+                                        <div className='flex items-center -px-5'>
+                                            <div className='text-center text-gray-400 text-lg flex-grow'>
+                                                <p className='m-0 w-52'>
+                                                    Clique para aumentar a imagem
+                                                </p>
+                                            </div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mx-3 w-6 h-6 text-gray-400">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                            </svg>
+                                        </div>
+                                        <div
+                                            className="relative cursor-pointer"
+                                            onClick={() =>
+                                                // openModal(`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${materialItem.stepContent.file}`)
+                                                openModal(`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`)
+                                            }
+                                        >
+                                            <img
+                                                // src={`http://academico2.gravatai.ifsul.edu.br:5000/Public/Images/${materialItem.stepContent.file}`}
+                                                src={`http://localhost:5000/Public/Images/${materialItem.stepContent.file}`}
+                                                alt="imagem do post"
+                                                className="w-[100%] rounded-3xl sm:aspect-[2/1] lg:aspect-[16/9] object-cover h-full"
+                                            />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    null
+                                )}
+                                {isModalOpen && (
+                                    <div className="fixed inset-0 flex items-center rounded-lg justify-center z-50">
+                                        <div className="fixed inset-0 bg-black opacity-75" onClick={closeModal}></div>
+                                        <div className="z-50 relative">
+                                            <button
+                                                className="absolute top-4 right-4 bg-primary p-2 rounded-lg text-white"
+                                                onClick={closeModal}
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                            <img
+                                                src={modalImageUrl}
+                                                alt="Imagem em tamanho completo"
+                                                className="max-h-screen max-w-screen-xl rounded-lg max-w-screen-3xl mx-auto"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -265,21 +281,22 @@ function Material() {
                     <div className="mx-auto mt-8 text-center">
                         <Link to={`/materials/add-step/${material._id}`}>
                             <div className='flex justify-center items-center'>
-                                <button className='text-white transition duration-700 ease-in-out bg-secondary flex items-center gap-x-2 cursor-pointer p-2 hover:bg-tertiary rounded-lg'>
+                                <button className='text-white transition duration-700 ease-in-out bg-secondary flex items-center gap-x-2 cursor-pointer p-2 hover:bg-tertiary hover:shadow-bg_shadow rounded-lg'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
-                                    Adicionar novo
+                                    <p>Adicionar novo passo</p>
                                 </button>
                             </div>
                         </Link>
                     </div>
                 )}
 
-                <div className="mx-auto mt-8 text-center">
+                {/* back to materials */}
+                <div className="mx-auto mt-12 text-center">
                     <Link to={`/materials/`}>
                         <div className='flex justify-center items-center'>
-                            <button className="text-md font-semibold leading-6 text-primary hover:text-tertiary border-transparent hover:border-b-2 hover:border-gray-300 transition duration-1000 ease-in-out">
+                            <button className="text-md font-semibold leading-6 text-primary hover:text-tertiary hover:border-b-2 hover:border-gray-300 border-b-2 border-transparent transition duration-1000 ease-in-out">
                                 Voltar aos materiais
                             </button>
                         </div>
@@ -287,7 +304,7 @@ function Material() {
                 </div>
 
                 {/* add comment */}
-                <div className='p-5 max-w-6xl mx-auto mt-12 rounded-lg bg-gray-400'>
+                <div className='p-5 max-w-6xl shadow-2xl mx-auto mt-12 rounded-lg bg-gray-400'>
                     <form onSubmit={handleSubmit(onSubmit)} className='flex w-auto gap-x-2 items-center'>
                         <label htmlFor='comment' className='sr-only'></label>
                         <input
@@ -329,7 +346,7 @@ function Material() {
                 <div className='p-5 mt-5 mx-auto max-w-6xl'>
                     <h1 className="text-primary text-2xl">Comentários</h1>
                     {material.ratings && material.ratings.length > 0 ? (
-                        <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
+                        <div className='bg-gray-100 mt-5 rounded-md shadow-2xl shadow-bg_primary'>
                             <ul>
                                 {/* todo - criar uma rota para apagar o comentário */}
                                 {material.ratings
@@ -360,7 +377,7 @@ function Material() {
 
                         </div>
                     ) : (
-                        <div className="block w-full rounded-md border-0 p-5 shadow-xl text-font_secondary bg-gray-100 mt-5">
+                        <div className="block w-full rounded-md border-0 p-5 shadow-bg_shadow shadow-2xl text-font_secondary bg-gray-100 mt-5">
                             <p className='text-black'>Nenhum comentário adicionado ainda!</p>
                         </div>
                     )}

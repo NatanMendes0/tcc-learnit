@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
 import Toggle from "../Components/Toggle/Index";
@@ -38,11 +38,11 @@ export default function Navbar() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-quaternary backdrop-blur-sm shadow fixed-navbar">
+    <Disclosure as="nav" className="bg-quaternary backdrop-blur-md shadow fixed-navbar">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8" id="nav">
-            <div className="flex h-12 justify-between items-center"> {/* Added 'items-center' class */}
+          <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
+            <div className="flex h-12 justify-between items-center">
               <div className="flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
                   <Link to="/">
@@ -53,7 +53,9 @@ export default function Navbar() {
                     />
                   </Link>
                 </div>
-                <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
+
+                {/* <div className="hidden lg:ml-6 lg:flex lg:space-x-8"> */}
+                <div className="ml-6 flex space-x-8 items-center">
                   {navigation.map((item) => (
                     <Link
                       key={item.name}
@@ -70,24 +72,39 @@ export default function Navbar() {
                       {item.name}
                     </Link>
                   ))}
+                  <p className="ml-5"><Toggle /></p>
                 </div>
               </div>
 
-              {/* Mobile menu button */}
-              <div className="flex items-center lg:hidden">
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500">
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
+              {/* Search bar */}
+              {/* <div className="flex flex-grow justify-center">
+                <input
+                  type="text"
+                  placeholder="Pesquisar"
+                  className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                />
+                <button className="ml-2 px-3 py-1 text-sm rounded-md bg-secondary text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  Pesquisar
+                </button>
+              </div> */}
 
-              <p className="items-center"><Toggle /></p>
+              {/* better search bar */}
+              {/* <div className="flex flex-grow justify-center items-center">
+                <div className="relative rounded-md shadow-sm">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                  </div>
+                  <input
+                    type="text"
+                    name="text"
+                    id="text"
+                    className="block w-full rounded-md border-0 py-1.5 pl-10 pr-16 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="pesquisar..."
+                  />
+                </div>
+              </div> */}
 
+              {/* Desktop menu items */}
               <div className="hidden lg:ml-4 lg:flex lg:items-center">
                 <h1 className="mr-3 text-primary">
                   Olá, {isLoggedIn && isLoggedIn ? auth.user.name : "visitante"}
@@ -182,6 +199,7 @@ export default function Navbar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
+                {/* <p className="ml-5"><Toggle /></p> */}
               </div>
             </div>
           </div>

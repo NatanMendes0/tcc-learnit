@@ -9,6 +9,7 @@ module.exports = {
         tertiary: 'var(--color-bg-tertiary)',
         quaternary: 'var(--color-bg-quaternary)',
         card: 'var(--color-bg-card)',
+        btn: 'var(--color-bg-btn)',
       },
       textColor: {
         primary: 'var(--color-font-primary)',
@@ -26,6 +27,7 @@ module.exports = {
         bg_primary: "var(--color-bg-secondary)",
         bg_secondary: "#F3F4F6",
         bg_tertiary: "#E5E7EB",
+        bg_shadow: 'var(--color-bg-shadow)',
       },
       fontFamily: {
         sans: ["Karma", "sans-serif"],

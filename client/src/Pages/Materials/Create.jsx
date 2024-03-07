@@ -29,9 +29,9 @@ export default function Create() {
   return (
     <>
       <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
-        <h1 className="subtitle text-3xl my-5">Crie um novo material!</h1>
+        <h1 className="subtitle text-primary text-3xl my-5">Crie um novo material!</h1>
         <form className="shadow-lg relative" onSubmit={handleSubmit(onSubmit)}>
-          <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-primary focus-within:ring-1">
+          <div className="overflow-hidden rounded-lg border border-primary shadow-sm focus-within:border-primary focus-within:ring-1">
             <label htmlFor="title" className="sr-only">
               Título
             </label>
@@ -49,7 +49,7 @@ export default function Create() {
                 },
                 maxLength: {
                   value: 700,
-                  message: "Máximo de 30 caracteres",
+                  message: "Máximo de 700 caracteres",
                 },
               })}
             />
@@ -58,7 +58,7 @@ export default function Create() {
                 {errors.title.message}
               </span>
             )}
-            <div className="border-b-2 border-gray-200 rounded-md mx-2" />
+            <div className="border-b-2 border-gray-200" />
             <label htmlFor="text" className="sr-only">
               Descrição
             </label>
@@ -78,14 +78,6 @@ export default function Create() {
               </span>
             )}
 
-            <div aria-hidden="true">
-              <div className="h-px" />
-              <div className="py-2">
-                <div className="py-px">
-                  <div className="h-9" />
-                </div>
-              </div>
-            </div>
 
             <label htmlFor="note" className="sr-only">
               Nota
@@ -94,7 +86,7 @@ export default function Create() {
               id="note"
               name="note"
               placeholder="Nota (opcional)"
-              className="block w-full resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6"
+              className="block w-full border-t-2 border-gray-200 resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 pt-4 text-xl"
               {...register("note", {
                 required: false,
               })}
@@ -106,7 +98,7 @@ export default function Create() {
               <div className="flex">
                 <label
                   htmlFor="file"
-                  className="p-1 relative flex cursor-pointer rounded-md font-italic text-lg text-gray-400 hover:text-secondary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                  className="p-1 relative flex cursor-pointer rounded-md font-italic text-lg text-quaternary hover:text-bg_primary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +140,7 @@ export default function Create() {
               <div className="flex-shrink-0">
                 <button
                   type="submit"
-                  className="inline-flex items-center rounded-md bg-primary px-6 py-2 text-md font-semibold text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:bg-sky-700"
+                  className="text-white px-5 cursor-pointer bg-primary p-2 hover:bg-secondary transition duration-700 ease-in-out rounded-lg"
                 >
                   Adicionar
                 </button>

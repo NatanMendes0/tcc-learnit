@@ -90,13 +90,14 @@ function Post() {
             <div className='mt-auto isolate py-14'>
                 <div className="mx-auto max-w-6xl bg-tertiary rounded-lg shadow-xl">
                     <div>
-                        <div className='bg-primary p-5 flex justify-between rounded-t-lg'>
+                        <div className='bg-secondary p-5 flex justify-between rounded-t-lg'>
                             <h1 className='title text-4xl text-white text-left'>{post.title}</h1>
-                            <div>
+                            <div className='space-x-1'>
+                                {/* edit btn */}
                                 {user && post.user && (user._id === post.user._id) && (
                                     <Link to={`/forum/edit-post/${post._id}`}>
                                         <button
-                                            className="text-white mr-2 cursor-pointer bg-secondary p-2 hover:bg-sky-800 rounded-lg"
+                                            className="text-white cursor-pointer bg-tertiary p-2 hover:bg-sky-800 transition duration-700 ease-in-out rounded-lg"
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -115,10 +116,12 @@ function Post() {
                                         </button>
                                     </Link>
                                 )}
+
+                                {/* delete btn */}
                                 {user && user.role && post.user && post.user._id && ((user.role === "Administrador" || user.role === "Educador") || (user._id === post.user._id)) && (
                                     <button
                                         onClick={() => handleDelete(post._id)}
-                                        className="text-white cursor-pointer bg-red-700 mr-2 p-2 hover:bg-red-900 rounded-lg"
+                                        className="text-white cursor-pointer bg-red-700 p-2 hover:bg-red-900 transition duration-700 ease-in-out rounded-lg"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +149,7 @@ function Post() {
                                             <div className="relative flex items-center gap-x-2">
                                                 <UserCircleIcon className="h-14 text-primary" />
                                                 <div className="flex gap-x-2">
-                                                    <p className="font-semibold text-xl text-secondary">
+                                                    <p className="font-semibold text-xl text-quaternary">
                                                         {post.user.name}
                                                     </p>
                                                     <p className="text-secondary font-semibold text-lg">@{post.user.nickname}</p>
@@ -154,7 +157,7 @@ function Post() {
                                                 <p className="text-primary font-bold">{post.user.role}</p>
                                             </div>
                                             <div>
-                                                <time dateTime={post.updatedAt} className="text-gray-700 text-lg">
+                                                <time dateTime={post.updatedAt} className="text-secondary text-lg">
                                                     {format(new Date(post.updatedAt), "MMMM, dd yyyy", {
                                                         locale: ptBR,
                                                     })}
@@ -162,7 +165,7 @@ function Post() {
                                             </div>
                                         </div>
                                         <div className="px-5 py-5">
-                                            <p className="text-gray-600 font-semibold text-xl">{post.description}</p>
+                                            <p className="text-tertiary font-semibold text-xl">{post.description}</p>
                                         </div>
                                     </>
                                 ) : () => { return }}
@@ -175,7 +178,7 @@ function Post() {
                                         openModal(`http://localhost:5000/Public/Images/${post.file}`)
                                     }
                                 >
-                                    <div className='text-center text-gray-400 text-md'>
+                                    <div className='text-center text-primary text-md'>
                                         Clique para <br /> aumentar a imagem
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mx-3 w-6 h-6 text-gray-400">
@@ -244,7 +247,7 @@ function Post() {
                             <div>
                                 <button
                                     type='submit'
-                                    className='text-white flex w-full items-center shadow-xl justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-md font-medium  hover:bg-secondary'
+                                    className="text-white cursor-pointer bg-secondary p-2 hover:bg-primary transition duration-700 ease-in-out rounded-lg"
                                 >
                                     Comentar
                                 </button>
@@ -255,9 +258,9 @@ function Post() {
 
                 {/* comment section */}
                 <div className='p-5 mt-5 mx-auto max-w-6xl'>
-                    <h1 className="subtitle text-2xl">Comentários</h1>
+                    <h1 className="subtitle text-primary text-2xl">Comentários</h1>
                     {post.ratings && post.ratings.length > 0 ? (
-                        <div className='bg-gray-100 mt-5 rounded-md shadow-xl'>
+                        <div className='mt-5 bg-gray-100 rounded-md shadow-xl'>
                             <ul>
                                 {post.ratings
                                     .map((rating, index) => (
@@ -265,16 +268,16 @@ function Post() {
                                             <div className="p-4">
                                                 <div className="flex items-center gap-x-2">
                                                     <div className="relative flex items-center gap-x-2 w-full">
-                                                            <div className="flex items-center justify-center text-primary">
+                                                            <div className="flex items-center justify-center text-quaternary">
                                                                 <UserCircleIcon className="h-14 w-14 min-h-14 min-w-14" />
                                                             </div>
                                                             <div className="flex gap-x-2">
-                                                                <p className="font-semibold text-xl text-secondary">
+                                                                <p className="font-semibold text-xl text-quaternary">
                                                                     {rating.postedby.name}
                                                                 </p>
-                                                                <p className="text-secondary font-semibold text-lg">@{rating.postedby.nickname}</p>
-                                                                <p className="text-primary font-bold text-lg">|</p>
-                                                                <p className="text-primary font-bold text-lg">{rating.postedby.role}</p>
+                                                                <p className="text-quaternary font-semibold text-lg">@{rating.postedby.nickname}</p>
+                                                                <p className="text-quaternary font-bold text-lg">|</p>
+                                                                <p className="text-quaternary font-bold text-lg">{rating.postedby.role}</p>
                                                             </div>
                                                     </div>
                                                 </div>
@@ -287,7 +290,7 @@ function Post() {
                             </ul>
                         </div>
                     ) : (
-                        <div className="block w-full rounded-md border-0 p-5 shadow-xl text-font_secondary">
+                        <div className="block bg-gray-100 w-full rounded-md border-0 p-5 shadow-xl text-font_secondary">
                             <p className='text-black'>Nenhum comentário adicionado ainda!</p>
                         </div>
                     )}

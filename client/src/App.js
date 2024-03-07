@@ -75,7 +75,7 @@ function App() {
         <MaterialProvider>
           <QueryClientProvider client={queryClient}>
             {/* <div className="relative flex flex-col min-h-screen w-full overflow-x-hidden bg-bg_primary text-font_secondary"> */}
-            <div className="bg-primary relative flex flex-col min-h-screen w-full overflow-x-hidden">
+            <div className="bg-primary transition duration-700 ease-in-out relative flex flex-col min-h-screen w-full overflow-x-hidden">
               <ThemeProvider>
                 <BrowserRouter>
                   <Navbar />

@@ -94,7 +94,7 @@ export default function Homepage() {
             <div className="mt-10 flex items-center gap-x-6">
               <Link
                 to="/materials"
-                className="rounded-md transition duration-700 ease-in-out bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="rounded-md transition duration-700 bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Acesse agora!
               </Link>
@@ -144,7 +144,7 @@ export default function Homepage() {
                       <p className="mt-6">
                         <Link
                           to={feature.href}
-                          className="text-sm border-transparent hover:border-b-2 hover:border-gray-300 transition duration-700 ease-in-out font-semibold leading-6 text-primary hover:text-secondary"
+                          className="text-sm border-transparent hover:border-b-2 hover:border-gray-300 transition duration-700 hover:ease-in-out font-semibold leading-6 text-primary hover:text-secondary"
                         >
                           Acesse agora <span aria-hidden="true">→</span>
                         </Link>
