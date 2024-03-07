@@ -10,6 +10,7 @@
     --color-font-quaternary: #292929;
     --color-bg-shadow: #0284C7;
     --color-bg-btn: #006699;
+    --color-bg-border: #0284C7;
 
     ::-webkit-scrollbar-track {
         background-color: #313030;
@@ -28,6 +29,7 @@
     --color-bg-card: #fafafa;
     --color-bg-shadow: #8d8d8d;
     --color-bg-btn: #4b4b4b;
+    --color-bg-border: #f9f9f9;
 }
 
 @tailwind base;

@@ -10,6 +10,7 @@ module.exports = {
         quaternary: 'var(--color-bg-quaternary)',
         card: 'var(--color-bg-card)',
         btn: 'var(--color-bg-btn)',
+        bg_border: 'var(--color-bg-border)',
       },
       textColor: {
         primary: 'var(--color-font-primary)',

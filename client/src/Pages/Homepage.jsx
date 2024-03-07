@@ -49,7 +49,7 @@ export default function Homepage() {
             <a
               key={nav.name}
               href={nav.href}
-              className="text-lg font-semibold text-primary hover:text-secondary sm:block md:mr-4 md:last:mr-0 md:mb-2"
+              className="text-lg font-semibold text-primary hover:text-secondary sm:block md:mr-4 md:last:mr-0 md:mb-2 hover:border-b-2 hover:border-gray-300 border-b-2 border-transparent transition duration-1000 ease-in-out"
             >
               {nav.name}
             </a>
