@@ -276,7 +276,7 @@ function Material() {
                     </div>
                 ))}
 
-                {/* add new step */}
+                {/* add new step - only for admin and educator */}
                 {user && (user.role === "Administrador" || user.role === "Educador") && (
                     <div className="mx-auto mt-8 text-center">
                         <Link to={`/materials/add-step/${material._id}`}>

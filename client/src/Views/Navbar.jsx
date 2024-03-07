@@ -38,7 +38,7 @@ export default function Navbar() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-quaternary backdrop-blur-md shadow fixed-navbar">
+    <Disclosure as="nav" className="bg-quaternary transition duration-700 ease-in-out backdrop-blur-md shadow fixed-navbar">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
