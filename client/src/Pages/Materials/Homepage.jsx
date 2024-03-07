@@ -71,7 +71,7 @@ export default function Homepage() {
                             </a>
                             <Link
                                 to="/forum"
-                                className="text-md font-semibold leading-6 text-primary hover:text-tertiary text-sm border-transparent hover:border-b-2 hover:border-gray-300 transition duration-700 ease-in-out"
+                                className="text-md border-transparent transition duration-1000 ease-in-out font-semibold leading-6 text-primary hover:text-tertiary text-sm hover:border-b-2 hover:border-gray-300"
                             >
                                 Acesse o fórum <span aria-hidden="true">→</span>
                             </Link>
@@ -81,6 +81,8 @@ export default function Homepage() {
 
                 {/* Materials section */}
                 <div className="mx-auto max-w-7xl px-6 lg:px-8" id="materials">
+
+                    {/* Materials section - header*/}
                     <div className="mx-auto max-w-2xl text-center">
                         <h1 className="text-3xl border-b-2 pb-2 border-font_secondary font-bold tracking-tight text-primary sm:text-5xl">
                             Veja os materiais disponíveis
@@ -98,10 +100,11 @@ export default function Homepage() {
                         )}
                     </div>
 
-                    {/* Materials section */}
+                    {/* Materials section - materials */}
                     <div className="mx-auto mt-16 grid max-w-2xlgrid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                         {Materials.map((material) => (
                             <div key={material._id}>
+                                {/* if the material has a file */}
                                 {material.content[0].stepContent.file ? (
                                     <>
                                         <Link to={`/materials/get-material/${material._id}`}>
@@ -117,7 +120,7 @@ export default function Homepage() {
                                                 <div className="absolute rounded-lg ring-1 ring-inset ring-gray-900/10" />
                                                 <div className="p-4 bg-card rounded-b-xl shadow-xl">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
-                                                        <time dateTime={material.updatedAt} className="text-quaternary">
+                                                        <time dateTime={material.updatedAt} className="text-gray-900">
                                                             {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
                                                                 locale: ptBR,
                                                             })}
@@ -128,7 +131,7 @@ export default function Homepage() {
                                                             <span className="absolute inset-0" />
                                                             {material.content[0].stepContent.title}
                                                         </h3>
-                                                        <p className="mt-5 text-sm leading-6 text-quaternary text-justify line-clamp-3 overflow-ellipsis">
+                                                        <p className="mt-5 text-sm leading-6 text-gray-900 text-justify line-clamp-3 overflow-ellipsis">
                                                             {material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
@@ -176,12 +179,14 @@ export default function Homepage() {
                                         </div>
                                     </>
                                 ) : (
+
+                                    // if the material has no file
                                     <>
                                         <Link to={`/materials/get-material/${material._id}`}>
                                             <div className="relative rounded-xl shadow-md full">
                                                 <div className="p-4 rounded-xl bg-card">
                                                     <div className="mt-2 flex items-center gap-x-4 text-md">
-                                                        <time dateTime={material.updatedAt} className="text-quaternary">
+                                                        <time dateTime={material.updatedAt} className="text-gray-900">
                                                             {format(new Date(material.updatedAt), "MMMM, dd yyyy", {
                                                                 locale: ptBR,
                                                             })}
@@ -192,7 +197,7 @@ export default function Homepage() {
                                                             <span className="absolute inset-0" />
                                                             {material.content[0].stepContent.title}
                                                         </h3>
-                                                        <p className="mt-5 text-sm leading-6 text-quaternary text-justify line-clamp-3 overflow-ellipsis">
+                                                        <p className="mt-5 text-sm leading-6 text-gray-900 text-justify line-clamp-3 overflow-ellipsis">
                                                             {material.content[0].stepContent.text}
                                                         </p>
                                                     </div>
