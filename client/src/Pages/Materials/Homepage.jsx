@@ -148,7 +148,7 @@ export default function Homepage() {
                                                             {material.user.name}
                                                         </p>
                                                         <p className="text-secondary">@{material.user.nickname}</p>
-                                                        <p className="text-bg_primary font-bold">{material.user.role}</p>
+                                                        <p className="text-bg_primary font-extrabold">{material.user.role}</p>
                                                     </div>
                                                 </div>
                                                 <div className="ml-auto flex items-center gap-x-2">
