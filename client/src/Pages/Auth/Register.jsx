@@ -36,7 +36,7 @@ export default function Register() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-full mt-auto flex-1 flex-col justify-center sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="text-center text-3xl font-bold tracking-tight text-primary">
             Crie sua conta!
@@ -239,15 +239,26 @@ export default function Register() {
             </form>
           </div>
 
-          <p className="mt-10 text-center text-sm text-secondary">
-            Já possui cadastro?{" "}
-            <Link
-              to="/login"
-              className="font-semibold leading-6 text-sky-700 hover:text-sky-500 transition duration-700"
-            >
-              Faça seu login aqui!
-            </Link>
-          </p>
+          {/* Signin link and became a educador */}
+          <div>
+            <p className="mt-10 text-center text-sm text-secondary">
+              Já possui cadastro?{" "}
+              <Link
+                to="/login"
+                className="font-semibold leading-6 text-sky-700 hover:text-sky-500 transition duration-700"
+              >
+                Faça seu login aqui!
+              </Link>
+            </p>
+            <p className="mt-5 text-center text-sm text-secondary">
+              <Link
+                to="/educator"
+                className="font-semibold transition duration-700 text-lg text-sky-600 hover:text-sky-400"
+              >
+                Quero ser um educador!
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </>
