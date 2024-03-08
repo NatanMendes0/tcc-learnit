@@ -38,7 +38,7 @@ export default function Register() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-primary">
             Crie sua conta!
           </h2>
         </div>
@@ -61,7 +61,7 @@ export default function Register() {
                     autoComplete="name"
                     placeholder="ex: Maria Antonia"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                     {...register("name", {
                       required: "Campo obrigatório",
                       // accept only letters
@@ -104,7 +104,7 @@ export default function Register() {
                     autoComplete="email"
                     required
                     placeholder="ex: pessoalegal@dominio.com"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                     {...register("email", {
                       required: "Campo obrigatório",
                       validate: (value) => {
@@ -146,7 +146,7 @@ export default function Register() {
                     autoComplete="nickname"
                     placeholder="ex: pessoa_legal"
                     required
-                    className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                    className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary shadow-sm focus:ring-sky-600 sm:text-sm sm:leading-6"
                     {...register("nickname", {
                       required: "Campo obrigatório",
                       validate: (value) => {
@@ -188,7 +188,7 @@ export default function Register() {
                     autoComplete="password"
                     placeholder="ex: ********"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                     {...register("password", {
                       required: "Campo obrigatório",
                       minLength: {
@@ -231,7 +231,7 @@ export default function Register() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="flex w-full justify-center text-sm focus-visible:outline-primary rounded-md transition duration-700 bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                   Cadastrar
                 </button>
@@ -239,11 +239,11 @@ export default function Register() {
             </form>
           </div>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-center text-sm text-secondary">
             Já possui cadastro?{" "}
             <Link
               to="/login"
-              className="font-semibold leading-6 text-primary hover:text-secondary"
+              className="font-semibold leading-6 text-sky-700 hover:text-sky-500 transition duration-700"
             >
               Faça seu login aqui!
             </Link>
