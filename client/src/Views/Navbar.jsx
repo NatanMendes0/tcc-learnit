@@ -72,7 +72,7 @@ export default function Navbar() {
                       {item.name}
                     </Link>
                   ))}
-                  <p className="ml-5"><Toggle /></p>
+
                 </div>
               </div>
 
@@ -199,7 +199,7 @@ export default function Navbar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                {/* <p className="ml-5"><Toggle /></p> */}
+                <p className="ml-5"><Toggle /></p>
               </div>
             </div>
           </div>
