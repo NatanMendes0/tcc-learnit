@@ -1,3 +1,3 @@
 # tcc-learnit
 
-ultima versão na main register-login
+Repositório focado para armazenar meu TCC do curso técnico.
