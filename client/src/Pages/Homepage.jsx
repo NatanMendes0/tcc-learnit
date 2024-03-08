@@ -272,6 +272,7 @@ export default function Homepage() {
           </div>
         </div>
 
+        {/* Footer */}
         <div className="mx-auto text-center max-w-fit text-xl my-4 font-semibold cursor-pointer text-primary hover:text-secondary hover:border-b-2 hover:border-gray-300 border-b-2 border-transparent transition duration-1000 ease-in-out">
           <a href="#quem-somos">
             Topo da pagina

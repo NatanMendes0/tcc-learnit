@@ -41,7 +41,7 @@ export default function Login() {
     <>
       <div className=" mt-auto justify-center sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-primary">
             Entre na sua conta!
           </h2>
         </div>
@@ -106,7 +106,7 @@ export default function Login() {
                     type={showPassword ? "text" : "password"} // toggle password visibility
                     autoComplete="password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                     {...register("password", {
                       required: "Campo obrigatório",
                       minLength: {
@@ -151,7 +151,7 @@ export default function Login() {
                 <div className="text-sm leading-6">
                   <Link
                     to="/forgot-password"
-                    className="font-semibold text-lg text-sky-600 hover:text-sky-700 action:text-sky-800"
+                    className="font-semibold text-lg transition duration-700 text-sky-600 hover:text-sky-700 action:text-sky-800"
                   >
                     Esqueceu a senha?
                   </Link>
@@ -161,7 +161,7 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                  className="flex w-full justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 transition duration-700 bg-secondary text-md shadow-lg hover:bg-tertiary"
                 >
                   Entrar
                 </button>
@@ -169,19 +169,19 @@ export default function Login() {
             </form>
           </div>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-center text-sm text-secondary">
             Não possui cadastro ainda?{" "}
             <Link
               to="/register"
-              className="font-semibold leading-6 text-sky-600 hover:text-sky-500"
+              className="font-semibold transition duration-700 leading-6 text-sky-600 hover:text-sky-400"
             >
               Faça seu cadastro aqui!
             </Link>
           </p>
-          <p className="mt-5 text-center text-sm text-gray-500">
+          <p className="mt-5 text-center text-sm text-secondary">
             <Link
               to="/educator"
-              className="font-semibold text-lg text-sky-600 hover:text-sky-500"
+              className="font-semibold transition duration-700 text-lg text-sky-600 hover:text-sky-400"
             >
               Quero ser um educador!
             </Link>
