@@ -39,7 +39,7 @@ export default function Login() {
 
   return (
     <>
-      <div className=" mt-auto justify-center sm:px-6 lg:px-8">
+      <div className="mt-auto justify-center sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="text-center text-3xl font-bold tracking-tight text-primary">
             Entre na sua conta!
@@ -47,7 +47,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+          <div className="bg-gray-200 px-6 py-12 shadow-xl shadow-bg_shadow sm:rounded-lg sm:px-12">
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label

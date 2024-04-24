@@ -31,7 +31,9 @@ export default function Create() {
       <div className="mt-auto justify-center lg:mx-80 py-10 sm:px-6 lg:px-8">
         <h1 className="subtitle text-primary text-3xl my-5">Crie um novo material!</h1>
         <form className="shadow-lg relative" onSubmit={handleSubmit(onSubmit)}>
-          <div className="overflow-hidden rounded-lg border border-primary shadow-sm focus-within:border-primary focus-within:ring-1">
+          
+          {/* title, text and note input */}
+          <div className="overflow-hidden rounded-lg">
             <label htmlFor="title" className="sr-only">
               Título
             </label>
@@ -79,6 +81,7 @@ export default function Create() {
             )}
 
 
+<div className="border-b-2 border-gray-200" />
             <label htmlFor="note" className="sr-only">
               Nota
             </label>
@@ -86,13 +89,15 @@ export default function Create() {
               id="note"
               name="note"
               placeholder="Nota (opcional)"
-              className="block w-full border-t-2 border-gray-200 resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 pt-4 text-xl"
+              // className="block w-full border-t-2 border-gray-200 resize-none border-0 pb-20 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 pt-4 text-xl"
+              className="block w-full border-none focus:ring-0 pb-20 text-gray-900 placeholder:text-gray-400 sm:text-lg sm:leading-6 pt-4 text-xl"
               {...register("note", {
                 required: false,
               })}
             />
           </div>
 
+          {/* file input */}
           <div className="absolute inset-x-px bottom-0">
             <div className="flex items-center justify-between space-x-3 border-t border-gray-200 px-2 py-2 sm:px-3">
               <div className="flex">

@@ -58,7 +58,7 @@ export default function Homepage() {
 
         {/* Hero section */}
         <div
-          className="mx-auto max-w-7xl px-6 py-24 sm:py-24 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-24"
+          className="mx-auto max-w-7xl px-6 sm:py-24 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-24"
           id="quem-somos"
         >
           <div className="mx-auto max-w-3xl lg:mx-0 lg:flex-auto">
@@ -160,7 +160,7 @@ export default function Homepage() {
         {/* CTA section */}
         <div className="mx-auto mt-20 max-w-7xl sm:mt-20 lg:mt-48 pb-16 pt-24 sm:pb-24 sm:pt-32 xl:pb-32" id="contato">
           <div className="mx-auto mb-20 max-w-3xl lg:text-center">
-            <p className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-5xl">
+            <p className="mt-2 text-3xl font-bold tracking-tight text-center text-primary sm:text-5xl">
               Conheça o responsável pelo projeto
             </p>
             <div className="border-b-2 border-gray-600 h-2 mt-2" />

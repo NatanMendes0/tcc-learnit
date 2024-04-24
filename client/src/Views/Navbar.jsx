@@ -105,7 +105,8 @@ export default function Navbar() {
               </div> */}
 
               {/* Desktop menu items */}
-              <div className="hidden lg:ml-4 lg:flex lg:items-center">
+              {/* <div className="hidden lg:ml-4 lg:flex lg:items-center"> */}
+              <div className="lg:ml-4 md:flex md:items-center">
                 <h1 className="mr-3 text-primary">
                   Olá, {isLoggedIn && isLoggedIn ? auth.user.name : "visitante"}
                 </h1>

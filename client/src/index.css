@@ -70,14 +70,6 @@ html {
     @apply text-6xl font-bold tracking-tight text-primary text-center;
 }
 
-/* .subtitle {
-    @apply text-2xl mt-5 font-bold tracking-tight text-font_secondary text-center;
-} */
-
-/* .btn {
-    @apply px-3 py-2 shadow-lg rounded-lg text-white bg-primary hover:bg-secondary active:bg-sky-900 text-sm font-semibold;
-} */
-
 .btn-secondary {
     @apply mx-1 px-3 py-2 -mr-6 bg-primary text-white rounded-lg cursor-pointer;
 }
