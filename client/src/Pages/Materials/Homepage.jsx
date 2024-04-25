@@ -52,7 +52,12 @@ export default function Homepage() {
 
     const handleClick = (pageNumber) => {
         setCurrentPage(pageNumber);
-        window.scrollTo(0, 0);
+        if (pageNumber === 2) {
+            const element = document.getElementById("materials");
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+            }
+        }
     };
 
     return (
