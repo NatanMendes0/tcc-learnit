@@ -3,16 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import api from "../../api";
-
 import { UserCircleIcon } from "@heroicons/react/20/solid";
-
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 
 export default function Homepage() {
     const navigate = useNavigate();
     const [Materials, setMaterials] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const { user } = useAuth();
+    const materialsPerPage = 3;
 
     const getMaterials = async () => {
         try {
@@ -42,6 +42,17 @@ export default function Homepage() {
             console.error("Error deleting Material:", error);
             toast.error(error.response.data.message);
         }
+    };
+
+    const paginateMaterials = (items, page, perPage) => {
+        const startIndex = (page - 1) * perPage;
+        const endIndex = startIndex + perPage;
+        return items.slice(startIndex, endIndex);
+    };
+
+    const handleClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo(0, 0);
     };
 
     return (
@@ -101,8 +112,8 @@ export default function Homepage() {
                     </div>
 
                     {/* Materials section - materials */}
-                    <div className="mx-auto mt-16 grid max-w-2xlgrid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                        {Materials.map((material) => (
+                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                        {paginateMaterials(Materials, currentPage, materialsPerPage).map((material) => (
                             <div key={material._id}>
                                 {/* if the material has a file */}
                                 {material.content[0].stepContent.file ? (
@@ -248,8 +259,25 @@ export default function Homepage() {
                             </div>
                         ))}
                     </div>
+
+                    {/* Pagination */}
+                    <div className="flex justify-center mt-8">
+                        {Array.from({ length: Math.ceil(Materials.length / materialsPerPage) }, (_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleClick(index + 1)}
+                                className={`text-lg font-semibold leading-6 text-secondary bg-bg_primary rounded-full px-4 py-2 mx-1 transition duration-300 ease-in-out hover:bg-gray-300 hover:text-gray-800 flex items-center justify-center focus:outline-none ${currentPage === index + 1 ? "" : " border bg-primary text-white hover:bg-primary focus:ring-primary"
+                                    }`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
+
                 </div>
+
             </div>
+        
         </>
     );
 }
