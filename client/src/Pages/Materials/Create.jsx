@@ -145,8 +145,7 @@ export default function Create() {
               <div className="flex-shrink-0">
                 <button
                   type="submit"
-                  className="text-white px-5 cursor-pointer bg-primary p-2 hover:bg-secondary transition duration-700 ease-in-out rounded-lg"
-                >
+                  className="rounded-md transition duration-700 ease-in-out bg-secondary px-4 py-2.5 text-md font-semibold text-white shadow-lg hover:bg-tertiary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-10">
                   Adicionar
                 </button>
               </div>
