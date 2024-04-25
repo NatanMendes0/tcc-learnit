@@ -43,13 +43,13 @@ export default function Login() {
         <>
             <div className=" mt-auto justify-center sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                    <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
+                <h2 className="text-center text-3xl transition duration-700 ease-in-out font-bold tracking-tight text-primary">
                         Altere sua senha!
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-                    <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+                <div className="bg-white px-6 py-12 sm:rounded-lg sm:px-12 shadow-xl shadow-bg_shadow">
                         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                             <div>
                                 <label
@@ -65,7 +65,7 @@ export default function Login() {
                                         type={showPassword ? "text" : "password"} // toggle password visibility
                                         autoComplete="password"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                                        className="transition duration-700 ease-in-out block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
                                         {...register("password", {
                                             required: "Campo obrigatório",
                                             minLength: {
@@ -136,7 +136,7 @@ export default function Login() {
                             <div>
                                 <button
                                     type="submit"
-                                    className="flex w-full justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                                    className="flex w-full justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 text-primary cursor-pointer bg-bg_primary hover:bg-btn transition duration-700 ease-in-out"
                                 >
                                     Alterar
                                 </button>

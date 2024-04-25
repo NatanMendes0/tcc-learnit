@@ -37,14 +37,14 @@ export default function Register() {
   return (
     <>
       <div className="flex min-h-full mt-auto flex-1 flex-col justify-center sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md ">
           <h2 className="text-center text-3xl font-bold tracking-tight text-primary">
             Crie sua conta!
           </h2>
         </div>
 
         <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+          <div className="bg-white px-6 py-12 sm:rounded-lg sm:px-12 shadow-xl shadow-bg_shadow">
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
