@@ -70,6 +70,9 @@ A interface da aplicação foi projetada para ser agradável e intuitiva, permit
 
 > ⚠️ <i><strong>A plataforma segue em desenvolvimento contínuo, de modo que melhorias e novas funcionalidades são adicionadas com o passar do tempo. Portanto, algum componente da aplicação pode não funcionar como esperado!</strong></i>
 
+## Licença 📃
+A LearnIT é licenciada sob a [GNU General Public License v3.0], que permite que você use, copie, modifique e distribua o código do projeto, desde que você mantenha a mesma licença e os créditos dos autores originais.
+
 ## Contato 📱
 Se você tiver alguma dúvida, sugestão ou feedback sobre o projeto, você pode entrar em contato através dos seguintes canais:
 
