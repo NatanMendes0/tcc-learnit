@@ -68,7 +68,7 @@ A interface da aplicação foi projetada para ser agradável e intuitiva, permit
   <li>Publicar materiais na plataforma (apenas educadores)</li>
 </ul>
 
-### <i>A plataforma segue em desenvolvimento contínuo, de modo que melhorias e novas funcionalidades são adicionadas com o passar do tempo. Portanto, algum componente da aplicação pode não funcionar como esperado!</i>
+> ⚠️ <i><strong>A plataforma segue em desenvolvimento contínuo, de modo que melhorias e novas funcionalidades são adicionadas com o passar do tempo. Portanto, algum componente da aplicação pode não funcionar como esperado!</strong></i>
 
 ## Contato 📱
 Se você tiver alguma dúvida, sugestão ou feedback sobre o projeto, você pode entrar em contato através dos seguintes canais:
